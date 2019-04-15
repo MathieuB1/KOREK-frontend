@@ -1,0 +1,18 @@
+.dropzone .dz-preview.dz-image-preview {
+    background: transparent;
+}
+
+.dropzone .dz-preview .dz-progress {
+    display: none;
+}
+
+div.filepicker {
+    text-align: center;
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 5px;
+    min-height: 60px;
+    border: 2px dashed rgb(0, 116, 217);
+    color: #55595c;
+    font: inherit;
+}
