@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - frontend:/usr/app/
+    ports:
+      - "4100:4100"
+
+volumes:
+  frontend: {}
