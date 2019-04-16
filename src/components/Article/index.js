@@ -50,7 +50,7 @@ class Article extends React.Component {
           <div className="row article-content">
             <div className="col-xs-12">
               <p>{this.props.article.subtitle}</p>
-              <p style={{'white-space': 'pre-line'}}>{this.props.article.text}</p>
+              <p style={{ whiteSpace: 'pre-line'}}>{this.props.article.text}</p>
 
               {(this.props.article.images.length) ? (<p>Images:</p>) : (<div></div>)}
               { Object.keys(this.props.article.images).map(key => 
