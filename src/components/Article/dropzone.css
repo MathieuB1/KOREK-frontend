@@ -16,3 +16,30 @@ div.filepicker {
     color: #55595c;
     font: inherit;
 }
+
+.img-wrap {
+    position: relative;
+    display: inline-block;
+}
+
+.img-wrap .delete {
+    position: absolute;
+    top: 0rem;
+    right: 0rem;
+    z-index: 100;
+    width: 36px;
+    opacity: 0.75;
+    font-size: 33px;
+}
+
+.img-wrap img,
+video,
+audio {
+    opacity: 0.9;
+}
+
+.img-wrap .delete:hover {
+    opacity: 1;
+    cursor: pointer;
+    color: #db1414;
+}

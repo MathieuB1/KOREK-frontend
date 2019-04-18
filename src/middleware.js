@@ -83,6 +83,7 @@ const localStorageMiddleware = store => next => action => {
         window.localStorage.removeItem('jwt', '');
         window.localStorage.removeItem('username', '');
         agent.setToken(null);
+        agent.setCsrf(null);
     }
 
     next(action);

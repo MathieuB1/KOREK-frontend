@@ -72,8 +72,9 @@ const Articles = {
     del: slug =>
         requests.del(`/products/${slug}/`),
     update: article =>
-        requests.put_data(`/products/${article.id}/`, article)
-
+        requests.put_data(`/products/${article.id}/`, article),
+    delete_media: article =>
+        requests.put_data(`/products/${article.id}/`, article),
 };
 
 

@@ -6,12 +6,14 @@ import DropzoneComponent from 'react-dropzone-component';
 import 'react-dropzone-component/styles/filepicker.css';
 import 'dropzone/dist/min/dropzone.min.css';
 import './dropzone.css';
+import ReadMedia from './ReadMedia';
 
 import {
   EDITOR_PAGE_LOADED,
   ARTICLE_SUBMITTED,
   EDITOR_PAGE_UNLOADED,
-  UPDATE_FIELD_EDITOR
+  UPDATE_FIELD_EDITOR,
+  DELETE_MEDIA
 } from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({
@@ -26,7 +28,9 @@ const mapDispatchToProps = dispatch => ({
   onUnload: payload =>
     dispatch({ type: EDITOR_PAGE_UNLOADED }),
   onUpdateField: (key, value) =>
-    dispatch({ type: UPDATE_FIELD_EDITOR, key, value })
+    dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
+  onDeleteMedia: payload =>
+    dispatch({ type: DELETE_MEDIA, payload })
 });
 
 class Editor extends React.Component {
@@ -34,8 +38,12 @@ class Editor extends React.Component {
     super();
 
     this.state = {
-      files: []
+      files: [],
+      deleted_images: [],
+      deleted_videos: [],
+      deleted_audios: []
     }
+
 
     this.submitForm = ev => {
       ev.preventDefault();
@@ -57,6 +65,17 @@ class Editor extends React.Component {
 
   }
 
+  deleteMedia = (key, type) => ev => {
+      const item_to_remove = type; //images_url, videos_url, audios_url
+
+      var data = { "id": this.props.match.params.id,
+                   "title": this.props.title,
+                   "text": this.props.text }
+
+      data[item_to_remove] = [key];
+      this.props.onDeleteMedia(agent.Articles.delete_media(data));
+    }
+
   updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
 
   componentDidMount() {
@@ -67,6 +86,14 @@ class Editor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.deleted) {
+        // hide the component
+        if(nextProps.media_deleted.images_url) { this.setState({ deleted_images: this.state.deleted_images.concat(nextProps.media_deleted.images_url) }) }
+        if(nextProps.media_deleted.videos_url) { this.setState({ deleted_videos: this.state.deleted_videos.concat(nextProps.media_deleted.videos_url) }) }
+        if(nextProps.media_deleted.audios_url) { this.setState({ deleted_audios: this.state.deleted_audios.concat(nextProps.media_deleted.audios_url) }) }
+    }
+
+
     if (this.props.match.params.id !== nextProps.match.params.id) {
       if (nextProps.match.params.id) {
         this.props.onUnload();
@@ -135,13 +162,12 @@ class Editor extends React.Component {
                       </textarea>
                     </fieldset>
 
-                    { (!this.props.match.params.id) ? (
-                      <fieldset className="form-group">  
-                        <DropzoneComponent config={componentConfig}
-                                          eventHandlers={eventHandlers}
-                                          djsConfig={djsConfig}/>
-                      </fieldset>
-                    ) : (<div></div>) }
+
+                    <fieldset className="form-group">  
+                      <DropzoneComponent config={componentConfig}
+                                        eventHandlers={eventHandlers}
+                                        djsConfig={djsConfig}/>
+                    </fieldset>
 
                     <button
                       className="btn btn-lg pull-xs-right btn-primary"
@@ -150,10 +176,55 @@ class Editor extends React.Component {
                       onClick={this.submitForm}>
                       Publish Product
                     </button>
+  
 
                   </fieldset>
                 </form>
+                  <hr/>
 
+                   <fieldset className="form-group">
+                    <div className="row article-content">
+                      <div className="col-xs-12">
+
+                        {(this.props.images.length) ? (<p>Images:</p>) : (<div></div>)}
+                        { Object.keys(this.props.images).filter( key => !this.state.deleted_images.includes(this.props.images[key].image) ).map(key => 
+                         
+                          { 
+                            return ( <span key={`image_` + key} className="img-wrap">
+                            <span className="delete" onClick={this.deleteMedia(this.props.images[key].image, 'images_url')} ><i className="ion-trash-a"></i></span>
+                            <ReadMedia  type='image' resize={{ 'width':'11rem', 'height':'7rem' }} url={this.props.images[key].image} />
+                            </span> ) 
+                          }
+
+                        )}
+
+                        {(this.props.videos.length) ? (<p>Videos:</p>) : (<div></div>)}
+                        { Object.keys(this.props.videos).filter(key => !this.state.deleted_videos.includes(this.props.videos[key].video)).map(key => 
+                         
+                          { 
+                            return ( <span key={`video_` + key} className="img-wrap">
+                            <span className="delete" onClick={this.deleteMedia(this.props.videos[key].video, 'videos_url')} ><i className="ion-trash-a"></i></span>
+                            <ReadMedia  type='video' resize={{ 'width':'11rem' }} url={this.props.videos[key].video} />
+                            </span> ) 
+                          }
+
+                        )}
+
+                        {(this.props.audios.length) ? (<p>Audios:</p>) : (<div></div>)}
+                        { Object.keys(this.props.audios).filter(key => !this.state.deleted_audios.includes(this.props.audios[key].audio)).map(key => 
+
+                          { 
+                            return ( <span key={`audio_` + key} className="img-wrap">
+                            <span className="delete" onClick={this.deleteMedia(this.props.audios[key].audio, 'audios_url')} ><i className="ion-trash-a"></i></span>
+                            <ReadMedia  type='audio' resize={{ 'width':'11rem' }} url={this.props.audios[key].audio}/>
+                            </span> ) 
+                          }
+
+                        )}
+                      </div>
+                    </div>
+                  </fieldset>
+                  
                 </div>
               </div>
             </div>

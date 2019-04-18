@@ -3,7 +3,8 @@ import {
   EDITOR_PAGE_UNLOADED,
   ARTICLE_SUBMITTED,
   ASYNC_START,
-  UPDATE_FIELD_EDITOR
+  UPDATE_FIELD_EDITOR,
+  DELETE_MEDIA
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -14,9 +15,17 @@ export default (state = {}, action) => {
         articleid: action.payload ? action.payload.body.id : '',
         title: action.payload ? action.payload.body.title : '',
         subtitle: action.payload ? action.payload.body.subtitle : '',
+        images: action.payload ? action.payload.body.images : '',
+        videos: action.payload ? action.payload.body.videos : '',
+        audios: action.payload ? action.payload.body.audios : '',
         text: action.payload ? action.payload.body.text : '',
-        inProgress: false
+        inProgress: false,
+        deleted: false
       };
+    case DELETE_MEDIA:
+      return {...state,
+        media_deleted: action.payload.req._data,
+        deleted: action.error ? false : true}
     case EDITOR_PAGE_UNLOADED:
       return {};
     case ARTICLE_SUBMITTED:
