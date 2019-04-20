@@ -72,7 +72,7 @@ const LoggedInView = props => {
 
         <li className="nav-item">
           <button className="btn btn-outline-danger btn-sm nav-link" style={{ marginTop:'0.125rem'}} onClick={props.onClickLogout}>
-            <i className="ion-log-out"></i>&nbsp;Logout
+            <i className="ion-log-out"></i> Logout
           </button>
         </li>
 

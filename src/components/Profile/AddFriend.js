@@ -80,29 +80,21 @@ class AddFriend extends React.Component {
                     <form onSubmit={this.submitForm(group_name)}>
 
                       <fieldset>
-                        <div className="container">
-                          <div className="row">
-
-                            <div className="col-xs-8 col-md-8">
-                                <fieldset className="form-group">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    value={group_name}
-                                    placeholder="Username Name"
-                                    autoComplete="group_name"
-                                    onChange={this.onChangeGroupName} required/>
-                                </fieldset>
-                            </div>
-                            <div className="col-xs-8 col-md-4">
+                            <fieldset className="form-group">
+                              <input
+                                className="form-control"
+                                style={{'width':'12rem', 'display':'inline', 'float':'left'}}
+                                type="text"
+                                value={group_name}
+                                placeholder="Username Name"
+                                autoComplete="group_name"
+                                onChange={this.onChangeGroupName} required/>
                               <button
-                                className="btn btn-md btn-primary pull-xs-right"
+                                className="btn btn-md btn-primary pull-xs-left" style={{'display':'inline'}}
                                 type="submit">
                                 Add Friend
                               </button>
-                            </div>
-                          </div>
-                        </div>
+                            </fieldset>
                       </fieldset>
                       
                     </form>

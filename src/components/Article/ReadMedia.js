@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-
 class ReadMedia extends React.Component {
 
   constructor() {
@@ -15,42 +14,23 @@ class ReadMedia extends React.Component {
   }
 
 
+
   refreshMedia(props) {
 
-      const media_type = props.type;
       const that = this;
       
-      fetch(props.url, {
-        method: 'GET', 
-        headers: new Headers({
-          'Authorization': 'Bearer  '+  window.localStorage.getItem('jwt'), 
-        }), 
-      })
-      .then(function(response) {
-        if(response.ok) {
-          return response.blob();
-        }
-        throw new Error('Network response was not ok.');
-      })
-      .then(function(myBlob) { 
-        var objectURL = URL.createObjectURL(myBlob); 
-
-        if (media_type.startsWith('image'))
+        if (props.type.startsWith('image'))
         {
-          that.setState({ loaded: true, media_image: that.state.media_image.concat(objectURL) });
+          that.setState({ loaded: true, media_image: that.state.media_image.concat(props.url) });
         } 
-        else if (media_type.startsWith('video'))
+        else if (props.type.startsWith('video'))
         {
-          that.setState({ loaded: true, media_video: that.state.media_video.concat(objectURL) });
+          that.setState({ loaded: true, media_video: that.state.media_video.concat(props.url) });
         }
-        else if (media_type.startsWith('audio'))
+        else if (props.type.startsWith('audio'))
         {
-          that.setState({ loaded: true, media_audio: that.state.media_audio.concat(objectURL) });
+          that.setState({ loaded: true, media_audio: that.state.media_audio.concat(props.url) });
         }
-      })
-      .catch(function(error) {
-        console.log('Problem with the fetch operation: ', error.message);
-      });
 
   }
 
@@ -60,7 +40,6 @@ class ReadMedia extends React.Component {
 
 
   render() {
-
 
         if (this.state.loaded) {
 

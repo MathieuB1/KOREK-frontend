@@ -96,26 +96,21 @@ class Profile extends React.Component {
     return (
       <div className="profile-page">
 
-        <div className="user-info">
+        <div className="user-info" style={{'padding': '2rem 0 2rem 0'}}>
           <div className="container">
             <div className="row">
               <div className="col-xs-8 col-md-8 offset-md-2">
                 <h5>{profile.first_name}&nbsp;{profile.last_name}</h5>
                 <h4>{profile.username}</h4>
               </div>
-              <div className="col-xs-1 col-md-1" style={{ 'display': 'flex', alignItems: 'center'}}>
-                <EditProfileSettings/>
-              </div>
             </div>
+            <EditProfileSettings/>
           </div>
         </div>
 
         <div className="container">
-          <div className="row">
-            <div className="col-xs-3 col-md-3">
               <ValidateFriend refreshProfile={this.refreshProfile}/>
-            </div> 
-            <div className="col-xs-5 col-md-5">
+              <AddFriend/>
 
               <div className="articles-toggle">
                 {this.renderTabs()}
@@ -128,13 +123,7 @@ class Profile extends React.Component {
                 loading={this.props.loading}
                 articlesCount={this.props.articlesCount}
                 currentPage={this.props.currentPage} />
-            </div>
-          
-            <div className="col-xs-4 col-md-4">
-              <AddFriend/>
-            </div>
 
-          </div>
         </div>
 
       </div>

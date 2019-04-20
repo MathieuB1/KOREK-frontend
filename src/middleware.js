@@ -73,6 +73,8 @@ const localStorageMiddleware = store => next => action => {
             window.localStorage.setItem('username', action.payload.req._data.username);
             window.localStorage.setItem('jwt', action.payload.body.token);
             agent.setToken(action.payload.body.token);
+            // Cookie is only for reading media as src cannot handle Header Authorization
+            document.cookie = "jwtoken=" + action.payload.body.token;
         }
     } else if (action.type === REGISTER) {
         if (!action.error) {
@@ -84,6 +86,7 @@ const localStorageMiddleware = store => next => action => {
         window.localStorage.removeItem('username', '');
         agent.setToken(null);
         agent.setCsrf(null);
+        document.cookie = "jwtoken=;";
     }
 
     next(action);
