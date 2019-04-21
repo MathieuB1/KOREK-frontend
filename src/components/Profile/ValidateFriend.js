@@ -74,14 +74,13 @@ class ValidateFriend extends React.Component {
               <p>{this.props.confirm ? 'Friend has been added!' : ''}</p>
 
               {this.state.list_to_validate.map(key => { return (
-                  <div key={key} className="row">
-                      <div className="col-md-4 col-xs-4">
-                          <p>{key.group_asker_username}</p>
-                      </div>
-                      <div className="col-md-8 col-xs-8">
-                          <a className="btn btn-sm btn-outline-primary action-btn" onClick={add.bind(this, key.id)}><i className="ion-android-add-circle"></i>&nbsp;accept</a>
-                          <a className="btn btn-sm btn-outline-danger action-btn" onClick={del.bind(this, key.id)}><i className="ion-android-remove-circle"></i>&nbsp;reject</a>
-                      </div>
+                  <div key={key}>
+
+                          
+                  <a className="btn btn-sm btn-outline-primary action-btn" onClick={add.bind(this, key.id)}><i className="ion-android-add-circle"></i>&nbsp;accept</a>
+                  <a className="btn btn-sm btn-outline-danger action-btn" onClick={del.bind(this, key.id)}><i className="ion-android-remove-circle"></i>&nbsp;reject</a>
+                  <p style={{ 'display': 'inline'}}>&nbsp;{key.group_asker_username}</p>
+                  
                   </div>
 
                   )})}

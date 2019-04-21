@@ -2,17 +2,21 @@ import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
 
+import {
+  UPLOAD_PROGRESS
+} from './constants/actionTypes';
+import { store } from './store';
+
 const superagent = superagentPromise(_superagent, global.Promise);
 
 
-//export const API_ROOT = 'http://35.241.210.208';
+export const API_ROOT = 'http://35.241.210.208';
 /* Remove this comment if KOREK-backend is booted locally */
-export const API_ROOT = 'http://localhost';
-
+//export const API_ROOT = 'http://localhost';
 window.localStorage.setItem('API_ROOT', API_ROOT);
 
-
 const responseBody = res => res;
+
 
 let token = null;
 let csrf = null;
@@ -25,6 +29,7 @@ const Plugins = req => {
     }
 }
 
+
 const requests = {
     del: url =>
         superagent.del(`${API_ROOT}${url}`).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
@@ -35,9 +40,17 @@ const requests = {
     post: (url, body) =>
         superagent.post(`${API_ROOT}${url}`, body).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
     post_data: (url, body) =>
-        superagent.post(`${API_ROOT}${url}`).send(body).set('Accept', 'application/json').use(Plugins).then(responseBody),
+        superagent.post(`${API_ROOT}${url}`).send(body).set('Accept', 'application/json').use(Plugins).on('progress', event => {
+            const percent = event.percent;
+            const action = { type: UPLOAD_PROGRESS, percent }
+            store.dispatch(action);
+        }).then(responseBody),
     put_data: (url, body) =>
-        superagent.put(`${API_ROOT}${url}`).send(body).set('Accept', 'application/json').use(Plugins).then(responseBody)
+        superagent.put(`${API_ROOT}${url}`).send(body).set('Accept', 'application/json').use(Plugins).on('progress', event => {
+            const percent = event.percent;
+            const action = { type: UPLOAD_PROGRESS, percent }
+            store.dispatch(action);
+        }).then(responseBody)
 
 };
 

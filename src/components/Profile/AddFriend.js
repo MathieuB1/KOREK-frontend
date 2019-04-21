@@ -88,7 +88,7 @@ class AddFriend extends React.Component {
                                 value={group_name}
                                 placeholder="Username Name"
                                 autoComplete="group_name"
-                                onChange={this.onChangeGroupName} required/>
+                                onChange={this.onChangeGroupName}/>
                               <button
                                 className="btn btn-md btn-primary pull-xs-left" style={{'display':'inline'}}
                                 type="submit">

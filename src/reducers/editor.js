@@ -4,7 +4,8 @@ import {
   ARTICLE_SUBMITTED,
   ASYNC_START,
   UPDATE_FIELD_EDITOR,
-  DELETE_MEDIA
+  DELETE_MEDIA,
+  UPLOAD_PROGRESS
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -19,9 +20,12 @@ export default (state = {}, action) => {
         videos: action.payload ? action.payload.body.videos : '',
         audios: action.payload ? action.payload.body.audios : '',
         text: action.payload ? action.payload.body.text : '',
+        uploadProgress: 0,
         inProgress: false,
         deleted: false
       };
+    case UPLOAD_PROGRESS:
+      return { ...state, uploadProgress: action.percent }
     case DELETE_MEDIA:
       return {...state,
         media_deleted: action.payload.req._data,

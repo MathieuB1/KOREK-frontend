@@ -8,6 +8,8 @@ import 'dropzone/dist/min/dropzone.min.css';
 import './dropzone.css';
 import ReadMedia from './ReadMedia';
 
+import { Line } from 'rc-progress';
+
 import {
   EDITOR_PAGE_LOADED,
   ARTICLE_SUBMITTED,
@@ -180,6 +182,9 @@ class Editor extends React.Component {
 
                   </fieldset>
                 </form>
+
+                {(this.props.uploadProgress) ? (<div><p>Sending data to server:</p><Line percent={this.props.uploadProgress} strokeWidth="1" trailWidth="1" trailColor="#D3D3D3" strokeColor="#0074d9" /></div>) : (<div></div>)}
+
                   <hr/>
 
                    <fieldset className="form-group">

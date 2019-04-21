@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "history": "^4.6.3",
+        "rc-progress": "^2.3.0",
         "react": "^16.3.0",
         "react-dom": "^16.3.0",
         "react-dropzone-component": "^3.2.0",
