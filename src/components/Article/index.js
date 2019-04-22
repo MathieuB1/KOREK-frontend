@@ -32,13 +32,14 @@ class Article extends React.Component {
     if (!this.props.article) { return null }
 
     const canModify = this.props.currentUser && this.props.currentUser === this.props.article.owner;
+    const htmlEext = { __html: this.props.article.text };
 
     return (
       <div className="article-page">
 
         <div className="banner">
           <div className="container">
-
+            
             <h1>{this.props.article.title}</h1>
             <ArticleMeta article={this.props.article} canModify={canModify} />
 
@@ -49,8 +50,9 @@ class Article extends React.Component {
 
           <div className="row article-content">
             <div className="col-xs-12">
+
               <p>{this.props.article.subtitle}</p>
-              <p style={{ whiteSpace: 'pre-line'}}>{this.props.article.text}</p>
+              <div dangerouslySetInnerHTML={htmlEext}></div>
 
               {(this.props.article.images.length) ? (<p>Images:</p>) : (<div></div>)}
               { Object.keys(this.props.article.images).map(key => 

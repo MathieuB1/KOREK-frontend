@@ -150,11 +150,11 @@ class SettingsForm extends React.Component {
                     onChange={this.updateState('password')} />
                 </fieldset>
 
-                <a
+                <button
                   className="btn btn-lg btn-danger pull-xs-left"
                   onClick={this.deleteUser}>
                   Delete User
-                </a>
+                </button>
 
                 <button
                   className="btn btn-lg btn-primary pull-xs-right"

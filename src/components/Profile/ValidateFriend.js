@@ -77,8 +77,8 @@ class ValidateFriend extends React.Component {
                   <div key={key}>
 
                           
-                  <a className="btn btn-sm btn-outline-primary action-btn" onClick={add.bind(this, key.id)}><i className="ion-android-add-circle"></i>&nbsp;accept</a>
-                  <a className="btn btn-sm btn-outline-danger action-btn" onClick={del.bind(this, key.id)}><i className="ion-android-remove-circle"></i>&nbsp;reject</a>
+                  <button className="btn btn-sm btn-outline-primary action-btn" onClick={add.bind(this, key.id)}><i className="ion-android-add-circle"></i>&nbsp;accept</button>
+                  <button className="btn btn-sm btn-outline-danger action-btn" onClick={del.bind(this, key.id)}><i className="ion-android-remove-circle"></i>&nbsp;reject</button>
                   <p style={{ 'display': 'inline'}}>&nbsp;{key.group_asker_username}</p>
                   
                   </div>

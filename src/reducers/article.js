@@ -8,8 +8,8 @@ export default (state = {}, action) => {
     case ARTICLE_PAGE_LOADED:
       return {
         ...state,
-        article: action.payload[0].body,
-        highlight: action.payload[1].text
+        article: action.error ? null : action.payload[0].body,
+        highlight: action.error ? null : action.payload[1].text
       };
     case ARTICLE_PAGE_UNLOADED:
       return {};

@@ -20,6 +20,7 @@ export default (state = {}, action) => {
         videos: action.payload ? action.payload.body.videos : '',
         audios: action.payload ? action.payload.body.audios : '',
         text: action.payload ? action.payload.body.text : '',
+        private: action.payload ? action.payload.body.private : false,
         uploadProgress: 0,
         inProgress: false,
         deleted: false

@@ -43,9 +43,11 @@ class Editor extends React.Component {
       files: [],
       deleted_images: [],
       deleted_videos: [],
-      deleted_audios: []
-    }
+      deleted_audios: [],
+      private: false
 
+    }
+    this.handleCheckBox = this.handleCheckBox.bind(this)
 
     this.submitForm = ev => {
       ev.preventDefault();
@@ -54,6 +56,8 @@ class Editor extends React.Component {
       formData.append("title",this.props.title);
       formData.append("subtitle",this.props.subtitle);
       formData.append("text",this.props.text);
+      formData.append("private",this.state.private);
+
       this.state.files.map( (file, index) => formData.append(`file${index}`,this.state.files[index]));
 
       const id = { id: this.props.articleid };
@@ -72,7 +76,8 @@ class Editor extends React.Component {
 
       var data = { "id": this.props.match.params.id,
                    "title": this.props.title,
-                   "text": this.props.text }
+                   "text": this.props.text
+                   }
 
       data[item_to_remove] = [key];
       this.props.onDeleteMedia(agent.Articles.delete_media(data));
@@ -95,6 +100,9 @@ class Editor extends React.Component {
         if(nextProps.media_deleted.audios_url) { this.setState({ deleted_audios: this.state.deleted_audios.concat(nextProps.media_deleted.audios_url) }) }
     }
 
+    if (nextProps.private) {
+      this.setState({ private: nextProps.private });
+    }
 
     if (this.props.match.params.id !== nextProps.match.params.id) {
       if (nextProps.match.params.id) {
@@ -102,6 +110,7 @@ class Editor extends React.Component {
         return this.props.onLoad(agent.Articles.get(nextProps.match.params.id));
       }
       this.props.onLoad(null);
+      this.setState({ private: false });
     }
   }
 
@@ -111,6 +120,10 @@ class Editor extends React.Component {
 
   removeFile(file) {
     this.setState({ files: this.state.files.filter( el => el.upload.uuid !== file.upload.uuid ) });
+  }
+
+  handleCheckBox(e) {
+    this.setState({ private: e.target.checked });
   }
 
   render() {
@@ -169,6 +182,12 @@ class Editor extends React.Component {
                       <DropzoneComponent config={componentConfig}
                                         eventHandlers={eventHandlers}
                                         djsConfig={djsConfig}/>
+                    </fieldset>
+
+                    <fieldset className="form-group"> 
+                      <p style={{ 'display': 'inline'}}>Privacy:</p>&nbsp;&nbsp;
+                      <input type="checkbox" style={{ 'width': '2rem', 'height': '1.2rem', 'display': 'inline'}} onChange={this.handleCheckBox} checked={this.state.private} />
+                      {(this.state.private) ? 'Private - only me can see this post' : 'Public - available to your friends'}
                     </fieldset>
 
                     <button

@@ -17,6 +17,7 @@ const ArticleMeta = props => {
         <span className="date">
           {new Date(article.created).toDateString()}
         </span>
+        {(article.private) ? <i className="ion-locked"></i> : null}
       </div>
 
       <ArticleActions canModify={props.canModify} article={article} />

@@ -24,6 +24,7 @@ const ArticlePreview = props => {
               <span className="date">
                 {new Date(article.created).toDateString()}
               </span>
+              {(article.private) ? <i className="ion-locked"></i> : null}
             </div>
 
           </div>
