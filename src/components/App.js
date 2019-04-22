@@ -41,7 +41,8 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = { 
-            loadedWebSocket: false
+            loadedWebSocket: false,
+            loadFailure: false
          }
     }
 
@@ -73,13 +74,15 @@ class App extends React.Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.errors) {
-            this.props.onClickLogout();
-        }
 
         if (nextProps.redirectTo) {
             store.dispatch(push(nextProps.redirectTo));
             this.props.onRedirect();
+        }
+        
+        if (!this.state.loadFailure && nextProps.errors) {
+            this.props.onClickLogout();
+            this.setState(state => ({ loadFailure: true }));
         }
 
         if(nextProps.currentUser && !nextProps.currentUserImage && !this.props.currentUserImage) {
@@ -119,7 +122,6 @@ class App extends React.Component {
     render() {
     
         if (this.props.appLoaded) {
-
             return ( <div >
                 <Header appName={this.props.appName} currentUser={this.props.currentUser} currentUserImage={this.props.currentUserImage} onClickLogout={this.props.onClickLogout} loadWebSocket={this.loadWebSocket} loadedWebSocket={this.state.loadedWebSocket} /> 
                 <Switch >
