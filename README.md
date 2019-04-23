@@ -8,6 +8,9 @@ This frontend is based on https://github.com/gothinkster/react-redux-realworld-e
 
 You can view a live demo over at (http://35.241.210.208:4100)
 
+> user: toto password: toto
+> user: toto1 password: toto
+
 To get the frontend running locally:
 
 - Clone this repo
