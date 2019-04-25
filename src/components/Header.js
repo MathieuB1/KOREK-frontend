@@ -61,24 +61,21 @@ const LoggedInView = props => {
         </li>
 
       <NavDropdown title={<img src={props.currentUserImage} className="user-pic" alt={props.currentUser} />} id="basic-nav-dropdown">
-        <NavDropdown.Item>
+
         <li className="nav-item">
-          <Link
-            to={`/settings/`}
-            className="nav-link">
+          <Link to={`/settings/`} className="nav-link">
               <i className="ion-gear-a"></i>&nbsp;My Settings
           </Link>
         </li>
-        </NavDropdown.Item>
-        
+
         <NavDropdown.Divider />
-        <NavDropdown.Item>
-            <li className="nav-item">
-              <button className="btn btn-danger btn-sm nav-link" style={{ 'color': 'white', 'width': '100%' }} onClick={props.onClickLogout}>
-                <i className="ion-log-out"></i>&nbsp;Logout
-              </button>
-            </li>
-        </NavDropdown.Item>
+        
+        <li className="nav-item">
+          <button className="btn btn-danger btn-sm nav-link" style={{ 'color': 'white', 'width': '100%' }} onClick={props.onClickLogout}>
+            <i className="ion-log-out"></i>&nbsp;Logout
+          </button>
+        </li>
+
       </NavDropdown>
 
 

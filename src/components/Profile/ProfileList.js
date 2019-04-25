@@ -14,7 +14,7 @@ const ProfileList = props => {
   return (
     <div>
       {
-        props.articles.map(article => {
+        props.articles.filter(el => props.currentUser !== el.profile.user.username).map(article => {
           return (
             <ProfilePreview onClickDeleteFriend={props.onClickDeleteFriend} article={article} key={article.id} 
             currentUser={props.currentUser}/>
