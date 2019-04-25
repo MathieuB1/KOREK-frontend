@@ -68,9 +68,7 @@ class AddFriend extends React.Component {
 
         (this.state.permission) ? (
               <div className="container page">
-                <div className="row">
 
-                  <div className="col-md-12 col-xs-12">
                     <p>Add a new friend</p>
 
                     <ListErrors errors={this.props.errors} />
@@ -99,9 +97,7 @@ class AddFriend extends React.Component {
                       
                     </form>
                   </div>
-
-                </div>
-              </div>
+                  
         ) : (<div></div>)
 
       )

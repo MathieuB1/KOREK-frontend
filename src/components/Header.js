@@ -1,30 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Navbar, NavDropdown  } from 'react-bootstrap';
 
 const LoggedOutView = props => {
   if (!props.currentUser) {
     return (
-      <ul className="nav navbar-nav pull-xs-right">
 
-        <li className="nav-item">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-        </li>
+      <ul className="nav navbar-nav ml-auto pull-md-right">
 
         <li className="nav-item">
           <Link to="/login" className="nav-link">
-            Sign in
+            <i className="ion-log-in"></i>&nbsp;Sign in
           </Link>
         </li>
 
         <li className="nav-item">
           <Link to="/register" className="nav-link">
-            Sign up
+            <i className="ion-person"></i>&nbsp;Sign up
           </Link>
         </li>
 
       </ul>
+
     );
   }
   return null;
@@ -41,14 +38,16 @@ const LoggedInView = props => {
     }
     
     return (
-      <ul className="nav navbar-nav pull-xs-right">
+
+
+      <ul className="nav navbar-nav ml-auto pull-md-right">
 
         <li className="nav-item">
           <Link to="/" className="nav-link">
-            Home
+            <i className="ion-home"></i>&nbsp;Home
           </Link>
         </li>
-
+        
         <li className="nav-item">
           <Link to="/editor" className="nav-link">
             <i className="ion-compose"></i>&nbsp;New Post
@@ -61,22 +60,30 @@ const LoggedInView = props => {
           </Link>
         </li>
 
+      <NavDropdown title={<img src={props.currentUserImage} className="user-pic" alt={props.currentUser} />} id="basic-nav-dropdown">
+        <NavDropdown.Item>
         <li className="nav-item">
           <Link
             to={`/settings/`}
             className="nav-link">
-            <img src={props.currentUserImage} className="user-pic" alt={props.currentUser} />
-            {props.currentUser.username}
+              <i class="ion-gear-a"></i>&nbsp;My Settings
           </Link>
         </li>
+        </NavDropdown.Item>
+        
+        <NavDropdown.Divider />
+        <NavDropdown.Item>
+            <li className="nav-item">
+              <button className="btn btn-danger btn-sm nav-link" style={{ 'color': 'white', 'width': '100%' }} onClick={props.onClickLogout}>
+                <i className="ion-log-out"></i>&nbsp;Logout
+              </button>
+            </li>
+        </NavDropdown.Item>
+      </NavDropdown>
 
-        <li className="nav-item">
-          <button className="btn btn-outline-danger btn-sm nav-link" style={{ marginTop:'0.125rem'}} onClick={props.onClickLogout}>
-            <i className="ion-log-out"></i> Logout
-          </button>
-        </li>
 
       </ul>
+
     );
   }
 
@@ -84,21 +91,30 @@ const LoggedInView = props => {
 };
 
 class Header extends React.Component {
-  render() {
-    return (
-      <nav className="navbar navbar-light">
-        <div className="container">
 
+  render() {
+
+    return (
+<div>
+
+      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Navbar.Brand href="#home">
           <Link to="/" className="navbar-brand">
             {this.props.appName.toLowerCase()}
           </Link>
-        
+        </Navbar.Brand>
+
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+
           <LoggedOutView currentUser={this.props.currentUser} />
           <LoggedInView currentUser={this.props.currentUser} currentUserImage={this.props.currentUserImage} 
                         onClickLogout={this.props.onClickLogout} loadWebSocket={this.props.loadWebSocket} loadedWebSocket={this.props.loadedWebSocket}  />
 
-        </div>
-      </nav>
+        </Navbar.Collapse>
+      </Navbar>
+
+</div>
     );
   }
 }

@@ -10,12 +10,12 @@ const ProfilePreview = props => {
     <div className="article-preview">
             <div className="container page">
               <div className="row">
-                  <div className="col-md-3 col-xs-3">
-                    <img style={{ borderRadius: '50px' }} src={article.image} alt="logo"/>
+                  <div className="col-md-1">
+                    <img className="user-pic" src={article.image} alt="logo"/>
                   </div>
-                  <div className="col-md-9 col-xs-9">
+                  <div className="col-md-11">
                     <Link className="author" to={`/users/${article.profile.user.username}`}>
-                    {article.profile.user.username}
+                    &nbsp;{article.profile.user.username}
                     </Link>
                   </div>
                 </div>

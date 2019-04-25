@@ -39,10 +39,9 @@ class Article extends React.Component {
 
         <div className="banner">
           <div className="container">
-            
-            <h1>{this.props.article.title}</h1>
+            <h1 style={{'color': 'black'}}>{this.props.article.title}</h1>
+            <p style={{'color': 'black'}}>{this.props.article.subtitle}</p>
             <ArticleMeta article={this.props.article} canModify={canModify} />
-
           </div>
         </div>
 
@@ -51,7 +50,6 @@ class Article extends React.Component {
           <div className="row article-content">
             <div className="col-xs-12">
 
-              <p>{this.props.article.subtitle}</p>
               <div dangerouslySetInnerHTML={htmlEext}></div>
 
               {(this.props.article.images.length) ? (<p>Images:</p>) : (<div></div>)}

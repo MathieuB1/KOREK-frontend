@@ -10,14 +10,14 @@ const ArticleMeta = props => {
          {<img src={article.owner_image} alt={article.owner} />}
       </Link>
 
-      <div className="info">
-        <Link to={`/users/${article.owner}`} className="author">
+      <div className="info" style={{ marginRight: '0.5rem'}}>
+        <Link style={{'color': 'black'}} to={`/users/${article.owner}`} className="author">
           {article.owner}
         </Link>
-        <span className="date">
+        <span className="date" style={{'color': 'black'}}>
           {new Date(article.created).toDateString()}
         </span>
-        {(article.private) ? <i className="ion-locked"></i> : null}
+        {(article.private) ? <i className="ion-locked" style={{'color': '#ea0000'}}></i> : null}
       </div>
 
       <ArticleActions canModify={props.canModify} article={article} />

@@ -135,12 +135,18 @@ class Editor extends React.Component {
       removedfile: (file) => this.removeFile(file)
     }
 
+
     if (typeof(this.props.title) !== "undefined")
     {
       return (
 
+        
+
         <div className="editor-page">
           <div className="container page">
+
+          <h3 className="text-xs-center">{(this.props.match.params.id ? 'Update ' : 'Create ')}Article</h3>
+
             <div className="row">
               <div className="col-md-10 offset-md-1 col-xs-12">
 
@@ -191,7 +197,7 @@ class Editor extends React.Component {
                     </fieldset>
 
                     <button
-                      className="btn btn-lg pull-xs-right btn-primary"
+                      className="btn btn-lg pull-xs-right btn-primary" style={{ 'width':'100%' }}
                       type="button"
                       disabled={this.props.inProgress}
                       onClick={this.submitForm}>

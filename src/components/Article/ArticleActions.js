@@ -14,19 +14,19 @@ const ArticleActions = props => {
 
   if (props.canModify) {
     return (
-      <span>
+      <div>
 
-        <Link
+        <Link style={{'color': 'black'}}
           to={`/editor/${article.id}`}
           className="btn btn-outline-secondary btn-sm">
           <i className="ion-edit"></i> Edit Article
         </Link>
 
-        <button className="btn btn-outline-danger btn-sm" onClick={del}>
+        <button style={{'color': 'black', 'display':'inline-flex'}} className="btn btn-outline-danger btn-sm" onClick={del}>
           <i className="ion-trash-a"></i> Delete Article
         </button>
 
-      </span>
+      </div>
     );
   } else { return null; }
   

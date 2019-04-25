@@ -5,10 +5,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import agent from '../../agent';
 import { connect } from 'react-redux';
+
+import Media from 'react-bootstrap/Media';
+
 import {
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED
 } from '../../constants/actionTypes';
+
+
+const ShowMyArticles = props => {
+    return (
+      <Link style={{'width':'9rem'}}
+        to={`/users/${props.username}`}
+        className="btn btn-sm btn-outline-secondary action-btn">
+        <i className="ion-android-list"></i> My Articles
+      </Link>
+    );
+};
 
 const EditProfileSettings = props => {
     return (
@@ -20,8 +34,11 @@ const EditProfileSettings = props => {
     );
 };
 
+
+
 const mapStateToProps = state => ({
   ...state.articleList,
+  currentUserImage: state.common.currentUserImage,
   currentUser: state.common.currentUser,
   profile: state.profile
 });
@@ -94,37 +111,44 @@ class Profile extends React.Component {
     if (!profile) {  return null; }
 
     return (
-      <div className="profile-page">
+      <div className="container">
 
-        <div className="user-info" style={{'padding': '2rem 0 2rem 0'}}>
-          <div className="container">
-            <div className="row">
-              <div className="col-xs-8 col-md-8 offset-md-2">
-                <h5>{profile.first_name}&nbsp;{profile.last_name}</h5>
-                <h4>{profile.username}</h4>
+
+        <div className="container page">
+            
+              <Media className="edit-profile">
+              <img width={55}
+                  height={55}
+                  style={{ borderRadius:'50px' }}
+                  className="mr-3" src={this.props.currentUserImage} alt={profile.username}/>
+                <Media.Body>
+                    <h4>{profile.username}</h4>
+                    <h5>{profile.first_name}&nbsp;{profile.last_name}</h5>
+                </Media.Body>
+              </Media>
+
+              <div className="edit-profile">
+                <ShowMyArticles username={profile.username}/>
+                <EditProfileSettings/>
               </div>
-            </div>
-            <EditProfileSettings/>
-          </div>
+
         </div>
 
-        <div className="container">
-              <ValidateFriend refreshProfile={this.refreshProfile}/>
-              <AddFriend/>
+        <ValidateFriend refreshProfile={this.refreshProfile}/>
+        <AddFriend/>
 
-              <div className="articles-toggle">
-                {this.renderTabs()}
-              </div>
-
-              <ProfileList
-                pager={this.props.pager}
-                articles={this.props.articles}
-                currentUser={this.props.currentUser}
-                loading={this.props.loading}
-                articlesCount={this.props.articlesCount}
-                currentPage={this.props.currentPage} />
-
+        <div className="articles-toggle">
+          {this.renderTabs()}
         </div>
+
+        <ProfileList
+          pager={this.props.pager}
+          articles={this.props.articles}
+          currentUser={this.props.currentUser}
+          loading={this.props.loading}
+          articlesCount={this.props.articlesCount}
+          currentPage={this.props.currentPage} />
+
 
       </div>
     );

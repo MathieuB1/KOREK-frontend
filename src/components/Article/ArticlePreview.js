@@ -14,24 +14,26 @@ const ArticlePreview = props => {
 
     return (
         <div className="article-preview">
+
           <div className="article-meta">
 
-            <div className="info">
+            <div className="info" style={{ marginRight: '0.5rem'}}>
                {<img src={article.owner_image} alt={article.owner} />}
               <Link className="author" to={`/users/${article.owner}`}>
-                {article.owner}
+                &nbsp;{article.owner}
               </Link>
               <span className="date">
                 {new Date(article.created).toDateString()}
               </span>
-              {(article.private) ? <i className="ion-locked"></i> : null}
+              {(article.private) ? <i className="ion-locked" style={{'color': '#ea0000'}}></i> : null}
             </div>
-
           </div>
 
           <Link to={`/products/${article.id}`} className="preview-link">
             <h1>{article.title}</h1>
-            <p>{subtext}</p>
+            <p>{article.subtitle}</p>
+            {(article.images && article.images[0]) ?
+            <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : null }
             <span>Read more...</span>
             <ul className="tag-list">
               {article.url}

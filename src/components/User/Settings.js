@@ -150,17 +150,20 @@ class SettingsForm extends React.Component {
                     onChange={this.updateState('password')} />
                 </fieldset>
 
-                <button
-                  className="btn btn-lg btn-danger pull-xs-left"
-                  onClick={this.deleteUser}>
-                  Delete User
-                </button>
+                <fieldset className="form-group">
+                    <button
+                      className="btn btn-lg btn-primary pull-xs-right" style={{ 'width':'100%' }}
+                      type="submit">
+                      Update Settings
+                    </button>
+                </fieldset>
 
-                <button
-                  className="btn btn-lg btn-primary pull-xs-right"
-                  type="submit">
-                  Update Settings
-                </button>
+               <hr/>
+               <button
+                className="btn btn-lg btn-danger pull-xs-left"
+                onClick={this.deleteUser}>
+                Delete User
+               </button>
 
             </form>
           </div>
@@ -201,7 +204,7 @@ class Settings extends React.Component {
           <div className="row">
             <div className="col-md-6 offset-md-3 col-xs-12">
 
-              <h1 className="text-xs-center">Your Settings</h1>
+              <h3 className="text-xs-center">Your Settings</h3>
 
               <ListErrors errors={this.props.errors}></ListErrors>
 
