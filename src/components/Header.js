@@ -30,12 +30,6 @@ const LoggedOutView = props => {
 const LoggedInView = props => {
 
   if (props.currentUser) {
-
-    // Load WebSocket
-    if (!props.loadedWebSocket)
-    {
-      props.loadWebSocket();
-    }
     
     return (
 
@@ -92,8 +86,7 @@ class Header extends React.Component {
   render() {
 
     return (
-<div>
-
+      
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
         <Navbar.Brand>
           <Link to="/" className="navbar-brand">
@@ -106,12 +99,10 @@ class Header extends React.Component {
 
           <LoggedOutView currentUser={this.props.currentUser} />
           <LoggedInView currentUser={this.props.currentUser} currentUserImage={this.props.currentUserImage} 
-                        onClickLogout={this.props.onClickLogout} loadWebSocket={this.props.loadWebSocket} loadedWebSocket={this.props.loadedWebSocket}  />
+                        onClickLogout={this.props.onClickLogout} />
 
         </Navbar.Collapse>
       </Navbar>
-
-</div>
     );
   }
 }

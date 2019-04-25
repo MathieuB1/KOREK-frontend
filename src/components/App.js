@@ -47,7 +47,7 @@ class App extends React.Component {
     }
 
 
-    loadWebSocket = () => {
+    loadWebSocket() {
 
         fetch(window.localStorage.getItem('API_ROOT') + '/event/notif/', { 
         method: 'GET',  
@@ -68,7 +68,7 @@ class App extends React.Component {
             document.getElementsByTagName("head")[0].appendChild(script);
         })
 
-        this.setState(state => ({ loadedWebSocket: true }));
+        this.setState({ loadedWebSocket: true });
         
     }
 
@@ -82,13 +82,17 @@ class App extends React.Component {
         
         if (!this.state.loadFailure && nextProps.errors) {
             this.props.onClickLogout();
-            this.setState(state => ({ loadFailure: true }));
+            this.setState({ loadFailure: true });
         }
 
         if(nextProps.currentUser && !nextProps.currentUserImage && !this.props.currentUserImage) {
             this.props.onLoadUserPicture(agent.Profile.byAuthor(nextProps.currentUser));
         }
 
+        if(nextProps.currentUser && !this.state.loadedWebSocket)
+        {
+            this.loadWebSocket();
+        }
     }
 
 
@@ -123,7 +127,7 @@ class App extends React.Component {
     
         if (this.props.appLoaded) {
             return ( <div >
-                <Header appName={this.props.appName} currentUser={this.props.currentUser} currentUserImage={this.props.currentUserImage} onClickLogout={this.props.onClickLogout} loadWebSocket={this.loadWebSocket} loadedWebSocket={this.state.loadedWebSocket} /> 
+                <Header appName={this.props.appName} currentUser={this.props.currentUser} currentUserImage={this.props.currentUserImage} onClickLogout={this.props.onClickLogout}/> 
                 <Switch >
                 <Route exact path = "/" component = { Home }/> 
                 <Route path = "/login" component = { Login }/> 
