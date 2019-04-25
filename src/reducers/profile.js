@@ -3,7 +3,8 @@ import {
     PROFILE_PAGE_UNLOADED,
     UPDATE_FIELD_FRIEND,
     ADD_FRIEND_LOADED,
-    ADD_FRIEND
+    ADD_FRIEND,
+    DELETE_FRIEND
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -27,6 +28,10 @@ export default (state = {}, action) => {
                 errors: action.error ? action.payload : null,
                 addedFriend: action.error ? false : true,
                 group_name: ''
+            };
+        case DELETE_FRIEND:
+            return {...state,
+                deletedFriend: action.error ? false : true,
             };
         case UPDATE_FIELD_FRIEND:
             return {...state, [action.key]: action.value };

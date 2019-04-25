@@ -66,7 +66,7 @@ const LoggedInView = props => {
           <Link
             to={`/settings/`}
             className="nav-link">
-              <i class="ion-gear-a"></i>&nbsp;My Settings
+              <i className="ion-gear-a"></i>&nbsp;My Settings
           </Link>
         </li>
         </NavDropdown.Item>
@@ -98,7 +98,7 @@ class Header extends React.Component {
 <div>
 
       <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
           <Link to="/" className="navbar-brand">
             {this.props.appName.toLowerCase()}
           </Link>

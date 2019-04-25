@@ -16,7 +16,7 @@ const ProfileList = props => {
       {
         props.articles.map(article => {
           return (
-            <ProfilePreview article={article} key={article.id} 
+            <ProfilePreview onClickDeleteFriend={props.onClickDeleteFriend} article={article} key={article.id} 
             currentUser={props.currentUser}/>
           );
         })

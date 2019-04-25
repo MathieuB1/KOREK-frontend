@@ -10,7 +10,8 @@ import Media from 'react-bootstrap/Media';
 
 import {
   PROFILE_PAGE_LOADED,
-  PROFILE_PAGE_UNLOADED
+  PROFILE_PAGE_UNLOADED,
+  DELETE_FRIEND
 } from '../../constants/actionTypes';
 
 
@@ -45,7 +46,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
-  onUnload: () => dispatch({ type: PROFILE_PAGE_UNLOADED })
+  onUnload: () => dispatch({ type: PROFILE_PAGE_UNLOADED }),
+  onClickDeleteFriend: payload => dispatch({ type: DELETE_FRIEND, payload })
 });
 
 class Profile extends React.Component {
@@ -77,9 +79,8 @@ class Profile extends React.Component {
     this.props.onUnload();
   }
 
-  componentWillReceiveProps(nextProps) {
 
-      if (nextProps.profile.addedFriend) { console.log('pending friend acknowlegment!') }
+  componentWillReceiveProps(nextProps) {
 
       if (nextProps.match.params.owner !== this.props.match.params.owner)
       {
@@ -88,6 +89,8 @@ class Profile extends React.Component {
           });
           this.refreshProfile(); 
       }
+
+      if (nextProps.profile.deletedFriend) { this.refreshProfile() }
 
   }
 
@@ -147,8 +150,8 @@ class Profile extends React.Component {
           currentUser={this.props.currentUser}
           loading={this.props.loading}
           articlesCount={this.props.articlesCount}
-          currentPage={this.props.currentPage} />
-
+          currentPage={this.props.currentPage}
+          onClickDeleteFriend={this.props.onClickDeleteFriend} />
 
       </div>
     );

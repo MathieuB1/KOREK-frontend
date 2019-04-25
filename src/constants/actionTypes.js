@@ -35,3 +35,4 @@ export const VALIDATE_ASKER = 'VALIDATE_ASKER';
 export const IMAGE_LOAD = 'IMAGE_LOAD';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
+export const DELETE_FRIEND = 'DELETE_FRIEND';
