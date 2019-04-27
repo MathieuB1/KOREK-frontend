@@ -57,7 +57,7 @@ const LoggedInView = props => {
       <NavDropdown title={<img src={props.currentUserImage} className="user-pic" alt={props.currentUser} />} id="basic-nav-dropdown">
 
         <li className="nav-item">
-          <Link to={`/settings/`} className="nav-link">
+          <Link to={`/settings/`} style={{ 'width': '100%', textAlign: 'center' }} className="nav-link">
               <i className="ion-gear-a"></i>&nbsp;My Settings
           </Link>
         </li>

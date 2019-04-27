@@ -98,6 +98,8 @@ const Profile = {
         requests.get(`/profiles?${limit(10, page)}`),
     byAuthor: (username) =>
         requests.get(`/profiles/?profile__user__username=${username}`),
+    delete: (id) =>
+        requests.del(`/profiles/${id}/`),
     getGroup: () =>
         requests.get(`/groups/`),
     addGroup: (group_name, id) =>

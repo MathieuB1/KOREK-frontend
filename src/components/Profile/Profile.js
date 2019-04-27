@@ -30,7 +30,7 @@ const EditProfileSettings = props => {
       <Link
         to="/settings"
         className="btn btn-sm btn-outline-secondary action-btn">
-        <i className="ion-gear-a"></i> Edit Profile Settings
+        <i className="ion-gear-a"></i> Edit My Profile
       </Link>
     );
 };

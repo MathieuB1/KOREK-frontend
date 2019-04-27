@@ -16,13 +16,13 @@ const ProfilePreview = props => {
                     <div className="col-md-1">
                       <img className="user-pic" src={article.image} alt="logo"/>
                     </div>
-                    <div className="col-md-10">
+                    <div className="col-md-9">
                       <Link className="author" to={`/users/${article.profile.user.username}`}>
                       &nbsp;{article.profile.user.username}
                       </Link>
                     </div>
 
-                    <div className="col-md-1">
+                    <div className="col-md-2">
                       <button
                         className="btn btn-md pull-xs-right btn-danger"
                         type="button"
