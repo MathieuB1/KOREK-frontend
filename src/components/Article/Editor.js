@@ -214,7 +214,7 @@ class Editor extends React.Component {
 
                    <fieldset className="form-group">
                     <div className="row article-content">
-                      <div className="col-xs-12">
+                      <div className="col-lg-12">
 
                         {(this.props.images.length) ? (<p>Images:</p>) : (<div></div>)}
                         { Object.keys(this.props.images).filter( key => !this.state.deleted_images.includes(this.props.images[key].image) ).map(key => 

@@ -48,7 +48,7 @@ class Article extends React.Component {
         <div className="container page">
 
           <div className="row article-content">
-            <div className="col-xs-12">
+            <div className="col-lg-12">
 
               <div dangerouslySetInnerHTML={htmlEext}></div>
 
@@ -66,6 +66,7 @@ class Article extends React.Component {
               { Object.keys(this.props.article.audios).map(key => 
                 { return ( <ReadMedia key={`audio_` + key} type='audio' url={this.props.article.audios[key].audio} /> ) }
               )}
+
             </div>
           </div>
 
