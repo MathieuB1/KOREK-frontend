@@ -33,13 +33,13 @@ const ArticlePreview = props => {
 
           <Link to={`/products/${article.id}`} className="preview-link">
             <h1>{article.title}</h1>
-            <p>{article.subtitle}</p>
+            {(article.subtitle) ? <p>{article.subtitle}</p> : null }
             {(article.images && article.images[0]) ?
             <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : null }
             <span>Read more...</span>
           </Link>
 
-          { article.tags ? 
+          { article.tags && article.tags.length > 0 ? 
 
           <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
             { Object.keys(article.tags).map(key => { return ( 

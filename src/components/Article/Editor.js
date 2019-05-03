@@ -202,6 +202,7 @@ class Editor extends React.Component {
                     <fieldset className="form-group">
                       <Multiselect
                         data={tags}
+                        placeholder="Add tags"
                         allowCreate="onFilter"
                         value={this.state.selected_tags}
                         onCreate={name => this.setState({ selected_tags: this.state.selected_tags.concat(name) })}
@@ -209,6 +210,7 @@ class Editor extends React.Component {
                         textField="name"
                       />
                     </fieldset>
+                    
 
                     <fieldset className="form-group">  
                       <DropzoneComponent config={componentConfig}

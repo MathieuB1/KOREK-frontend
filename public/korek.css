@@ -230,57 +230,6 @@ hr {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23d9534f' viewBox='-2 -2 7 7'%3E%3Cpath stroke='%23d9534f' d='M0 0l3 3m0-3L0 3'/%3E%3Ccircle r='.5'/%3E%3Ccircle cx='3' r='.5'/%3E%3Ccircle cy='3' r='.5'/%3E%3Ccircle cx='3' cy='3' r='.5'/%3E%3C/svg%3E");
 }
 
-@media (min-width: 544px) {
-    .form-inline .form-group {
-        display: inline-block;
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-    .form-inline .form-control {
-        display: inline-block;
-        width: auto;
-        vertical-align: middle;
-    }
-    .form-inline .form-control-static {
-        display: inline-block;
-    }
-    .form-inline .input-group {
-        display: inline-table;
-        vertical-align: middle;
-    }
-    .form-inline .input-group .input-group-addon,
-    .form-inline .input-group .input-group-btn,
-    .form-inline .input-group .form-control {
-        width: auto;
-    }
-    .form-inline .input-group>.form-control {
-        width: 100%;
-    }
-    .form-inline .form-control-label {
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-    .form-inline .radio,
-    .form-inline .checkbox {
-        display: inline-block;
-        margin-top: 0;
-        margin-bottom: 0;
-        vertical-align: middle;
-    }
-    .form-inline .radio label,
-    .form-inline .checkbox label {
-        padding-left: 0;
-    }
-    .form-inline .radio input[type="radio"],
-    .form-inline .checkbox input[type="checkbox"] {
-        position: relative;
-        margin-left: 0;
-    }
-    .form-inline .has-feedback .form-control-feedback {
-        top: 0;
-    }
-}
-
 .btn {
     display: inline-block;
     font-weight: normal;
@@ -2016,9 +1965,9 @@ a.bg-danger:hover {
 
 .article-preview .preview-link span {
     max-width: 30%;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #bbb;
     vertical-align: middle;
 }
 
@@ -2250,4 +2199,10 @@ a.bg-danger:hover {
     display: inline !important;
     vertical-align: 0;
     outline: none;
+}
+
+.badge {
+    color: white !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
 }

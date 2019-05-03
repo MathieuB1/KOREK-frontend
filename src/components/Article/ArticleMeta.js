@@ -22,7 +22,7 @@ const ArticleMeta = props => {
       </div>
 
 
-      { article.tags ? 
+      { article.tags && article.tags.length > 0 ? 
       
       <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
         { Object.keys(article.tags).map(key => { return ( 
