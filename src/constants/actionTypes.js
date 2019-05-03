@@ -36,3 +36,6 @@ export const IMAGE_LOAD = 'IMAGE_LOAD';
 export const DELETE_MEDIA = 'DELETE_MEDIA';
 export const UPLOAD_PROGRESS = 'UPLOAD_PROGRESS';
 export const DELETE_FRIEND = 'DELETE_FRIEND';
+export const TAG_PAGE_LOADED = 'TAG_PAGE_LOADED';
+export const TAG_PAGE_UNLOADED = 'TAG_PAGE_UNLOADED';
+export const TAGS_LOADED = 'TAGS_LOADED';

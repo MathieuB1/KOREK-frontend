@@ -55,7 +55,7 @@ class Friend extends React.Component {
 
         <div className="container page">
           <div className="row">
-            <div className="col-md-9">
+            <div className="col-md-12">
 
               <ArticleList
                 pager={this.props.pager}

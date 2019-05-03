@@ -18,18 +18,34 @@ const ListPagination = props => {
     range.push(i);
   }
 
+
+
   const setPage = page => {
     if(props.pager) {
       if (props.args)
       {
-        props.onSetPage(page, props.pager(page, props.args.owner));
+        if (props.args.owner) {
+          props.onSetPage(page, props.pager(page, props.args.owner));
+        } 
+        
+        if (props.args.tag){
+          props.onSetPage(page, props.pager(page, props.args.tag));
+        }   
+
       }else
       {
         props.onSetPage(page, props.pager(page));
       }
       
     }else {
-      props.onSetPage(page, props.page_type === 'profile' ? agent.Profile.profiles(page) : agent.Articles.all(page))
+      
+      if (props.page_type === 'profile') 
+        { agent.Profile.profiles(page) }
+      else if (props.page_type === 'tag') 
+        { agent.Articles.tag(page) }
+      else 
+        { agent.Articles.all(page) }
+
     }
   };
 

@@ -2016,9 +2016,9 @@ a.bg-danger:hover {
 
 .article-preview .preview-link span {
     max-width: 30%;
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: #bbb;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
     vertical-align: middle;
 }
 
@@ -2193,7 +2193,7 @@ a.bg-danger:hover {
     opacity: 1;
 }
 
-.editor-page .tag-list i {
+.editor-page i {
     font-size: 0.6rem;
     margin-right: 5px;
     cursor: pointer;
@@ -2229,4 +2229,25 @@ a.bg-danger:hover {
 
 .text-xs-center {
     text-align: center;
+}
+
+.badge {
+    margin: 0.125rem;
+}
+
+.tag-title {
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 700 !important;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 1rem;
+}
+
+.rw-multiselect-taglist {
+    margin: 0;
+    padding: 0;
+    /* list-style: none; */
+    display: inline !important;
+    vertical-align: 0;
+    outline: none;
 }

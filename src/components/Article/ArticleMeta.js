@@ -1,6 +1,7 @@
 import ArticleActions from './ArticleActions';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import Badge from 'react-bootstrap/Badge';
 
 const ArticleMeta = props => {
   const article = props.article;
@@ -19,6 +20,17 @@ const ArticleMeta = props => {
         </span>
         {(article.private) ? <i className="ion-locked" style={{'color': '#ea0000'}}></i> : null}
       </div>
+
+
+      { article.tags ? 
+      
+      <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
+        { Object.keys(article.tags).map(key => { return ( 
+          <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link"><Badge variant="dark">{article.tags[key]}</Badge></Link>
+        )}) }
+      </div>
+
+      : null }
 
       <ArticleActions canModify={props.canModify} article={article} />
     </div>

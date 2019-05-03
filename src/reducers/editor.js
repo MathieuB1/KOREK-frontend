@@ -5,7 +5,8 @@ import {
   ASYNC_START,
   UPDATE_FIELD_EDITOR,
   DELETE_MEDIA,
-  UPLOAD_PROGRESS
+  UPLOAD_PROGRESS,
+  TAGS_LOADED
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
@@ -21,6 +22,7 @@ export default (state = {}, action) => {
         audios: action.payload ? action.payload.body.audios : '',
         text: action.payload ? action.payload.body.text : '',
         private: action.payload ? action.payload.body.private : false,
+        tags_set: action.payload ? action.payload.body.tags : null,
         uploadProgress: 0,
         inProgress: false,
         deleted: false
@@ -31,6 +33,11 @@ export default (state = {}, action) => {
       return {...state,
         media_deleted: action.payload.req._data,
         deleted: action.error ? false : true}
+    case TAGS_LOADED:
+        return {
+            ...state,
+            tags: action.error ? null : action.payload.body.results
+        };
     case EDITOR_PAGE_UNLOADED:
       return {};
     case ARTICLE_SUBMITTED:

@@ -10,12 +10,16 @@ import ReadMedia from './ReadMedia';
 
 import { Line } from 'rc-progress';
 
+import 'react-widgets/dist/css/react-widgets.css';
+import Multiselect from 'react-widgets/lib/Multiselect'
+
 import {
   EDITOR_PAGE_LOADED,
   ARTICLE_SUBMITTED,
   EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR,
-  DELETE_MEDIA
+  DELETE_MEDIA,
+  TAGS_LOADED
 } from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({
@@ -32,7 +36,8 @@ const mapDispatchToProps = dispatch => ({
   onUpdateField: (key, value) =>
     dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
   onDeleteMedia: payload =>
-    dispatch({ type: DELETE_MEDIA, payload })
+    dispatch({ type: DELETE_MEDIA, payload }),
+  onLoadTags: (payload) => dispatch({ type: TAGS_LOADED, payload }),
 });
 
 class Editor extends React.Component {
@@ -44,7 +49,8 @@ class Editor extends React.Component {
       deleted_images: [],
       deleted_videos: [],
       deleted_audios: [],
-      private: false
+      private: false,
+      selected_tags: []
 
     }
     this.handleCheckBox = this.handleCheckBox.bind(this)
@@ -57,6 +63,7 @@ class Editor extends React.Component {
       formData.append("subtitle",this.props.subtitle);
       formData.append("text",this.props.text);
       formData.append("private",this.state.private);
+      formData.append("tags",JSON.stringify(this.state.selected_tags));
 
       this.state.files.map( (file, index) => formData.append(`file${index}`,this.state.files[index]));
 
@@ -86,6 +93,9 @@ class Editor extends React.Component {
   updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
 
   componentDidMount() {
+
+    this.props.onLoadTags(agent.Articles.get_tag());
+
     if (this.props.match.params.id) {
       return this.props.onLoad(agent.Articles.get(this.props.match.params.id));
     }
@@ -102,6 +112,10 @@ class Editor extends React.Component {
 
     if (nextProps.private) {
       this.setState({ private: nextProps.private });
+    }
+
+    if (nextProps.tags_set) {
+      this.setState({ selected_tags: nextProps.tags_set });
     }
 
     if (this.props.match.params.id !== nextProps.match.params.id) {
@@ -138,9 +152,11 @@ class Editor extends React.Component {
 
     if (typeof(this.props.title) !== "undefined")
     {
-      return (
+    
+      let tags = [];
+      if (this.props.tags) { tags = this.props.tags.map(key => key.name); }
 
-        
+      return (
 
         <div className="editor-page">
           <div className="container page">
@@ -183,6 +199,16 @@ class Editor extends React.Component {
                       </textarea>
                     </fieldset>
 
+                    <fieldset className="form-group">
+                      <Multiselect
+                        data={tags}
+                        allowCreate="onFilter"
+                        value={this.state.selected_tags}
+                        onCreate={name => this.setState({ selected_tags: this.state.selected_tags.concat(name) })}
+                        onChange={value => this.setState({ selected_tags: value })}
+                        textField="name"
+                      />
+                    </fieldset>
 
                     <fieldset className="form-group">  
                       <DropzoneComponent config={componentConfig}

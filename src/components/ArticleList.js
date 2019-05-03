@@ -32,6 +32,7 @@ const ArticleList = props => {
         pager={props.pager}
         articlesCount={props.articlesCount}
         args={props.args}
+        page_type={props.page_type ? props.page_type : null}
         currentPage={props.currentPage} />
     </div>
   );

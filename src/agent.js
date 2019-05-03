@@ -76,6 +76,10 @@ const Articles = {
         requests.get(`/products?${limit(10, page)}`),
     feed: (page, owner) =>
         requests.get(`/products?${limit(10, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
+    get_tag: () =>
+        requests.get(`/tags/`),
+    tag: (page, tag_slug) =>
+        requests.get(`/products?${limit(10, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }`),
     get: slug =>
         requests.get(`/products/${slug}/`),
     highlight: slug =>

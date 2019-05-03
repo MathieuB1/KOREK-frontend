@@ -1,6 +1,7 @@
 import React from 'react'; 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Badge from 'react-bootstrap/Badge';
 
 const mapDispatchToProps = dispatch => ({
 });
@@ -29,16 +30,25 @@ const ArticlePreview = props => {
             </div>
           </div>
 
+
           <Link to={`/products/${article.id}`} className="preview-link">
             <h1>{article.title}</h1>
             <p>{article.subtitle}</p>
             {(article.images && article.images[0]) ?
             <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : null }
             <span>Read more...</span>
-            <ul className="tag-list">
-              {article.url}
-            </ul>
           </Link>
+
+          { article.tags ? 
+
+          <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
+            { Object.keys(article.tags).map(key => { return ( 
+              <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link"><Badge variant="dark">{article.tags[key]}</Badge></Link>
+            )}) }
+          </div>
+
+          : null }
+
         </div>
       );
 
