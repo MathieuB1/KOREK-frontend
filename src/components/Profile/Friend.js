@@ -52,8 +52,10 @@ class Friend extends React.Component {
   render() {
     return (
       <div className="friend-page">
-
         <div className="container page">
+
+          <h3 className="text-xs-center">{this.state.username}</h3>
+
           <div className="row">
             <div className="col-md-12">
 

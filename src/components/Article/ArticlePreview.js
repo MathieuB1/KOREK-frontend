@@ -36,7 +36,7 @@ const ArticlePreview = props => {
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
             {(article.images && article.images[0]) ?
             <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : null }
-            <span>Read more...</span>
+            { (article.text) ? <p style={{'color':'black'}}>{article.text.substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
           </Link>
 
           { article.tags && article.tags.length > 0 ? 
