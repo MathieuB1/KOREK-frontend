@@ -7,6 +7,8 @@ import agent from '../../agent';
 import { connect } from 'react-redux';
 
 import Media from 'react-bootstrap/Media';
+import Badge from 'react-bootstrap/Badge';
+
 
 import {
   PROFILE_PAGE_LOADED,
@@ -20,7 +22,7 @@ const ShowMyArticles = props => {
       <Link style={{'width':'9rem'}}
         to={`/users/${props.username}`}
         className="btn btn-sm btn-outline-secondary action-btn">
-        <i className="ion-android-list"></i> My Articles
+        <i className="ion-android-list"></i> My Articles&nbsp;{props.total}
       </Link>
     );
 };
@@ -113,9 +115,10 @@ class Profile extends React.Component {
     const profile = this.props.profile[0];
     if (!profile) {  return null; }
 
+    const profile_stats = (this.props.articles && this.props.currentUser) ? this.props.articles.filter(el => this.props.currentUser === el.profile.user.username).map(article => { return article }) : null
+
     return (
       <div className="container">
-
 
         <div className="container page">
             
@@ -131,9 +134,24 @@ class Profile extends React.Component {
               </Media>
 
               <div className="edit-profile">
-                <ShowMyArticles username={profile.username}/>
+                <ShowMyArticles username={profile.username} total={profile_stats ? profile_stats[0].products : 0} />
                 <EditProfileSettings/>
               </div>
+
+              <br/>
+              
+              { profile_stats && profile_stats[0].tags.length > 0 ?
+              <div className="scrolling-wrapper">{profile_stats[0].tags.filter(el => el.tags__name).map(el => {
+                return  ( 
+                  <Link className="category" key={el.tags__name} to={`/products_tags/${el.tags__name}`} >
+                     <Badge key={el.tags__name} style={{'margin':'1px','padding':'1px'}} className="btn" variant="primary">
+                       {el.tags__name}&nbsp;
+                       <Badge variant="dark">{el.total}</Badge>
+                     </Badge>
+                  </Link>
+                )
+              })}</div>
+              : null }
 
         </div>
 
