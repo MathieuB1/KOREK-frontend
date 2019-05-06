@@ -1880,16 +1880,21 @@ a.bg-danger:hover {
 
 .banner {
     color: #fff;
-    background: #333;
     padding: 2rem;
     margin-bottom: 2rem;
-    border-radius: 1rem;
-    background-color: #00000003;
+    background-color: #fafafa;
 }
 
 .banner h1 {
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
     margin-bottom: 0px;
+}
+
+.banner-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
 }
 
 .container.page {
@@ -2229,5 +2234,25 @@ a.bg-danger:hover {
         border-radius: 5px;
         -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
         background: rgba(0, 0, 0, 0.2);
+    }
+}
+
+.card {
+    border-radius: 1rem;
+    margin-top: 0;
+    margin: auto;
+    width: 15rem;
+}
+
+.card>i {
+    font-size: 8rem;
+    text-align: center;
+    background-color: #4cb74c;
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .card {
+        display: none;
     }
 }

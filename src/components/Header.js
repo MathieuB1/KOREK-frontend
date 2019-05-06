@@ -3,27 +3,6 @@ import { Link } from 'react-router-dom';
 import { Navbar, NavDropdown  } from 'react-bootstrap';
 
 const LoggedOutView = props => {
-  if (!props.currentUser) {
-    return (
-
-      <ul className="nav navbar-nav ml-auto pull-md-right">
-
-        <li className="nav-item">
-          <Link to="/login" className="nav-link">
-            <i className="ion-log-in"></i>&nbsp;Sign in
-          </Link>
-        </li>
-
-        <li className="nav-item">
-          <Link to="/register" className="nav-link">
-            <i className="ion-person"></i>&nbsp;Sign up
-          </Link>
-        </li>
-
-      </ul>
-
-    );
-  }
   return null;
 };
 

@@ -1,5 +1,6 @@
 import Banner from './Banner';
 import MainView from './MainView';
+import HomeCards from './HomeCards';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
@@ -30,6 +31,7 @@ class Home extends React.Component {
     this.props.onLoad(tab, articlesPromise, articlesPromise());
   }
 
+
   componentWillUnmount() {
     this.props.onUnload();
   }
@@ -44,7 +46,7 @@ class Home extends React.Component {
             <ListErrors errors={this.props.errors} />
           </div>
           <div className="row">
-            <MainView />
+            {this.props.errors ? <HomeCards /> : <MainView /> }
           </div>
         </div>
 
