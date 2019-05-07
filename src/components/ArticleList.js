@@ -1,8 +1,10 @@
+import React from 'react';
 import ArticlePreview from './Article/ArticlePreview';
 import ListPagination from './ListPagination';
-import React from 'react';
+
 
 const ArticleList = props => {
+
 
   if (!props.articles) {
     return (
@@ -18,12 +20,14 @@ const ArticleList = props => {
     );
   }
 
+
   return (
     <div>
+
       {
         props.articles.map(article => {
           return (
-            <ArticlePreview article={article} key={article.id} />
+            <ArticlePreview display_mode={props.display_mode} article={article} key={article.id} />
           );
         })
       }

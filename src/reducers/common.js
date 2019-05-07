@@ -18,7 +18,8 @@ import {
     REGISTER_PAGE_UNLOADED,
     ADD_FRIEND_LOADED,
     ADD_FRIEND,
-    IMAGE_LOAD
+    IMAGE_LOAD,
+    DISPLAY_MODE
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -94,6 +95,10 @@ export default (state = defaultState, action) => {
         case ADD_FRIEND:
             return {...state,
                 redirectTo: action.error ? null : '/users/'
+            };
+        case DISPLAY_MODE:
+            return {...state,
+                display_mode: action.error ? null : action.mode
             };
         case LOGIN_PAGE_UNLOADED:
         case DELETE_PROFILE_ARTICLE:

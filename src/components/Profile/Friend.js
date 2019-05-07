@@ -10,6 +10,7 @@ import {
 const mapStateToProps = state => ({
   ...state.friend,
   appName: state.common.appName,
+  display_mode: state.common.display_mode
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -21,10 +22,13 @@ class Friend extends React.Component {
 
   constructor() {
     super();
+
     this.state = {
       username: null
     }
   }
+
+
 
   componentWillMount() {
       this.setState({ username: this.props.match.params.owner });
@@ -52,7 +56,7 @@ class Friend extends React.Component {
   render() {
     return (
       <div className="friend-page">
-        <div className="container page">
+        <div className={"container " + this.props.display_mode}>
 
           <h3 className="text-xs-center">{this.state.username}</h3>
 
@@ -63,6 +67,7 @@ class Friend extends React.Component {
                 pager={this.props.pager}
                 articles={this.props.articles}
                 loading={this.props.loading}
+                display_mode={this.props.display_mode}
                 args={{owner: this.state.username}}
                 articlesCount={this.props.articlesCount}
                 currentPage={this.props.currentPage} />

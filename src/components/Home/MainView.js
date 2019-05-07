@@ -45,7 +45,8 @@ const GlobalFeedTab = props => {
 
 const mapStateToProps = state => ({
   ...state.articleList,
-  token: state.common.token
+  token: state.common.token,
+  display_mode: state.common.display_mode
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -70,6 +71,7 @@ const MainView = props => {
 
       <ArticleList
         pager={props.pager}
+        display_mode={props.display_mode}
         articles={props.articles}
         loading={props.loading}
         articlesCount={props.articlesCount}

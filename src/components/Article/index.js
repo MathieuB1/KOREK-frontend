@@ -5,6 +5,7 @@ import  agent from '../../agent';
 import { connect } from 'react-redux';
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
 
+
 const mapStateToProps = state => ({
   ...state.article,
   currentUser: state.common.currentUser
@@ -44,6 +45,8 @@ class Article extends React.Component {
             <ArticleMeta article={this.props.article} canModify={canModify} />
           </div>
         </div>
+
+
 
         <div className="container page">
 

@@ -68,7 +68,7 @@ class AddFriend extends React.Component {
 
         (this.state.permission) ? (
               <div className="container page">
-
+             
                     <p>Add a new friend</p>
 
                     <ListErrors errors={this.props.errors} />

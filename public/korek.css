@@ -2165,7 +2165,7 @@ a.bg-danger:hover {
 
 .first_article_image {
     max-height: 25rem;
-    max-width: 20.5rem;
+    max-width: 20rem;
     display: flex;
 }
 
@@ -2252,7 +2252,21 @@ a.bg-danger:hover {
 }
 
 @media (max-width: 700px) {
-    .card {
+    .card,
+    .article-display {
         display: none;
+        position: absolute;
+        right: 4rem;
+    }
+}
+
+.ion-image {
+    font-size: 6rem;
+    color: #4cb74c;
+}
+
+@media (min-width: 1200px) {
+    .container.grid {
+        max-width: 1446px;
     }
 }

@@ -39,3 +39,4 @@ export const DELETE_FRIEND = 'DELETE_FRIEND';
 export const TAG_PAGE_LOADED = 'TAG_PAGE_LOADED';
 export const TAG_PAGE_UNLOADED = 'TAG_PAGE_UNLOADED';
 export const TAGS_LOADED = 'TAGS_LOADED';
+export const DISPLAY_MODE = 'DISPLAY_MODE';

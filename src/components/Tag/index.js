@@ -7,7 +7,8 @@ import { TAG_PAGE_LOADED, TAG_PAGE_UNLOADED } from '../../constants/actionTypes'
 
 const mapStateToProps = state => ({
   ...state.tag,
-  currentUser: state.common.currentUser
+  currentUser: state.common.currentUser,
+  display_mode: state.common.display_mode
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -41,12 +42,13 @@ class Tag extends React.Component {
         <div>
         <h1 className="tag-title"><i className="ion-bookmark"></i>&nbsp;{this.props.match.params.tag}</h1>
 
-              <div className="container page">
+              <div className={"container " + this.props.display_mode}>
                 <div className="row">
                   <div className="col-md-12">
                         <ArticleList
                           pager={this.props.pager}
                           articles={this.props.articles}
+                          display_mode={this.props.display_mode}
                           loading={this.props.loading}
                           articlesCount={this.props.articlesCount}
                           page_type='tag'
