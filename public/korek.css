@@ -2148,7 +2148,7 @@ a.bg-danger:hover {
 }
 
 .editor-page i {
-    font-size: 0.6rem;
+    font-size: 1.6rem;
     margin-right: 5px;
     cursor: pointer;
 }
@@ -2256,7 +2256,7 @@ a.bg-danger:hover {
     .article-display {
         display: none;
         position: absolute;
-        right: 4rem;
+        right: 5rem;
     }
 }
 

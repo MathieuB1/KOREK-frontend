@@ -19,7 +19,7 @@ const YourFeedTab = props => {
         <button style={{'outline': 'none'}}
             className={ props.tab === 'feed' ? 'nav-link active' : 'nav-link' }
             onClick={clickHandler}>
-          Your Feed
+         My Post
         </button>
       </li>
     );
@@ -37,7 +37,7 @@ const GlobalFeedTab = props => {
       <button style={{'outline': 'none'}}
         className={ props.tab === 'all' ? 'nav-link active' : 'nav-link' }
         onClick={clickHandler}>
-        Global Feed
+        Global Post
       </button>
     </li>
   );

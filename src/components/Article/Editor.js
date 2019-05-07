@@ -13,6 +13,9 @@ import { Line } from 'rc-progress';
 import 'react-widgets/dist/css/react-widgets.css';
 import Multiselect from 'react-widgets/lib/Multiselect'
 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import {
   EDITOR_PAGE_LOADED,
   ARTICLE_SUBMITTED,
@@ -21,6 +24,10 @@ import {
   DELETE_MEDIA,
   TAGS_LOADED
 } from '../../constants/actionTypes';
+
+
+
+
 
 const mapStateToProps = state => ({
   ...state.editor
@@ -43,6 +50,8 @@ const mapDispatchToProps = dispatch => ({
 class Editor extends React.Component {
   constructor() {
     super();
+
+    this.handleEditorChange = this.handleEditorChange.bind(this);
 
     this.state = {
       files: [],
@@ -140,6 +149,12 @@ class Editor extends React.Component {
     this.setState({ private: e.target.checked });
   }
 
+  handleEditorChange(value) {
+
+    this.props.onUpdateField('text',value)
+
+  }
+
   render() {
     
     var componentConfig = { showFiletypeIcon: true, postUrl: 'no-url' };
@@ -190,13 +205,9 @@ class Editor extends React.Component {
                     </fieldset>
 
                     <fieldset className="form-group">
-                      <textarea
-                        className="form-control form-control-lg"
-                        rows="8"
-                        placeholder="Text"
-                        value={this.props.text}
-                        onChange={this.updateFieldEvent('text')}>
-                      </textarea>
+                          <ReactQuill placeholder="Text"
+                          value={this.props.text}
+                          onChange={this.handleEditorChange} />
                     </fieldset>
 
                     <fieldset className="form-group">

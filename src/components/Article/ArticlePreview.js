@@ -15,10 +15,14 @@ const ArticlePreview = props => {
   if (subtext && subtext.length > 20) { subtext = article.text.substring(0,20) + '...' }
 
   const display_style = (props.display_mode === 'grid') ? { 
-                                                            display:'inline-grid', 
-                                                            minWidth:'22rem', 
-                                                            maxWidth:'21rem',
-                                                            minHeight: '27rem'
+                                                            display:'inline-grid',
+                                                            minWidth:'20rem',
+                                                            maxWidth:'20rem',
+                                                            minHeight: '27rem',
+                                                            margin: '1rem',
+                                                            backgroundColor: '#ffffff',
+                                                            borderRadius: '1rem',
+                                                            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)'
                                                           } : { display:'block'};
 
     return (
@@ -43,7 +47,7 @@ const ArticlePreview = props => {
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
             {(article.images && article.images[0]) ?
             <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : <i className="ion-image"></i> }
-            { (article.text) ? <p style={{'color':'black'}}>{article.text.substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
+            { (article.text) ? <p style={{'color':'black'}}>{article.text.replace(/<(?:.|\n)*?>/gm, '').substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
           </Link>
 
           { article.title && article.tags && article.tags.length > 0 ? 
