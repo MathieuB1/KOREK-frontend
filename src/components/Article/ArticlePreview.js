@@ -24,6 +24,8 @@ const ArticlePreview = props => {
                                                             borderRadius: '1rem',
                                                             boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)'
                                                           } : { display:'block'};
+  
+  const display_first_image = (props.display_mode === 'grid') ? { margin: 'auto' } : {}
 
     return (
         <div className="article-preview" style={display_style}>
@@ -46,7 +48,7 @@ const ArticlePreview = props => {
             <h1>{article.title}</h1>
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
             {(article.images && article.images[0]) ?
-            <img className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : <i className="ion-image"></i> }
+            <img style={display_first_image} className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : <i className="ion-image"></i> }
             { (article.text) ? <p style={{'color':'black'}}>{article.text.replace(/<(?:.|\n)*?>/gm, '').substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
           </Link>
 
