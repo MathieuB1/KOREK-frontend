@@ -114,10 +114,20 @@ const Profile = {
         requests.put(`/acknowlegment/${id}/`, { activate: val }),
 };
 
+
+const Comments = {
+    create: (comment) =>
+        requests.post(`/comment/`, comment),
+    delete: (slug) =>
+        requests.del(`/comment/${slug}/`),
+};
+
+
 export default {
     Articles,
     Auth,
     Profile,
+    Comments,
     setToken: _token => { token = _token; },
     setCsrf: _csrf => { csrf = _csrf; }
 };
