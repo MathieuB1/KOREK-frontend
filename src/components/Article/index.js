@@ -2,13 +2,16 @@ import ArticleMeta from './ArticleMeta';
 import ReadMedia from './ReadMedia';
 import React from 'react';
 import  agent from '../../agent';
+import CommentContainer from '../Comment/CommentContainer';
+
 import { connect } from 'react-redux';
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
 
 
 const mapStateToProps = state => ({
   ...state.article,
-  currentUser: state.common.currentUser
+  currentUser: state.common.currentUser,
+  currentUserImage: state.common.currentUserImage
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -74,6 +77,16 @@ class Article extends React.Component {
           </div>
 
           <hr />
+
+          <div className="row">
+            <CommentContainer
+              comments={this.props.comments || []}
+              errors={this.props.commentErrors}
+              product_id={this.props.match.params.id}
+              product_owner={this.props.article.owner}
+              currentUser={this.props.currentUser}
+              currentUserImage={this.props.currentUserImage} />
+          </div>
 
         </div>
       </div>

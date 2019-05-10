@@ -2106,7 +2106,7 @@ a.bg-danger:hover {
 }
 
 .article-page .card .card-footer {
-    border-top: 1px solid #e5e5e5;
+    border-top: 0px;
     box-shadow: none !important;
     font-size: 0.8rem;
     font-weight: 300;
@@ -2237,7 +2237,6 @@ a.bg-danger:hover {
 }
 
 .card {
-    border-radius: 1rem;
     margin-top: 0;
     margin: auto;
     width: 15rem;
@@ -2257,6 +2256,10 @@ a.bg-danger:hover {
         position: absolute;
         right: 5rem;
     }
+    .card.comment,
+    .card.comment-form {
+        display: contents;
+    }
 }
 
 .ion-image {
@@ -2269,4 +2272,13 @@ a.bg-danger:hover {
         max-width: 1446px;
         margin: auto;
     }
+}
+
+.card.comment-form,
+.card.comment {
+    width: 100%;
+}
+
+.card-text {
+    margin-left: 1rem;
 }
