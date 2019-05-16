@@ -11,14 +11,19 @@ You can view a live demo over at (http://35.241.210.208:4100)
 > user: toto password: toto
 > user: toto1 password: toto
 
-To get the frontend running locally:
+## Run Korek frontend locally
 
-- Clone this repo
-- `npm install` to install all req'd dependencies
-- `npm start` to start the local server (this project uses create-react-app)
+- Install & Boot Korek backend https://github.com/MathieuB1/KOREK-backend
+- `npm install` to install all requested dependencies
+- `npm start` to start the local http server (this project uses create-react-app)
 
 Local web server will use port 4100. You can configure port in scripts section of `package.json`.
  
+## Run docker-compose )
+
+- `cd KOREK-frontend/ && docker-compose down && docker-compose build && docker-compose up`
+   (SSL will be the same as KOREK-backend)
+
 ### Making requests to the backend API
 
 The Django source code for the backend server can be found in the [KOREK github repository](https://github.com/MathieuB1/KOREK).
@@ -39,4 +44,4 @@ The example application is targeting the KOREK backend API, which provides a Dja
 - CRUD Articles (Images & Videos & Audio creation support)
 - GET and display paginated lists of articles & friends
 - Follow other users
-- Articles Tags 
+- Articles Tags

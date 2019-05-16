@@ -7,6 +7,10 @@ services:
       - frontend:/usr/app/
     ports:
       - "4100:4100"
+    volumes:
+      - korekbackend_ssl_cetificate:/etc/letsencrypt/:ro
 
 volumes:
   frontend: {}
+  korekbackend_ssl_cetificate:
+    external: true

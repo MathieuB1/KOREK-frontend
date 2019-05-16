@@ -28,6 +28,8 @@
     },
     "scripts": {
         "start": "cross-env PORT=4100 react-scripts start",
+        "prestart_https": "./set_ssl.sh",
+        "start_https": "cross-env PORT=4100 HTTPS=true react-scripts start",
         "build": "react-scripts build",
         "test": "cross-env PORT=4100 react-scripts test --env=jsdom",
         "eject": "react-scripts eject"
