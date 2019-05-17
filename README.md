@@ -6,7 +6,7 @@ This frontend is based on https://github.com/gothinkster/react-redux-realworld-e
 
 ## Getting started
 
-You can view a live demo over at (http://35.241.210.208:4100)
+You can view a live demo over at (https://korek.ml:4100)
 
 > user: toto password: toto
 > user: toto1 password: toto
