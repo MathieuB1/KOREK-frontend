@@ -63,7 +63,7 @@ class Home extends React.Component {
 
           {this.props.errors ? null :
           <div className="article-display" style={{'float':'right','position':'absolute','right':'4rem'}}>
-            <ButtonGroup>
+            <ButtonGroup style={{'z-index':'5'}}>
               <Button className="article-display-list" onClick={() => this.onClickDisplay('list')} variant="secondary"><i className="ion-android-list"></i></Button>
               <Button className="article-display-grid" onClick={() => this.onClickDisplay('grid')} variant="secondary"><i className="ion-grid"></i></Button>
             </ButtonGroup>
