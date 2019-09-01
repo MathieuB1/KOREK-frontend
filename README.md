@@ -28,7 +28,7 @@ Local web server will use port 4100. You can configure port in scripts section o
 
 The Django source code for the backend server can be found in the [KOREK github repository](https://github.com/MathieuB1/KOREK).
 
-For convenience, we have a live API server running at http://35.241.210.208/ for the application to make requests against.
+For convenience, we have a live API server running at https://korek.ml:4100/ for the application to make requests against.
 
 If you want to change the API URL to a local server, simply edit `src/agent.js` and change `API_ROOT` to the local server's URL (i.e. `http://localhost/`)
 
