@@ -5,10 +5,12 @@ import {
     CHANGE_TAB,
     PROFILE_PAGE_LOADED,
     PROFILE_PAGE_UNLOADED,
+    SEARCHING
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {
+        case SEARCHING:
         case HOME_PAGE_LOADED:
             return {
                 ...state,

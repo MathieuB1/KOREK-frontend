@@ -103,7 +103,7 @@ class Editor extends React.Component {
 
   componentDidMount() {
 
-    this.props.onLoadTags(agent.Articles.get_tag());
+    this.props.onLoadTags(agent.Articles.get_tags());
 
     if (this.props.match.params.id) {
       return this.props.onLoad(agent.Articles.get(this.props.match.params.id));

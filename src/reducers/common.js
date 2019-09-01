@@ -7,6 +7,7 @@ import {
     SETTINGS_SAVED,
     SETTINGS_PAGE_UNLOADED,
     LOGIN,
+    CLEAR_TOKEN,
     REGISTER,
     DELETE_ARTICLE,
     DELETE_PROFILE_ARTICLE,
@@ -19,7 +20,9 @@ import {
     ADD_FRIEND_LOADED,
     ADD_FRIEND,
     IMAGE_LOAD,
-    DISPLAY_MODE
+    DISPLAY_MODE,
+    FILTERS_LOADED,
+    SEARCHING
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -44,6 +47,12 @@ export default (state = defaultState, action) => {
                 token: action.error ? null : action.payload.body.token,
                 currentUser: action.error ? null : action.payload.req._data.username
             };
+        case CLEAR_TOKEN:
+            return {
+                ...state,
+                redirectTo: '/login/',
+                token: null,
+            };
         case APP_LOAD:
             return {
                 ...state,
@@ -57,6 +66,12 @@ export default (state = defaultState, action) => {
             return {
                 ...state,
                 currentUserImage: (action.payload.body.results.length > 0) ? action.payload.body.results[0].image : null,
+            };
+        case FILTERS_LOADED:
+            return {
+                ...state,
+                categories: action.payload[0].body ? action.payload[0].body : null,
+                tags: action.payload[1].body.results ? action.payload[1].body.results : null,
             };
         case SETTINGS_SAVED:
             return {
@@ -99,6 +114,10 @@ export default (state = defaultState, action) => {
         case DISPLAY_MODE:
             return {...state,
                 display_mode: action.error ? null : action.mode
+            };
+        case SEARCHING:
+            return {...state,
+                criteria: action.criteria
             };
         case LOGIN_PAGE_UNLOADED:
         case DELETE_PROFILE_ARTICLE:

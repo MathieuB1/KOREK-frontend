@@ -19,10 +19,9 @@ const ArticlePreview = props => {
                                                             minWidth:'20rem',
                                                             maxWidth:'20rem',
                                                             minHeight: '27rem',
+                                                            maxHeight: '27rem',
                                                             margin: '1rem',
                                                             backgroundColor: '#ffffff',
-                                                            borderRadius: '1rem',
-                                                            boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.2)'
                                                           } : { display:'block'};
   
   const display_first_image = (props.display_mode === 'grid') ? { margin: 'auto' } : {}

@@ -9,7 +9,8 @@ import {
 } from '../../constants/actionTypes';
 
 const mapStateToProps = state => ({ 
-  ...state.auth
+  ...state.auth,
+  currentUser: state.common.currentUser,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -18,11 +19,11 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-        username: '',
+        username: this.props.currentUser  ? this.props.currentUser : '',
         password: '',
     };
 

@@ -20,6 +20,7 @@ const responseBody = res => res;
 
 let token = null;
 let csrf = null;
+
 const Plugins = req => {
     if (token) {
         req.set('Authorization', `Bearer ${token}`);
@@ -73,13 +74,17 @@ const Auth = {
 const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
 const Articles = {
     all: page =>
-        requests.get(`/products?${limit(10, page)}`),
+        requests.get(`/products?${limit(8, page)}`),
+    filter: (filters, page) =>
+        requests.get(`/products?${limit(8, page)}${filters}`),
     feed: (page, owner) =>
-        requests.get(`/products?${limit(10, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
-    get_tag: () =>
+        requests.get(`/products?${limit(8, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
+    get_tags: () =>
         requests.get(`/tags/`),
     tag: (page, tag_slug) =>
-        requests.get(`/products?${limit(10, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }`),
+        requests.get(`/products?${limit(8, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }`),
+    get_categories: () =>
+        requests.get(`/categories/`),
     get: slug =>
         requests.get(`/products/${slug}/`),
     highlight: slug =>
