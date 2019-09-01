@@ -2,11 +2,11 @@ import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import { FILTERS_LOADED, SEARCHING } from '../../constants/actionTypes';
-import Multiselect from 'react-widgets/lib/Multiselect';
-import DropdownList from 'react-widgets/lib/DropdownList';
 
 import TreeMenu from 'react-simple-tree-menu'
 import '../../../node_modules/react-simple-tree-menu/dist/main.css';
+
+import Select from 'react-select';
 
 const mapStateToProps = state => ({
   ...state.common,
@@ -53,9 +53,15 @@ class SearchFilter extends React.Component {
     var category = ''; 
 
     if (type === 'selected_tags'){
-      tags_list = '&tags__name=' + value.name;
-      //tags_list = value.map(el => '&tags__name=' + el.name).toString().replace(',','');
-      this.setState({ selected_tags: value, url_tags_suffix: tags_list });
+      if(value)
+      {
+        tags_list = '&tags__name=' + value.value;
+        //tags_list = value.map(el => '&tags__name=' + el.value).toString().replace(',','');
+        this.setState({ selected_tags: value, url_tags_suffix: tags_list });
+      } else {
+        tags_list = 'null';
+        this.setState({ selected_tags: '', url_tags_suffix: '' });
+      }
     }
 
     if (type === 'selected_category'){ 
@@ -75,12 +81,13 @@ class SearchFilter extends React.Component {
     
     var criteria = search ? search : this.state.url_search_suffix;
     criteria += category ? ((category === 'null') ? '' : category) : this.state.url_category_suffix;
-    criteria += tags_list ? tags_list : this.state.url_tags_suffix;
+    criteria += tags_list ? ((tags_list === 'null') ? '' : tags_list) : this.state.url_tags_suffix;
     criteria = criteria.replace(',','')
 
     this.props.onSearch('filter', agent.Articles.filter, agent.Articles.filter(criteria), criteria);
 
   }
+
 
   render() {
 
@@ -95,6 +102,10 @@ class SearchFilter extends React.Component {
 
     if (this.props.categories) { 
       tree.push({ key: '0', label: 'Category', nodes: nodesSet(this.props.categories)});
+    }
+
+    if (this.props.tags){
+        var tags = this.props.tags.map(el => ({ value: el.name, label: el.slug }));
     }
 
     return (
@@ -119,13 +130,12 @@ class SearchFilter extends React.Component {
                      hasSearch={false}>
                       </TreeMenu>: null }
 
-                    {/* <Multiselect */}
-                      <DropdownList
-                      data={this.props.tags}
-                      placeholder="Add tags"
+                    <Select
+                      placeholder={"Select tag"}
+                      isClearable={true}
                       value={this.state.selected_tags}
+                      options={tags}
                       onChange={value => this.setFilter('selected_tags', value)}
-                      textField="name"
                     />
                     
                 </div>
