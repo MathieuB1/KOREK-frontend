@@ -2164,14 +2164,16 @@ a.bg-danger:hover {
     right: 0px;
 }
 
-.first_article_image {
+.first_article_image,
+.first_article_video {
     max-height: 25rem;
     max-width: 19.6rem;
     display: flex;
 }
 
 @media (max-width: 700px) {
-    .first_article_image {
+    .first_article_image,
+    .first_article_video {
         margin: auto;
     }
 }

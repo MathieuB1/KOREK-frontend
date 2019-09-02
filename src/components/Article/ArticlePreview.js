@@ -48,7 +48,7 @@ const ArticlePreview = props => {
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
 
             {(article.videos && article.videos[0]) ?
-            <video style={display_first_image} key={article.videos[0].video}><source src={article.videos[0].video} /></video> : null }
+            <video style={display_first_image} className="first_article_video" key={article.videos[0].video}><source src={article.videos[0].video} /></video> : null }
             {(article.images && article.images[0] && !article.videos[0]) ?
             <img style={display_first_image} className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : (!article.videos[0]) ? <i className="ion-image"></i> : null }
 
