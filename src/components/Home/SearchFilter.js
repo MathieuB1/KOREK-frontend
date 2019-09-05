@@ -7,6 +7,7 @@ import TreeMenu from 'react-simple-tree-menu'
 import '../../../node_modules/react-simple-tree-menu/dist/main.css';
 
 import Select from 'react-select';
+import './SearchFilter.css';
 
 const mapStateToProps = state => ({
   ...state.common,
@@ -126,7 +127,7 @@ class SearchFilter extends React.Component {
                      {this.props.categories ? 
                      <TreeMenu 
                      data={tree}
-                     onClickItem={({ key, label }) => { this.setFilter('selected_category', key) }}
+                     onClickItem={({ key, label }) => { this.setFilter('selected_category', label) }}
                      hasSearch={false}>
                       </TreeMenu>: null }
 

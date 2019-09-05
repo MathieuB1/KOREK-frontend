@@ -57,7 +57,7 @@ class SettingsForm extends React.Component {
 
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.currentUser) {
       this.setState({ username: this.props.currentUser });
     }

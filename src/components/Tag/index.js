@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Tag extends React.Component {
-  componentDidMount() {
+  componentWillMount() {
     this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
   }
 

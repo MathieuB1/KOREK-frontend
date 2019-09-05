@@ -22,6 +22,7 @@ export default (state = {}, action) => {
         audios: action.payload ? action.payload.body.audios : '',
         text: action.payload ? action.payload.body.text : '',
         private: action.payload ? action.payload.body.private : false,
+        category: action.payload ? action.payload.body.category : null,
         tags_set: action.payload ? action.payload.body.tags : null,
         uploadProgress: 0,
         inProgress: false,

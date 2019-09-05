@@ -15,8 +15,6 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 
 
-
-
 const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,
@@ -32,7 +30,7 @@ const mapDispatchToProps = dispatch => ({
 
 class Home extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const tab = this.props.token ? 'all' : 'feed';
     const articlesPromise = this.props.token ?
       agent.Articles.all :
@@ -62,7 +60,7 @@ class Home extends React.Component {
 
 
           {this.props.errors ? null :
-          <div className="article-display" style={{'float':'right','position':'absolute','right':'4rem'}}>
+          <div className="article-display" style={{'float':'right','position':'absolute','right':'0.5rem'}}>
             <ButtonGroup style={{'zIndex':'5'}}>
               <Button className="article-display-list" onClick={() => this.onClickDisplay('list')} variant="secondary"><i className="ion-android-list"></i></Button>
               <Button className="article-display-grid" onClick={() => this.onClickDisplay('grid')} variant="secondary"><i className="ion-grid"></i></Button>

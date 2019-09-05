@@ -73,7 +73,7 @@ class Profile extends React.Component {
     ]));
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.refreshProfile();
   }
 

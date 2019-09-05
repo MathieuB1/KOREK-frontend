@@ -101,7 +101,7 @@ class App extends React.Component {
         window.eventSocket.onclose();
     }
 
-    componentDidMount() {
+    componentWillMount() {
 
         const csrf = window.localStorage.getItem('csrf');
         if (csrf) {

@@ -16,13 +16,15 @@ import Multiselect from 'react-widgets/lib/Multiselect'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
+import Select from 'react-select';
+
 import {
   EDITOR_PAGE_LOADED,
   ARTICLE_SUBMITTED,
   EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR,
   DELETE_MEDIA,
-  TAGS_LOADED
+  FILTERS_LOADED
 } from '../../constants/actionTypes';
 
 
@@ -30,7 +32,9 @@ import {
 
 
 const mapStateToProps = state => ({
-  ...state.editor
+  ...state.editor,
+  tags: state.common.tags,
+  categories: state.common.categories,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -44,7 +48,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPDATE_FIELD_EDITOR, key, value }),
   onDeleteMedia: payload =>
     dispatch({ type: DELETE_MEDIA, payload }),
-  onLoadTags: (payload) => dispatch({ type: TAGS_LOADED, payload }),
+  onLoadFilters: (payload) => 
+    dispatch({ type: FILTERS_LOADED, payload }),
 });
 
 class Editor extends React.Component {
@@ -55,11 +60,13 @@ class Editor extends React.Component {
 
     this.state = {
       files: [],
+      category: '',
       deleted_images: [],
       deleted_videos: [],
       deleted_audios: [],
       private: false,
-      selected_tags: []
+      selected_tags: [],
+      selected_category: null
 
     }
     this.handleCheckBox = this.handleCheckBox.bind(this)
@@ -72,6 +79,7 @@ class Editor extends React.Component {
       formData.append("subtitle",this.props.subtitle);
       formData.append("text",this.props.text);
       formData.append("private",this.state.private);
+      if (this.state.selected_category) { formData.append("category",this.state.selected_category.id); }
       formData.append("tags",JSON.stringify(this.state.selected_tags));
 
       this.state.files.map( (file, index) => formData.append(`file${index}`,this.state.files[index]));
@@ -101,9 +109,12 @@ class Editor extends React.Component {
 
   updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
 
-  componentDidMount() {
+  componentWillMount() {
 
-    this.props.onLoadTags(agent.Articles.get_tags());
+    this.props.onLoadFilters(Promise.all([
+        agent.Articles.get_categories(),
+        agent.Articles.get_tags()
+    ]));
 
     if (this.props.match.params.id) {
       return this.props.onLoad(agent.Articles.get(this.props.match.params.id));
@@ -121,6 +132,10 @@ class Editor extends React.Component {
 
     if (nextProps.private) {
       this.setState({ private: nextProps.private });
+    }
+
+    if (nextProps.category) {
+      this.setState({ category: nextProps.category });
     }
 
     if (nextProps.tags_set) {
@@ -169,7 +184,20 @@ class Editor extends React.Component {
     {
     
       let tags = [];
+      let categories = [];
       if (this.props.tags) { tags = this.props.tags.map(key => key.name); }
+
+      var tree_to_list = []
+      function nodesSet(node) {
+        if(node && node.length){
+          node.map(el => tree_to_list.push({id: el.id, value: el.data.name, label: el.data.name, nodes: el.children ? nodesSet(el.children) : [] }));
+        }
+      }
+
+      if (this.props.categories) { 
+        nodesSet(this.props.categories);
+        categories = tree_to_list; 
+      }
 
       return (
 
@@ -208,6 +236,16 @@ class Editor extends React.Component {
                           <ReactQuill placeholder="Text"
                           value={this.props.text}
                           onChange={this.handleEditorChange} />
+                    </fieldset>
+
+                    <fieldset className="form-group">
+                      <Select
+                        placeholder={"Add category"}
+                        isClearable={true}
+                        value={this.state.selected_category ? this.state.selected_category : {value:  this.props.category !== '' ? this.props.category : "Add category", label:  this.props.category }}
+                        options={categories}
+                        onChange={value => this.setState({ selected_category: value })}
+                      />
                     </fieldset>
 
                     <fieldset className="form-group">
