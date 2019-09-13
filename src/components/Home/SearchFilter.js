@@ -66,7 +66,7 @@ class SearchFilter extends React.Component {
     }
 
     if (type === 'selected_category'){ 
-      if (value === '0') { 
+      if (value === 'Category') { 
         category = 'null';
         this.setState({ selected_category: [], url_category_suffix: '' });
       } else {

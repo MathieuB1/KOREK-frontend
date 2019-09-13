@@ -60,7 +60,7 @@ class Editor extends React.Component {
 
     this.state = {
       files: [],
-      category: '',
+      category: null,
       deleted_images: [],
       deleted_videos: [],
       deleted_audios: [],
@@ -242,7 +242,7 @@ class Editor extends React.Component {
                       <Select
                         placeholder={"Add category"}
                         isClearable={true}
-                        value={this.state.selected_category ? this.state.selected_category : {value:  this.props.category !== '' ? this.props.category : "Add category", label:  this.props.category }}
+                        value={this.state.selected_category ? this.state.selected_category : this.props.category ? { value:  this.props.category, label:  this.props.category } : null}
                         options={categories}
                         onChange={value => this.setState({ selected_category: value })}
                       />
