@@ -44,4 +44,5 @@ The example application is targeting the KOREK backend API, which provides a Dja
 - CRUD Articles (Images & Videos & Audio creation support)
 - GET and display paginated lists of articles & friends
 - Follow other users
-- Articles Tags
+- Articles Tags/Category
+- Articles Locations

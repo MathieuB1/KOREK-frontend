@@ -7,6 +7,7 @@ import CommentContainer from '../Comment/CommentContainer';
 import { connect } from 'react-redux';
 import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
 
+import Map from './Map';
 
 const mapStateToProps = state => ({
   ...state.article,
@@ -20,12 +21,27 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Article extends React.Component {
-  componentWillMount() {
+  
+  constructor() {
+    super();
+    this.state = { 
+      locations: []
+    };
+  }
+
+
+  componentDidMount() {
     this.props.onLoad(Promise.all([
       agent.Articles.get(this.props.match.params.id),
       agent.Articles.highlight(this.props.match.params.id)
     ]));
-  
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+   if (this.props.article && this.props.article.locations !== prevState.locations) {
+      this.setState({ locations: this.props.article.locations });
+    }
+
   }
 
   componentWillUnmount() {
@@ -37,6 +53,11 @@ class Article extends React.Component {
 
     const canModify = this.props.currentUser && this.props.currentUser === this.props.article.owner;
     const htmlEext = { __html: this.props.article.text };
+
+    var locations = [];
+    if (this.state.locations.length) {
+      locations = this.state.locations.map(key => [{lat: parseFloat(key.coords.split(' ')[2].replace(')','')), lon: parseFloat(key.coords.split(' ')[1].replace('(',''))}] );
+    }
 
     return (
       <div className="article-page">
@@ -68,10 +89,14 @@ class Article extends React.Component {
                 { return ( <ReadMedia key={`video_` + key} type='video' url={this.props.article.videos[key].video} /> ) }
               )}
 
-              {(this.props.article.audios.length) ? (<p>Audios:</p>) : (<div></div>)}
+              {(this.props.article.audios.length) ? (<p>Audios:</p>) : null }
               { Object.keys(this.props.article.audios).map(key => 
                 { return ( <ReadMedia key={`audio_` + key} type='audio' url={this.props.article.audios[key].audio} /> ) }
               )}
+
+              {(this.props.article.locations.length) ? (<p>Locations:</p>) : null }
+              { (locations.length) ? <Map markerPositions={locations} /> : null }
+
 
             </div>
           </div>
