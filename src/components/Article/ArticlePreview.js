@@ -63,6 +63,10 @@ const ArticlePreview = props => {
             <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-videocamera"></i>
             { article.videos.length > 1 ? ' x' + article.videos.length : null }&nbsp;</span></div> : null }
 
+            { article.audios && article.audios.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-headphone"></i>
+            { article.audios.length > 1 ? ' x' + article.audios.length : null }&nbsp;</span></div> : null }
+
             { article.locations && article.locations.length > 0 ? 
             <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-android-locate"></i>
             { article.locations.length > 1 ? ' x' + article.locations.length : null }&nbsp;</span></div> : null }
