@@ -1926,7 +1926,6 @@ a.bg-danger:hover {
 }
 
 .article-meta .info {
-    margin: 0 1.5rem 0 0.3rem;
     display: inline-block;
     vertical-align: middle;
     line-height: 1rem;
@@ -1970,7 +1969,6 @@ a.bg-danger:hover {
 }
 
 .article-preview .preview-link span {
-    max-width: 30%;
     font-size: 0.8rem;
     font-weight: 300;
     color: #bbb;

@@ -83,6 +83,8 @@ const Articles = {
         requests.get(`/tags/`),
     tag: (page, tag_slug) =>
         requests.get(`/products?${limit(8, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }`),
+    category: (page, category_slug) =>
+        requests.get(`/products?${limit(8, page)}&category__name=${ category_slug }`),
     get_categories: () =>
         requests.get(`/categories/`),
     get: slug =>

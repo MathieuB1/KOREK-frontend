@@ -42,7 +42,6 @@ const ArticlePreview = props => {
             </div>
           </div>
 
-
           <Link to={`/products/${article.id}`} className="preview-link">
             <h1>{article.title}</h1>
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
@@ -54,17 +53,37 @@ const ArticlePreview = props => {
 
             { (article.text) ? <p style={{'color':'black'}}>{article.text.replace(/<(?:.|\n)*?>/gm, '').substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
           </Link>
+          <div>
 
-          { article.title && article.tags && article.tags.length > 0 ? 
-          <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
-            { Object.keys(article.tags).map(key => { return ( 
-              <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link">
-                <Badge variant="primary">{article.tags[key]}</Badge>
-              </Link>
-            )}) }
+            { article.images && article.images.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-android-image"></i>
+            { article.images.length > 1 ? ' x' + article.images.length : null }&nbsp;</span></div> : null }
+
+            { article.videos && article.videos.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-videocamera"></i>
+            { article.videos.length > 1 ? ' x' + article.videos.length : null }&nbsp;</span></div> : null }
+
+            { article.locations && article.locations.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-android-locate"></i>
+            { article.locations.length > 1 ? ' x' + article.locations.length : null }&nbsp;</span></div> : null }
+
+            { article.category && article.category.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }} ><span style={{'color': 'black'}}><i className="ion-ios-pricetag"></i>&nbsp;</span>
+              { <Link to={`/products_category/${article.category}`} className="preview-link">
+                  <Badge variant="secondary">{article.category}</Badge>
+                </Link> }
+            </div> : null }
+
+            { article.tags && article.tags.length > 0 ? 
+            <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
+              { Object.keys(article.tags).map(key => { return ( 
+                <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link">
+                  <Badge variant="primary">{article.tags[key]}</Badge>
+                </Link>
+              )}) }
+            </div> : null }
+
           </div>
-
-          : null }
 
         </div>
       );

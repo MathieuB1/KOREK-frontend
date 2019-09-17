@@ -142,7 +142,7 @@ class Profile extends React.Component {
               
               { profile_stats && profile_stats[0].tags.length > 0 ?
               <div className="scrolling-wrapper">{profile_stats[0].tags.filter(el => el.tags__name).map(el => {
-                return  ( 
+                return  (
                   <Link className="category" key={el.tags__name} to={`/products_tags/${el.tags__name}`} >
                      <Badge key={el.tags__name} style={{'margin':'1px','padding':'1px'}} className="btn" variant="primary">
                        {el.tags__name}&nbsp;

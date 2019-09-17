@@ -11,7 +11,7 @@ const ArticleMeta = props => {
          {<img src={article.owner_image} alt={article.owner} />}
       </Link>
 
-      <div className="info" style={{ marginRight: '0.5rem'}}>
+      <div className="info">
         <Link style={{'color': 'black'}} to={`/users/${article.owner}`} className="author">
           {article.owner}
         </Link>
@@ -21,6 +21,13 @@ const ArticleMeta = props => {
         {(article.private) ? <i className="ion-locked" style={{'color': '#ea0000'}}></i> : null}
       </div>
 
+
+      { article.category && article.category.length > 0 ? 
+      <div style={{ 'display': 'inline-block' }} ><span style={{'color': 'black'}}><i className="ion-ios-pricetag"></i>&nbsp;</span>
+        { <Link to={`/products_category/${article.category}`} className="preview-link">
+            <Badge variant="secondary">{article.category}</Badge>
+          </Link> }
+      </div> : null }
 
       { article.tags && article.tags.length > 0 ? 
       

@@ -6,6 +6,7 @@ import { REQUEST_CSRF, APP_LOAD, REDIRECT, LOGOUT, IMAGE_LOAD } from '../constan
 import { Route, Switch } from 'react-router-dom';
 import Article from '../components/Article';
 import Tag from '../components/Tag';
+import Category from '../components/Category';
 import Editor from '../components/Article/Editor';
 import Home from '../components/Home';
 import Login from '../components/User/Login';
@@ -136,7 +137,8 @@ class App extends React.Component {
                 <Route path = "/editor/:id" component = { Editor }/> 
                 <Route path = "/editor" component = { Editor } /> 
                 <Route path = "/products/:id" component = { Article }/>
-                <Route path = "/products_tags/:tag" component = { Tag }/> 
+                <Route path = "/products_tags/:tag" component = { Category }/> 
+                <Route path = "/products_category/:category" component = { Tag }/> 
                 <Route path = "/users/:owner" component = { Friend }/> 
                 <Route path = "/users/" component = { Profile }/> 
                 <Route path = "/settings" component = { Settings } />
