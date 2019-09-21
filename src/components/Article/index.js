@@ -94,6 +94,11 @@ class Article extends React.Component {
                 { return ( <ReadMedia key={`audio_` + key} type='audio' url={this.props.article.audios[key].audio} /> ) }
               )}
 
+              {(this.props.article.files.length) ? (<p>Files:</p>) : null }
+              { Object.keys(this.props.article.files).map(key => 
+                { return ( <a key={`file_` + key} href={this.props.article.files[key].file} download><i style={{'font-size':'1.5rem'}} className="ion-android-archive"/></a> ) }
+              )}
+
               {(this.props.article.locations.length) ? (<p>Locations:</p>) : null }
               { (locations.length) ? <Map markerPositions={locations} /> : null }
 
