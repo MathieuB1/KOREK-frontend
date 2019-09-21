@@ -68,7 +68,6 @@ class Editor extends React.Component {
       private: false,
       selected_tags: [],
       selected_category: null
-
     }
     this.handleCheckBox = this.handleCheckBox.bind(this)
 
@@ -80,6 +79,7 @@ class Editor extends React.Component {
       formData.append("subtitle",this.props.subtitle);
       formData.append("text",this.props.text);
       formData.append("private",this.state.private);
+      if (this.props.latitude) { formData.append("locations", '[{"coords": [' + this.props.latitude + ',' + this.props.longitude + ']}]') }
       if (this.state.selected_category) { formData.append("category",this.state.selected_category.id); }
       formData.append("tags",JSON.stringify(this.state.selected_tags));
 
@@ -120,6 +120,7 @@ class Editor extends React.Component {
     }
     this.props.onLoad(null);
   }
+
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.deleted) {
@@ -261,10 +262,28 @@ class Editor extends React.Component {
                     </fieldset>
                     
 
+
                     <fieldset className="form-group">  
                       <DropzoneComponent config={componentConfig}
                                         eventHandlers={eventHandlers}
                                         djsConfig={djsConfig}/>
+                    </fieldset>
+
+                    <fieldset className="form-group">
+                      {/* Invert Lat/Lon because of postgis*/}
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Latitude"
+                        value={this.props.longitude}
+                        onChange={this.updateFieldEvent('longitude')} />
+
+                      <input
+                        className="form-control"
+                        type="text"
+                        placeholder="Longitude"
+                        value={this.props.latitude}
+                        onChange={this.updateFieldEvent('latitude')} />
                     </fieldset>
 
                     <fieldset className="form-group"> 
@@ -333,13 +352,15 @@ class Editor extends React.Component {
                         { Object.keys(this.props.files).filter(key => !this.state.deleted_files.includes(this.props.files[key].file)).map(key => 
 
                           { 
-                            return ( <span key={`audio_` + key} className="img-wrap">
+                            return ( <span key={`audio_` + key} className="img-wrap" style={{'margin':'0.5rem'}}>
                             <span className="delete" onClick={this.deleteMedia(this.props.files[key].file, 'files_urls')} ><i className="ion-trash-a"></i></span>
-                            <span><i style={{'font-size':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>{this.props.files[key].file.split('/').pop()}</span>
+                            <span><i style={{'font-size':'2rem'}} className="ion-android-archive"/><div>{this.props.files[key].file.split('/').pop()}</div></span>
                             </span> ) 
                           }
 
                         )}
+
+
                       </div>
                     </div>
                   </fieldset>
