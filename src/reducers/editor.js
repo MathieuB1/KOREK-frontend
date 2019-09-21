@@ -20,6 +20,7 @@ export default (state = {}, action) => {
         images: action.payload ? action.payload.body.images : '',
         videos: action.payload ? action.payload.body.videos : '',
         audios: action.payload ? action.payload.body.audios : '',
+        files: action.payload ? action.payload.body.files : '',
         text: action.payload ? action.payload.body.text : '',
         private: action.payload ? action.payload.body.private : false,
         category: action.payload ? action.payload.body.category : null,

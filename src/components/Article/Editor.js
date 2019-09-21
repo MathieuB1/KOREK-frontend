@@ -64,6 +64,7 @@ class Editor extends React.Component {
       deleted_images: [],
       deleted_videos: [],
       deleted_audios: [],
+      deleted_files: [],
       private: false,
       selected_tags: [],
       selected_category: null
@@ -96,12 +97,10 @@ class Editor extends React.Component {
   }
 
   deleteMedia = (key, type) => ev => {
-      const item_to_remove = type; //images_url, videos_url, audios_url
+      const item_to_remove = type; //images_urls, videos_urls, audios_urls, file_url
 
       var data = { "id": this.props.match.params.id,
-                   "title": this.props.title,
-                   "text": this.props.text
-                   }
+                   "title": this.props.title }
 
       data[item_to_remove] = [key];
       this.props.onDeleteMedia(agent.Articles.delete_media(data));
@@ -125,9 +124,10 @@ class Editor extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.deleted) {
         // hide the component
-        if(nextProps.media_deleted.images_url) { this.setState({ deleted_images: this.state.deleted_images.concat(nextProps.media_deleted.images_url) }) }
-        if(nextProps.media_deleted.videos_url) { this.setState({ deleted_videos: this.state.deleted_videos.concat(nextProps.media_deleted.videos_url) }) }
-        if(nextProps.media_deleted.audios_url) { this.setState({ deleted_audios: this.state.deleted_audios.concat(nextProps.media_deleted.audios_url) }) }
+        if(nextProps.media_deleted.images_urls) { this.setState({ deleted_images: this.state.deleted_images.concat(nextProps.media_deleted.images_urls) }) }
+        if(nextProps.media_deleted.videos_urls) { this.setState({ deleted_videos: this.state.deleted_videos.concat(nextProps.media_deleted.videos_urls) }) }
+        if(nextProps.media_deleted.audios_urls) { this.setState({ deleted_audios: this.state.deleted_audios.concat(nextProps.media_deleted.audios_urls) }) }
+        if(nextProps.media_deleted.files_urls) { this.setState({ deleted_files: this.state.deleted_files.concat(nextProps.media_deleted.files_urls) }) }
     }
 
     if (nextProps.private) {
@@ -285,7 +285,7 @@ class Editor extends React.Component {
                   </fieldset>
                 </form>
 
-                {(this.props.uploadProgress) ? (<div><p>Sending data to server:</p><Line percent={this.props.uploadProgress} strokeWidth="1" trailWidth="1" trailColor="#D3D3D3" strokeColor="#0074d9" /></div>) : (<div></div>)}
+                {(this.props.uploadProgress) ? (<div><p>Sending data to server:</p><Line percent={this.props.uploadProgress} strokeWidth="1" trailWidth="1" trailColor="#D3D3D3" strokeColor="#0074d9" /></div>) : null}
 
                   <hr/>
 
@@ -293,37 +293,49 @@ class Editor extends React.Component {
                     <div className="row article-content">
                       <div className="col-lg-12">
 
-                        {(this.props.images.length) ? (<p>Images:</p>) : (<div></div>)}
+                        {(this.props.images.length) ? (<p>Images:</p>) : null}
                         { Object.keys(this.props.images).filter( key => !this.state.deleted_images.includes(this.props.images[key].image) ).map(key => 
                          
                           { 
                             return ( <span key={`image_` + key} className="img-wrap">
-                            <span className="delete" onClick={this.deleteMedia(this.props.images[key].image, 'images_url')} ><i className="ion-trash-a"></i></span>
+                            <span className="delete" onClick={this.deleteMedia(this.props.images[key].image, 'images_urls')} ><i className="ion-trash-a"></i></span>
                             <ReadMedia  type='image' resize={{ 'width':'11rem', 'height':'7rem' }} url={this.props.images[key].image} />
                             </span> ) 
                           }
 
                         )}
 
-                        {(this.props.videos.length) ? (<p>Videos:</p>) : (<div></div>)}
+                        {(this.props.videos.length) ? (<p>Videos:</p>) : null}
                         { Object.keys(this.props.videos).filter(key => !this.state.deleted_videos.includes(this.props.videos[key].video)).map(key => 
                          
                           { 
                             return ( <span key={`video_` + key} className="img-wrap">
-                            <span className="delete" onClick={this.deleteMedia(this.props.videos[key].video, 'videos_url')} ><i className="ion-trash-a"></i></span>
+                            <span className="delete" onClick={this.deleteMedia(this.props.videos[key].video, 'videos_urls')} ><i className="ion-trash-a"></i></span>
                             <ReadMedia  type='video' resize={{ 'width':'11rem' }} url={this.props.videos[key].video} />
                             </span> ) 
                           }
 
                         )}
 
-                        {(this.props.audios.length) ? (<p>Audios:</p>) : (<div></div>)}
+                        {(this.props.audios.length) ? (<p>Audios:</p>) : null}
                         { Object.keys(this.props.audios).filter(key => !this.state.deleted_audios.includes(this.props.audios[key].audio)).map(key => 
 
                           { 
                             return ( <span key={`audio_` + key} className="img-wrap">
-                            <span className="delete" onClick={this.deleteMedia(this.props.audios[key].audio, 'audios_url')} ><i className="ion-trash-a"></i></span>
+                            <span className="delete" onClick={this.deleteMedia(this.props.audios[key].audio, 'audios_urls')} ><i className="ion-trash-a"></i></span>
                             <ReadMedia  type='audio' resize={{ 'width':'11rem' }} url={this.props.audios[key].audio}/>
+                            </span> ) 
+                          }
+
+                        )}
+
+                        {(this.props.files.length) ? (<p>Files:</p>) : null}
+                        { Object.keys(this.props.files).filter(key => !this.state.deleted_files.includes(this.props.files[key].file)).map(key => 
+
+                          { 
+                            return ( <span key={`audio_` + key} className="img-wrap">
+                            <span className="delete" onClick={this.deleteMedia(this.props.files[key].file, 'files_urls')} ><i className="ion-trash-a"></i></span>
+                            <span><i style={{'font-size':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>{this.props.files[key].file.split('/').pop()}</span>
                             </span> ) 
                           }
 
