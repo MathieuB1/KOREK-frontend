@@ -23,7 +23,7 @@ class Login extends React.Component {
     super(props);
 
     this.state = {
-        username: this.props.currentUser  ? this.props.currentUser : '',
+        username: window.localStorage.getItem('username')  ? window.localStorage.getItem('username') : '',
         password: '',
     };
 
