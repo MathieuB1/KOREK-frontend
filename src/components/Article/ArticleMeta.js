@@ -29,14 +29,13 @@ const ArticleMeta = props => {
           </Link> }
       </div> : null }
 
+
       { article.tags && article.tags.length > 0 ? 
-      
       <div><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
         { Object.keys(article.tags).map(key => { return ( 
-          <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link"><Badge variant="primary">{article.tags[key]}</Badge></Link>
+          <Link key={key} to={`/products_tag/${article.tags[key]}`} className="preview-link"><Badge variant="primary">{article.tags[key]}</Badge></Link>
         )}) }
       </div>
-
       : null }
 
       <ArticleActions canModify={props.canModify} article={article} />

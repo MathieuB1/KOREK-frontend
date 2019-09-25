@@ -18,14 +18,18 @@ const mapDispatchToProps = dispatch => ({
 
 class Category extends React.Component {
   componentDidMount() {
-    this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
+    if (this.props.match.params.category && !this.props.match.params.owner) {
+      this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
+    }
+
+    if (this.props.match.params.category && this.props.match.params.owner) {
+      this.props.onLoad('category', agent.Articles.category, agent.Articles.category_owner(0, this.props.match.params.category, this.props.match.params.owner));
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.match.params.category && this.props.match.params.category !== prevProps.match.params.category) {
-      if (this.props.match.params.category) {
-        return this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
-      }
+        this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
     }
   }
 

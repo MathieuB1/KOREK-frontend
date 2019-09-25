@@ -18,14 +18,18 @@ const mapDispatchToProps = dispatch => ({
 
 class Tag extends React.Component {
   componentDidMount() {
-    this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
+    if (this.props.match.params.tag && !this.props.match.params.owner) {
+      this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
+    }
+
+    if (this.props.match.params.tag && this.props.match.params.owner) {
+      this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag_owner(0, this.props.match.params.tag, this.props.match.params.owner));
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.match.params.tag && this.props.match.params.tag !== prevProps.match.params.tag) {
-      if (this.props.match.params.tag) {
-        return this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
-      }
+        this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
     }
   }
 

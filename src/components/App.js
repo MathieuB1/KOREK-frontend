@@ -137,8 +137,10 @@ class App extends React.Component {
                 <Route path = "/editor/:id" component = { Editor }/> 
                 <Route path = "/editor" component = { Editor } /> 
                 <Route path = "/products/:id" component = { Article }/>
-                <Route path = "/products_tags/:tag" component = { Tag }/> 
-                <Route path = "/products_category/:category" component = { Category }/> 
+                <Route path = "/products_tag/:tag" component = { Tag }/> 
+                <Route path = "/products_category/:category" component = { Category }/>
+                <Route path = "/products_tag_owner/:tag/:owner" component = { Tag }/> 
+                <Route path = "/products_category_owner/:category/:owner" component = { Category }/> 
                 <Route path = "/users/:owner" component = { Friend }/> 
                 <Route path = "/users/" component = { Profile }/> 
                 <Route path = "/settings" component = { Settings } />

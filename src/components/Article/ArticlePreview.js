@@ -89,7 +89,7 @@ const ArticlePreview = props => {
             { article.tags && article.tags.length > 0 ? 
             <div style={{ 'display': 'inline-block' }}><span style={{'color': 'black'}}><i className="ion-bookmark"></i>&nbsp;</span>
               { Object.keys(article.tags).map(key => { return ( 
-                <Link key={key} to={`/products_tags/${article.tags[key]}`} className="preview-link">
+                <Link key={key} to={`/products_tag/${article.tags[key]}`} className="preview-link">
                   <Badge variant="primary">{article.tags[key]}</Badge>
                 </Link>
               )}) }

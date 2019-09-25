@@ -85,6 +85,10 @@ const Articles = {
         requests.get(`/products?${limit(8, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }`),
     category: (page, category_slug) =>
         requests.get(`/products?${limit(8, page)}&category__name=${ category_slug }`),
+    tag_owner: (page, tag_slug, owner) =>
+        requests.get(`/products?${limit(8, page)}&tags__name=${ tag_slug ? tag_slug : 'other' }&owner__username=${owner}`),
+    category_owner: (page, category_slug, owner) =>
+        requests.get(`/products?${limit(8, page)}&category__name=${ category_slug }&owner__username=${owner}`),
     get_categories: () =>
         requests.get(`/categories/`),
     get: slug =>

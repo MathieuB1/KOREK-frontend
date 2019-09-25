@@ -135,20 +135,32 @@ class Profile extends React.Component {
               </div>
 
               <br/>
+
+              { profile_stats && profile_stats[0].categories.length > 0 ?
+              <span>Categories:<div className="scrolling-wrapper">{profile_stats[0].categories.filter(el => el.category__name).map(el => {
+                return  (
+                  <Link className="category" key={el.category__name} to={`/products_category_owner/${el.category__name}/${profile.username}`} >
+                     <Badge key={el.tags__name} style={{'margin':'1px','padding':'1px'}} className="btn" variant="secondary">
+                       {el.category__name}&nbsp;
+                       <Badge variant="dark">{el.total}</Badge>
+                     </Badge>
+                  </Link>
+                )
+              })}</div></span>
+              : null }
               
               { profile_stats && profile_stats[0].tags.length > 0 ?
-              <div className="scrolling-wrapper">{profile_stats[0].tags.filter(el => el.tags__name).map(el => {
+              <span>Tags:<div className="scrolling-wrapper">{profile_stats[0].tags.filter(el => el.tags__name).map(el => {
                 return  (
-                  <Link className="category" key={el.tags__name} to={`/products_tags/${el.tags__name}`} >
+                  <Link className="tag" key={el.tags__name} to={`/products_tag_owner/${el.tags__name}/${profile.username}`} >
                      <Badge key={el.tags__name} style={{'margin':'1px','padding':'1px'}} className="btn" variant="primary">
                        {el.tags__name}&nbsp;
                        <Badge variant="dark">{el.total}</Badge>
                      </Badge>
                   </Link>
                 )
-              })}</div>
+              })}</div></span>
               : null }
-
         </div>
 
         <ValidateFriend refreshProfile={this.refreshProfile}/>
