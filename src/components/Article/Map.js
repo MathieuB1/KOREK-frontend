@@ -30,7 +30,7 @@ class Map extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     // check if positions have changed
-    if (this.props.markerPositions !== prevProps.markerPositions) {
+    if (this.props.markerPositions && this.props.markerPositions !== prevProps.markerPositions) {
 
         var greenIcon = new L.Icon({
           iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',

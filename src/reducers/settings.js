@@ -20,7 +20,8 @@ export default (state = {}, action) => {
       };
     case SETTINGS_PAGE_LOADED:
       return {
-        ...action.payload.body.results[0],
+        ...state,
+        settings: action.payload.body.results[0],
         errors: null,
       };
     case ASYNC_START:

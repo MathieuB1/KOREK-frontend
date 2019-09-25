@@ -3,7 +3,7 @@ import agent from '../../agent';
 import { connect } from 'react-redux';
 import { FILTERS_LOADED, SEARCHING } from '../../constants/actionTypes';
 
-import TreeMenu from 'react-simple-tree-menu'
+import TreeMenu from 'react-simple-tree-menu';
 import '../../../node_modules/react-simple-tree-menu/dist/main.css';
 
 import Select from 'react-select';
@@ -34,7 +34,7 @@ class SearchFilter extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.currentUser)
     {
       this.props.onLoad(Promise.all([

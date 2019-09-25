@@ -96,7 +96,7 @@ class Article extends React.Component {
 
               {(this.props.article.files.length) ? (<p>Files:</p>) : null }
               { Object.keys(this.props.article.files).map(key => 
-                { return ( <a key={`file_` + key} href={this.props.article.files[key].file} download><i style={{'font-size':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>
+                { return ( <a key={`file_` + key} href={this.props.article.files[key].file} download><i style={{'fontSize':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>
                 <div style={{'color':'black'}}>{this.props.article.files[key].file.split('/').pop()}</div></a> ) }
               )}
 

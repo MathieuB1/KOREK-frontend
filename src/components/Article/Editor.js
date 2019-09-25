@@ -108,7 +108,7 @@ class Editor extends React.Component {
 
   updateFieldEvent = key => ev => this.props.onUpdateField(key, ev.target.value);
 
-  componentWillMount() {
+  componentDidMount() {
 
     this.props.onLoadFilters(Promise.all([
         agent.Articles.get_categories(),
@@ -122,31 +122,31 @@ class Editor extends React.Component {
   }
 
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.deleted) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.deleted && this.props.deleted !== prevProps.deleted) {
         // hide the component
-        if(nextProps.media_deleted.images_urls) { this.setState({ deleted_images: this.state.deleted_images.concat(nextProps.media_deleted.images_urls) }) }
-        if(nextProps.media_deleted.videos_urls) { this.setState({ deleted_videos: this.state.deleted_videos.concat(nextProps.media_deleted.videos_urls) }) }
-        if(nextProps.media_deleted.audios_urls) { this.setState({ deleted_audios: this.state.deleted_audios.concat(nextProps.media_deleted.audios_urls) }) }
-        if(nextProps.media_deleted.files_urls) { this.setState({ deleted_files: this.state.deleted_files.concat(nextProps.media_deleted.files_urls) }) }
+        if(this.props.media_deleted.images_urls) { this.setState({ deleted_images: this.state.deleted_images.concat(this.props.media_deleted.images_urls) }) }
+        if(this.props.media_deleted.videos_urls) { this.setState({ deleted_videos: this.state.deleted_videos.concat(this.props.media_deleted.videos_urls) }) }
+        if(this.props.media_deleted.audios_urls) { this.setState({ deleted_audios: this.state.deleted_audios.concat(this.props.media_deleted.audios_urls) }) }
+        if(this.props.media_deleted.files_urls) { this.setState({ deleted_files: this.state.deleted_files.concat(this.props.media_deleted.files_urls) }) }
     }
 
-    if (nextProps.private) {
-      this.setState({ private: nextProps.private });
+    if (this.props.private && this.props.private !== prevProps.private) {
+      this.setState({ private: this.props.private });
     }
 
-    if (nextProps.category) {
-      this.setState({ category: nextProps.category });
+    if (this.props.category && this.props.category !== prevProps.category) {
+      this.setState({ category: this.props.category });
     }
 
-    if (nextProps.tags_set) {
-      this.setState({ selected_tags: nextProps.tags_set });
+    if (this.props.tags_set && this.props.tags_set !== prevProps.tags_set) {
+      this.setState({ selected_tags: this.props.tags_set });
     }
 
-    if (this.props.match.params.id !== nextProps.match.params.id) {
-      if (nextProps.match.params.id) {
+    if (this.props.match.params.id && this.props.match.params.id !== prevProps.match.params.id) {
+      if (this.props.match.params.id) {
         this.props.onUnload();
-        return this.props.onLoad(agent.Articles.get(nextProps.match.params.id));
+        return this.props.onLoad(agent.Articles.get(this.props.match.params.id));
       }
       this.props.onLoad(null);
       this.setState({ private: false });
@@ -354,7 +354,7 @@ class Editor extends React.Component {
                           { 
                             return ( <span key={`audio_` + key} className="img-wrap" style={{'margin':'0.5rem'}}>
                             <span className="delete" onClick={this.deleteMedia(this.props.files[key].file, 'files_urls')} ><i className="ion-trash-a"></i></span>
-                            <span><i style={{'font-size':'2rem'}} className="ion-android-archive"/><div>{this.props.files[key].file.split('/').pop()}</div></span>
+                            <span><i style={{'fontSize':'2rem'}} className="ion-android-archive"/><div>{this.props.files[key].file.split('/').pop()}</div></span>
                             </span> ) 
                           }
 

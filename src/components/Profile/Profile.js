@@ -40,10 +40,9 @@ const EditProfileSettings = props => {
 
 
 const mapStateToProps = state => ({
-  ...state.articleList,
+  ...state.profile,
   currentUserImage: state.common.currentUserImage,
-  currentUser: state.common.currentUser,
-  profile: state.profile
+  currentUser: state.common.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -73,7 +72,7 @@ class Profile extends React.Component {
     ]));
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.refreshProfile();
   }
 
@@ -82,17 +81,14 @@ class Profile extends React.Component {
   }
 
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
 
-      if (nextProps.match.params.owner !== this.props.match.params.owner)
+      if (this.props.profile && this.props.profile !== prevProps.profile)
       {
-          this.setState({ 
-            username: nextProps.profile[0].username
-          });
-          this.refreshProfile(); 
+          this.setState({ username: this.props.profile.username });
       }
 
-      if (nextProps.profile.deletedFriend) { this.refreshProfile() }
+      if (this.props.deletedFriend) { this.refreshProfile() }
 
   }
 
@@ -112,7 +108,7 @@ class Profile extends React.Component {
   }
 
   render() {
-    const profile = this.props.profile[0];
+    const profile = this.props.profile;
     if (!profile) {  return null; }
 
     const profile_stats = (this.props.articles && this.props.currentUser) ? this.props.articles.filter(el => this.props.currentUser === el.profile.user.username).map(article => { return article }) : null

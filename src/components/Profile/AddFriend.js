@@ -38,16 +38,16 @@ class AddFriend extends React.Component {
       this.props.onSubmit(group_name, this.state.id);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onLoad(agent.Profile.getGroup());
   }
 
-  componentWillReceiveProps(nextProps) {
-      if (nextProps.friends) {
-        this.setState({ id: nextProps.friends.id, });
+  componentDidUpdate(prevProps, prevState) {
+      if (this.props.friends && this.props.friends !== prevProps.friends) {
+        this.setState({ id: this.props.friends.id });
       }
       
-      if (nextProps.errors && nextProps.errors.detail === 'You do not have permission to perform this action.') {
+      if (this.props.errors && this.props.errors !== prevProps.errors && this.props.errors.detail === 'You do not have permission to perform this action.') {
          this.setState({
             permission: false
         });       

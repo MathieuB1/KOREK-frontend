@@ -61,7 +61,7 @@ class App extends React.Component {
         if(response.ok) {
             return response.text();
         }
-        throw new Error('Network response was not ok.');
+        throw new Error('WebSocket network response was not ok.');
         })
         .then(function(text) {
             var script = document.createElement("script");
@@ -75,23 +75,23 @@ class App extends React.Component {
     }
 
 
-    componentWillReceiveProps(nextProps) {
+    componentDidUpdate(prevProps, prevState) {
 
-        if (nextProps.redirectTo) {
-            store.dispatch(push(nextProps.redirectTo));
+        if (this.props.redirectTo && this.props.redirectTo !== prevProps.redirectTo) {
+            store.dispatch(push(this.props.redirectTo));
             this.props.onRedirect();
         }
         
-        if (!this.state.loadFailure && nextProps.errors) {
+        if (this.props.errors && this.props.errors !== prevProps.errors && !this.state.loadFailure) {
             this.props.onClickLogout();
             this.setState({ loadFailure: true });
         }
 
-        if(nextProps.currentUser && !nextProps.currentUserImage && !this.props.currentUserImage) {
-            this.props.onLoadUserPicture(agent.Profile.byAuthor(nextProps.currentUser));
+        if(this.props.currentUser && this.props.currentUser !== prevProps.currentUser && this.props.currentUser && !this.props.currentUserImage && !this.props.currentUserImage) {
+            this.props.onLoadUserPicture(agent.Profile.byAuthor(this.props.currentUser));
         }
 
-        if(nextProps.currentUser && !this.state.loadedWebSocket)
+        if(this.props.currentUser && this.props.currentUser && !this.state.loadedWebSocket)
         {
             this.loadWebSocket();
         }
@@ -102,7 +102,7 @@ class App extends React.Component {
         window.eventSocket.onclose();
     }
 
-    componentWillMount() {
+    componentDidMount() {
 
         const csrf = window.localStorage.getItem('csrf');
         if (csrf) {
@@ -137,8 +137,8 @@ class App extends React.Component {
                 <Route path = "/editor/:id" component = { Editor }/> 
                 <Route path = "/editor" component = { Editor } /> 
                 <Route path = "/products/:id" component = { Article }/>
-                <Route path = "/products_tags/:tag" component = { Category }/> 
-                <Route path = "/products_category/:category" component = { Tag }/> 
+                <Route path = "/products_tags/:tag" component = { Tag }/> 
+                <Route path = "/products_category/:category" component = { Category }/> 
                 <Route path = "/users/:owner" component = { Friend }/> 
                 <Route path = "/users/" component = { Profile }/> 
                 <Route path = "/settings" component = { Settings } />

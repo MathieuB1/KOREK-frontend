@@ -16,20 +16,21 @@ const mapDispatchToProps = dispatch => ({
   onUnload: () => dispatch({ type: TAG_PAGE_UNLOADED })
 });
 
-class Category extends React.Component {
-  componentWillMount() {
-    this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
+class Tag extends React.Component {
+  componentDidMount() {
+    this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.category !== nextProps.match.params.category) {
-      if (nextProps.match.params.category) {
-        return this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, nextProps.match.params.category));
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.tag && this.props.match.params.tag !== prevProps.match.params.tag) {
+      if (this.props.match.params.tag) {
+        return this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
       }
     }
   }
 
   
+
   componentWillUnmount() {
     this.props.onUnload();
   }
@@ -39,7 +40,7 @@ class Category extends React.Component {
 
     return (
         <div>
-        <h1 className="tag-title"><i className="ion-bookmark"></i>&nbsp;{this.props.match.params.category}</h1>
+        <h1 className="tag-title"><i className="ion-bookmark"></i>&nbsp;{this.props.match.params.tag}</h1>
 
               <div className={"container " + this.props.display_mode}>
                 <div className="row">
@@ -61,4 +62,4 @@ class Category extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Category);
+export default connect(mapStateToProps, mapDispatchToProps)(Tag);

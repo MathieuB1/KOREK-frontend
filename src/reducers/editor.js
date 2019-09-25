@@ -41,7 +41,7 @@ export default (state = {}, action) => {
             tags: action.error ? null : action.payload.body.results
         };
     case EDITOR_PAGE_UNLOADED:
-      return {};
+      return { ...state };
     case ARTICLE_SUBMITTED:
       return {
         ...state,

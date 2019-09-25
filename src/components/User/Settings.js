@@ -57,21 +57,20 @@ class SettingsForm extends React.Component {
 
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.currentUser) {
       this.setState({ username: this.props.currentUser });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentUser) {
-
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.settings && this.props.settings !== prevProps.settings) {
       this.setState({
-        userPage: nextProps.settings.id,
-        username: nextProps.settings.username,
-        email: nextProps.settings.email,
-        first_name: nextProps.settings.first_name,
-        last_name: nextProps.settings.last_name
+        userPage: this.props.settings.id,
+        username: this.props.settings.username,
+        email: this.props.settings.email,
+        first_name: this.props.settings.first_name,
+        last_name: this.props.settings.last_name
       });
     }
   }
@@ -179,8 +178,7 @@ class SettingsForm extends React.Component {
 
 const mapStateToProps = state => ({
   ...state.settings,
-  currentUser: state.common.currentUser,
-  settings: state.settings,
+  currentUser: state.common.currentUser
 });
 
 const mapDispatchToProps = dispatch => ({

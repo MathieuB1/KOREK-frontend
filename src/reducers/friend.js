@@ -29,7 +29,7 @@ export default (state = {}, action) => {
                 ...state,
                 users_to_validate: action.error ? null : action.payload.body,
                 errors: action.error ? action.payload : null,
-                validate: true
+                validate: true,
             };
         case LOAD_ASKER_FRIENDS:
             return {

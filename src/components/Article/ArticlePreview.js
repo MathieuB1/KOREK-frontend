@@ -26,6 +26,7 @@ const ArticlePreview = props => {
   
   const display_first_image = (props.display_mode === 'grid') ? { margin: 'auto' } : {}
 
+
     return (
         <div className="article-preview" style={display_style}>
 
@@ -46,10 +47,13 @@ const ArticlePreview = props => {
             <h1>{article.title}</h1>
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
 
-            {(article.videos && article.videos[0]) ?
+            {(article.videos && article.videos.length > 0) ?
             <video style={display_first_image} className="first_article_video" key={article.videos[0].video}><source src={article.videos[0].video} /></video> : null }
-            {(article.images && article.images[0] && !article.videos[0]) ?
-            <img style={display_first_image} className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> : (!article.videos[0]) ? <i className="ion-image"></i> : null }
+            
+            {(article.images && article.images.length > 0 && article.videos.length === 0) ?
+            <img style={display_first_image} className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> 
+            : 
+            (article.videos.length === 0 && article.images.length === 0) ? <i className="ion-image"></i> : null }
 
             { (article.text) ? <p style={{'color':'black'}}>{article.text.replace(/<(?:.|\n)*?>/gm, '').substring(0, 150)}<span>&nbsp;&nbsp;Read more...</span></p> : null }
           </Link>

@@ -16,21 +16,20 @@ const mapDispatchToProps = dispatch => ({
   onUnload: () => dispatch({ type: TAG_PAGE_UNLOADED })
 });
 
-class Tag extends React.Component {
-  componentWillMount() {
-    this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, this.props.match.params.tag));
+class Category extends React.Component {
+  componentDidMount() {
+    this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.tag !== nextProps.match.params.tag) {
-      if (nextProps.match.params.tag) {
-        return this.props.onLoad('tag', agent.Articles.tag, agent.Articles.tag(0, nextProps.match.params.tag));
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.match.params.category && this.props.match.params.category !== prevProps.match.params.category) {
+      if (this.props.match.params.category) {
+        return this.props.onLoad('category', agent.Articles.category, agent.Articles.category(0, this.props.match.params.category));
       }
     }
   }
 
   
-
   componentWillUnmount() {
     this.props.onUnload();
   }
@@ -40,7 +39,7 @@ class Tag extends React.Component {
 
     return (
         <div>
-        <h1 className="tag-title"><i className="ion-bookmark"></i>&nbsp;{this.props.match.params.tag}</h1>
+        <h1 className="tag-title"><i className="ion-bookmark"></i>&nbsp;{this.props.match.params.category}</h1>
 
               <div className={"container " + this.props.display_mode}>
                 <div className="row">
@@ -51,8 +50,8 @@ class Tag extends React.Component {
                           display_mode={this.props.display_mode}
                           loading={this.props.loading}
                           articlesCount={this.props.articlesCount}
-                          page_type='tag'
-                          args={{tag: this.props.match.params.tag}}
+                          page_type='category'
+                          args={{tag: this.props.match.params.category}}
                           currentPage={this.props.currentPage} />
                   </div>
                 </div>
@@ -62,4 +61,4 @@ class Tag extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tag);
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

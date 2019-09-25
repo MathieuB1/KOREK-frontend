@@ -24,28 +24,27 @@ class ValidateFriend extends React.Component {
     };
   }
 
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.onLoad(agent.Profile.getAcknowlegment());
   }
 
-  componentWillReceiveProps(nextProps) {
-      if (nextProps.validate) {
+  componentDidUpdate(prevProps, prevState) {
+      if (this.props.validate && this.props.validate !== prevProps.validate) {
 
         // Remove validated friend from list
-        const data = this.state.list_to_validate.filter(i => i.id !== nextProps.users_to_validate.id );
+        const data = this.state.list_to_validate.filter(i => i.id !== this.props.users_to_validate.id );
         this.setState({ list_to_validate: data });
-
         this.props.refreshProfile();
 
-      } 
-      if (!nextProps.validate && nextProps.users_to_validate.length > 0) {
+      }
+
+      if (this.props.users_to_validate && this.props.users_to_validate !== prevProps.users_to_validate && this.props.users_to_validate.length > 0) {
         this.setState({
-            list_to_validate: nextProps.users_to_validate,
+            list_to_validate: this.props.users_to_validate,
         });
       }
       
-      if (nextProps.errors && nextProps.errors.detail === 'You do not have permission to perform this action.') {
+      if (this.props.errors && this.props.errors !== prevProps.errors && this.props.errors.detail === 'You do not have permission to perform this action.') {
         this.setState({
             permission: false
         });

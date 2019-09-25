@@ -34,7 +34,7 @@ class ReadMedia extends React.Component {
 
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.refreshMedia(this.props);
   }
 

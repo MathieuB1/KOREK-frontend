@@ -29,21 +29,20 @@ class Friend extends React.Component {
   }
 
 
-
-  componentWillMount() {
+  componentDidMount() {
       this.setState({ username: this.props.match.params.owner });
       this.props.onLoad('userfeed', agent.Articles.feed, agent.Articles.feed(0, this.props.match.params.owner));
   }
 
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps, prevState) {
 
-      if (nextProps.match.params.owner !== this.props.match.params.owner)
+      if (this.props.match.params.owner && this.props.match.params.owner !== prevProps.match.params.owner)
       {
-        if (nextProps.match.params.owner)
+        if (this.props.match.params.owner)
         {
-          this.setState({ username: nextProps.match.params.owner });
-          this.props.onLoad('userfeed', agent.Articles.feed, agent.Articles.feed(0, nextProps.match.params.owner));
+          this.setState({ username: this.props.match.params.owner });
+          this.props.onLoad('userfeed', agent.Articles.feed, agent.Articles.feed(0, this.props.match.params.owner));
         }
       }
 

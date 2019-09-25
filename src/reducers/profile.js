@@ -1,6 +1,5 @@
 import {
     PROFILE_PAGE_LOADED,
-    PROFILE_PAGE_UNLOADED,
     UPDATE_FIELD_FRIEND,
     ADD_FRIEND_LOADED,
     ADD_FRIEND,
@@ -19,8 +18,13 @@ export default (state = {}, action) => {
             };
         case PROFILE_PAGE_LOADED:
             return {
-                ...action.payload[0].body.results,
-                group_name: ''
+                ...state,
+                pager: action.pager,
+                articles: action.error ? null : action.payload[1].body.results,
+                articlesCount: action.error ? null : action.payload[1].body.count,
+                currentPage: 0,
+                profile: action.payload[0].body.results[0],
+                group_name: '',
             };
         case ADD_FRIEND:
             return {...state,
@@ -35,8 +39,6 @@ export default (state = {}, action) => {
             };
         case UPDATE_FIELD_FRIEND:
             return {...state, [action.key]: action.value };
-        case PROFILE_PAGE_UNLOADED:
-            return {};
         default:
             return state;
     }
