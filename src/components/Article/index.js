@@ -99,8 +99,11 @@ class Article extends React.Component {
                 { return ( <a key={`file_` + key} href={this.props.article.files[key].file} download><i style={{'fontSize':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>
                 <div style={{'color':'black'}}>{this.props.article.files[key].file.split('/').pop()}</div></a> ) }
               )}
-
-              {(this.props.article.locations.length) ? (<p>Locations:</p>) : null }
+              
+              {(this.props.article.locations.length) ? (<span><p>Locations:</p>
+              <div>{this.props.article.locations.length} positions</div>
+              <span>Lon Lat: {this.props.article.locations[this.props.article.locations.length-1].coords.split(';')[1].replace('POINT (','').replace(')','')}</span></span>) 
+              : null }
               { (locations.length) ? <Map markerPositions={locations} /> : null }
 
 

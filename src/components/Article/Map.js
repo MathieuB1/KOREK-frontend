@@ -43,11 +43,9 @@ class Map extends React.Component {
 
         // add marker
         var markers = [];
-        this.props.markerPositions.map((key,idx) => 
-           //markers.push(new L.marker(key[0],  {icon: greenIcon}).addTo(this.map))
-           (idx === 1) ? markers.push(new L.marker(key[0],  {icon: greenIcon}).addTo(this.map)) : markers.push(new L.marker(key[0]).addTo(this.map))
-        )
-
+        markers.push(new L.marker(this.props.markerPositions[this.props.markerPositions.length-1][0],  {icon: greenIcon}).addTo(this.map))
+        var latlngs = this.props.markerPositions.map((key,idx) => [key[0].lat, key[0].lon])
+        new L.polyline(latlngs, {color: 'blue'}).addTo(this.map)
 
         // go to marker
         if(markers.length){
