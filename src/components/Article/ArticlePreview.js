@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Badge from 'react-bootstrap/Badge';
-
+import ImageMediaReader from './ImageMediaReader';
 
 const mapDispatchToProps = dispatch => ({
 });
@@ -51,7 +51,7 @@ const ArticlePreview = props => {
             <video style={display_first_image} className="first_article_video" key={article.videos[0].video}><source src={article.videos[0].video} /></video> : null }
             
             {(article.images && article.images.length > 0 && article.videos.length === 0) ?
-            <img style={display_first_image} className="first_article_image" src={article.images[0].image} alt={article.images[0]} /> 
+            <ImageMediaReader style={display_first_image} className="first_article_image" url={article.images[0].image} />
             : 
             (article.videos.length === 0 && article.images.length === 0) ? <i className="ion-image"></i> : null }
 

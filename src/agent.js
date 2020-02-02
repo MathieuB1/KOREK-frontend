@@ -1,7 +1,6 @@
 import superagentPromise from 'superagent-promise';
 import _superagent from 'superagent';
 
-
 import {
     UPLOAD_PROGRESS
 } from './constants/actionTypes';
@@ -9,14 +8,12 @@ import { store } from './store';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-
 export const API_ROOT = 'https://korek.ml';
 /* Remove this comment if KOREK-backend is booted locally */
 //export const API_ROOT = 'http://localhost';
 window.localStorage.setItem('API_ROOT', API_ROOT);
 
 const responseBody = res => res;
-
 
 let token = null;
 let csrf = null;
@@ -36,6 +33,8 @@ const requests = {
         superagent.del(`${API_ROOT}${url}`).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
     get: url =>
         superagent.get(`${API_ROOT}${url}`).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
+    get_media: url =>
+        superagent.get(`${url}`).use(Plugins).responseType('blob').end(responseBody),
     put: (url, body) =>
         superagent.put(`${API_ROOT}${url}`, body).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
     post: (url, body) =>
@@ -79,6 +78,8 @@ const Articles = {
         requests.get(`/products?${limit(8, page)}${filters}`),
     feed: (page, owner) =>
         requests.get(`/products?${limit(8, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
+    get_media: name =>
+        requests.get_media(`${name}`),
     get_tags: () =>
         requests.get(`/tags/`),
     tag: (page, tag_slug) =>
@@ -141,4 +142,5 @@ export default {
     Comments,
     setToken: _token => { token = _token; },
     setCsrf: _csrf => { csrf = _csrf; }
+
 };

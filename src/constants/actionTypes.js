@@ -45,3 +45,4 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const FILTERS_LOADED = 'FILTERS_LOADED';
 export const SEARCHING = 'SEARCHING';
+export const FETCH_MEDIA = 'FETCH_MEDIA';

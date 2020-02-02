@@ -87,7 +87,7 @@ class App extends React.Component {
             this.setState({ loadFailure: true });
         }
 
-        if(this.props.currentUser && this.props.currentUser !== prevProps.currentUser && this.props.currentUser && !this.props.currentUserImage && !this.props.currentUserImage) {
+        if(this.props.currentUser && this.props.currentUser !== prevProps.currentUser && !this.props.currentUserImage) {
             this.props.onLoadUserPicture(agent.Profile.byAuthor(this.props.currentUser));
         }
 

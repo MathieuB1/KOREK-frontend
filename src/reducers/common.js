@@ -22,7 +22,8 @@ import {
     IMAGE_LOAD,
     DISPLAY_MODE,
     FILTERS_LOADED,
-    SEARCHING
+    SEARCHING,
+    FETCH_MEDIA,
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -61,6 +62,12 @@ export default (state = defaultState, action) => {
                 appLoaded: true,
                 currentUser: action.error ? null : action.username,
                 errors: action.error ? action.payload : null,
+            };
+        case FETCH_MEDIA:
+            return {
+                ...state,
+                media: action.payload ? action.payload.body : null,
+                media_name: action.payload ? action.payload.req.url : null,
             };
         case IMAGE_LOAD:
             return {
