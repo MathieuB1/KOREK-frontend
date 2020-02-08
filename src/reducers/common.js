@@ -23,7 +23,7 @@ import {
     DISPLAY_MODE,
     FILTERS_LOADED,
     SEARCHING,
-    FETCH_MEDIA,
+    FETCH_IMAGE_MEDIA,
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -63,7 +63,7 @@ export default (state = defaultState, action) => {
                 currentUser: action.error ? null : action.username,
                 errors: action.error ? action.payload : null,
             };
-        case FETCH_MEDIA:
+        case FETCH_IMAGE_MEDIA:
             return {
                 ...state,
                 media: action.payload ? action.payload.body : null,

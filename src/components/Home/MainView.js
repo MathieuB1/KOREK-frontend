@@ -105,7 +105,8 @@ const MainView = props => {
         articles={props.articles}
         loading={props.loading}
         articlesCount={props.articlesCount}
-        currentPage={props.currentPage} />
+        currentPage={props.currentPage}
+        token={props.token} />
     </div>
   );
 };

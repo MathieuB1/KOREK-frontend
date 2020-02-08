@@ -27,14 +27,13 @@ const Plugins = req => {
     }
 }
 
-
 const requests = {
     del: url =>
         superagent.del(`${API_ROOT}${url}`).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
     get: url =>
         superagent.get(`${API_ROOT}${url}`).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
-    get_media: url =>
-        superagent.get(`${url}`).use(Plugins).responseType('blob').end(responseBody),
+    get_image_media: url =>
+        superagent.get(`${url}`).use(Plugins).responseType('blob').then(responseBody),
     put: (url, body) =>
         superagent.put(`${API_ROOT}${url}`, body).set('Content-Type', 'application/json').use(Plugins).then(responseBody),
     post: (url, body) =>
@@ -78,8 +77,8 @@ const Articles = {
         requests.get(`/products?${limit(8, page)}${filters}`),
     feed: (page, owner) =>
         requests.get(`/products?${limit(8, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
-    get_media: name =>
-        requests.get_media(`${name}`),
+    get_image_media: name =>
+        requests.get_image_media(`${name}`),
     get_tags: () =>
         requests.get(`/tags/`),
     tag: (page, tag_slug) =>

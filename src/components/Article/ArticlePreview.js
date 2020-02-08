@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Badge from 'react-bootstrap/Badge';
-import ImageMediaReader from './ImageMediaReader';
+import ImageMediaReader from './Readers/ImageMediaReader';
 
 const mapDispatchToProps = dispatch => ({
 });
@@ -26,6 +26,7 @@ const ArticlePreview = props => {
   
   const display_first_image = (props.display_mode === 'grid') ? { margin: 'auto' } : {}
 
+  const add_token = '?token=' + props.token;
 
     return (
         <div className="article-preview" style={display_style}>
@@ -48,7 +49,7 @@ const ArticlePreview = props => {
             {(article.subtitle) ? <p>{article.subtitle}</p> : null }
 
             {(article.videos && article.videos.length > 0) ?
-            <video style={display_first_image} className="first_article_video" key={article.videos[0].video}><source src={article.videos[0].video} /></video> : null }
+            <video style={display_first_image} className="first_article_video" key={article.videos[0].video}><source src={article.videos[0].video + add_token} /></video> : null }
             
             {(article.images && article.images.length > 0 && article.videos.length === 0) ?
             <ImageMediaReader style={display_first_image} className="first_article_image" url={article.images[0].image} />

@@ -1,5 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ImageMediaReader from './Readers/ImageMediaReader';
+
+const mapStateToProps = state => ({
+   token: state.common.token,
+});
 
 class ReadMedia extends React.Component {
 
@@ -41,17 +46,19 @@ class ReadMedia extends React.Component {
 
   render() {
 
+        const add_token = '?token=' + this.props.token;
+
         if (this.state.loaded) {
 
             let media;
             if (this.props.type === 'image'){
-                this.state.media_image.map(key => media = <img style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} src={key} alt={key} />);
+                this.state.media_image.map(key => media = <ImageMediaReader style={(this.props.resize) ? this.props.resize : {'width':'100%'} } className="first_article_image" url={key} />);
             } 
             else if (this.props.type === 'video'){
-                this.state.media_video.map(key =>  media = <video style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key} /></video>);
+                this.state.media_video.map(key =>  media = <video style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key + add_token} /></video>);
             } 
             else if (this.props.type === 'audio'){
-                this.state.media_audio.map(key =>  media = <audio style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key} /></audio>);
+                this.state.media_audio.map(key =>  media = <audio style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key + add_token} /></audio>);
             }
             return media;
 
@@ -63,5 +70,6 @@ class ReadMedia extends React.Component {
   }
 }
 
-export default connect()(ReadMedia);
+export default connect(mapStateToProps)(ReadMedia);
+
 export { ReadMedia };
