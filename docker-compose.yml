@@ -1,15 +1,29 @@
 version: '3'
 
 services:
+
   web:
-    build: .
+    build: ./frontend
     volumes:
       - frontend:/usr/app/
-      - korekbackend_ssl_cetificate:/etc/letsencrypt/:ro
+      - korekfrontend_ssl_cetificate:/etc/letsencrypt/:ro
     ports:
-      - "443:4100"
+      - "4100:4100"
+      #- "443:4100"
+
+  nginx_react:
+    build: ./nginx
+    depends_on:
+      - web
+    volumes:
+      - korekfrontend_ssl_cetificate:/etc/letsencrypt/
+    ports:
+      - "80:80"
+      - "443:443"
 
 volumes:
   frontend: {}
-  korekbackend_ssl_cetificate:
-    external: true
+  korekfrontend_ssl_cetificate: {}
+
+  #korekfrontend_ssl_cetificate:
+    #external: true
