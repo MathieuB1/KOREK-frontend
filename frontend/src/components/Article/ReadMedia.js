@@ -52,7 +52,7 @@ class ReadMedia extends React.Component {
 
             let media;
             if (this.props.type === 'image'){
-                this.state.media_image.map(key => media = <ImageMediaReader style={(this.props.resize) ? this.props.resize : {'width':'100%'} } className="first_article_image" url={key} />);
+                this.state.media_image.map(key => media = <ImageMediaReader style={(this.props.resize) ? this.props.resize : {'width':'100%'} } url={key} />);
             } 
             else if (this.props.type === 'video'){
                 this.state.media_video.map(key =>  media = <video style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key + add_token} /></video>);

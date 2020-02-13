@@ -1,5 +1,8 @@
 import React from "react";
 import L from "leaflet";
+import { Range } from 'rc-slider';
+
+import 'rc-slider/assets/index.css';
 
 const style = {
   width: "100%",
@@ -7,6 +10,14 @@ const style = {
 };
 
 class Map extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      min: 0,
+      max: this.props.markerPositions.length-1,
+    };
+  }
 
   componentDidMount() {
     // create map
@@ -45,17 +56,31 @@ class Map extends React.Component {
         var markers = [];
         markers.push(new L.marker(this.props.markerPositions[this.props.markerPositions.length-1][0],  {icon: greenIcon}).addTo(this.map))
         var latlngs = this.props.markerPositions.map((key,idx) => [key[0].lat, key[0].lon])
-        new L.polyline(latlngs, {color: 'blue'}).addTo(this.map)
-
+        this.polyline = new L.polyline(latlngs, {color: 'blue'}).addTo(this.map)
         // go to marker
         if(markers.length){
           this.centerLeafletMapOnMarker(this.map, markers)
         }
     }
+
+    if (this.state.min !== prevState.min || this.state.max !== prevState.max) {
+        var latlngs_ = this.props.markerPositions.filter((key,idx) => (idx > this.state.min) && (idx < this.state.max) ).map((key,idx) => [key[0].lat, key[0].lon])
+        if (this.polyline !== undefined) {this.map.removeLayer(this.polyline);}
+        this.polyline = new L.polyline(latlngs_, {color: 'blue'}).addTo(this.map)
+    }
+
+  }
+
+  onSliderChange = (value) => {
+    this.setState({ min: value[0], max: value[1] });
   }
 
   render() {
-    return <div id="map" style={style} />;
+    const default_max = this.props.markerPositions.length-1;
+    const default_min = 0;
+    return <div><div id="map" style={style} />
+                <Range defaultValue={[default_min, default_max]} allowCross={false} min={default_min} max={default_max} onChange={this.onSliderChange}/>
+           </div>;
   }
 }
 
