@@ -77,8 +77,8 @@ export default (state = defaultState, action) => {
         case FILTERS_LOADED:
             return {
                 ...state,
-                categories: action.payload[0].body ? action.payload[0].body : null,
-                tags: action.payload[1].body ? action.payload[1].body.results : null,
+                categories: action.payload[0] && action.payload[0].body ? action.payload[0].body : null,
+                tags: action.payload[1] && action.payload[1].body ? action.payload[1].body.results : null,
             };
         case SETTINGS_SAVED:
             return {
