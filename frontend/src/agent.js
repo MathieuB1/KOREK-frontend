@@ -8,7 +8,7 @@ import { store } from './store';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-export const API_ROOT = 'https://korek.ml';
+export const API_ROOT = 'https://korekk.ml';
 /* Remove this comment if KOREK-backend is booted locally */
 //export const API_ROOT = 'http://localhost';
 window.localStorage.setItem('API_ROOT', API_ROOT);

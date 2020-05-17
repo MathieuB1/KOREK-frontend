@@ -4,6 +4,7 @@ services:
 
   web:
     build: ./frontend
+    tty: true
     volumes:
       - frontend:/usr/app/
       - korekfrontend_ssl_cetificate:/etc/letsencrypt/:ro
