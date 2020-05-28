@@ -103,6 +103,7 @@ class Article extends React.Component {
               {(this.props.article.locations.length) ? (<span><p>Locations:</p>
               <div>Positions: {this.props.article.locations.length}</div>
               <div>Snap Time: {this.props.article.locations[this.props.article.locations.length-1].created.split('.')[0].split('T')[1]}</div>
+              <div>Trip length: {this.props.article.locations_distance} m</div>
               <span>Lon Lat: {this.props.article.locations[this.props.article.locations.length-1].coords.split(';')[1].replace('POINT (','').replace(')','')}</span></span>) 
               : null }
               { (locations.length) ? <Map markerPositions={locations} /> : null }
