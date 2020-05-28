@@ -14,6 +14,8 @@ You can view a live demo over at (https://korek-react.ml)
 ## Run Korek frontend locally
 
 - Install & Boot Korek backend see https://github.com/MathieuB1/KOREK-backend
+- Clone this repository
+- `cd frontend`
 - `npm install` to install all requested dependencies
 - `npm start` to start the local http server (this project uses create-react-app)
 
