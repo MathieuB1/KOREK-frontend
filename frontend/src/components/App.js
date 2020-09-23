@@ -91,7 +91,7 @@ class App extends React.Component {
             this.props.onLoadUserPicture(agent.Profile.byAuthor(this.props.currentUser));
         }
 
-        if(this.props.currentUser && this.props.currentUser && !this.state.loadedWebSocket)
+        if(this.props.currentUser && !this.state.loadedWebSocket)
         {
             this.loadWebSocket();
         }
