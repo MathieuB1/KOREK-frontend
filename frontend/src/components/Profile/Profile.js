@@ -130,13 +130,15 @@ class Profile extends React.Component {
               </Media>
 
               <div className="edit-profile">
-                <ShowMyArticles username={profile.username} total={profile_stats ? profile_stats[0].products : 0} />
+                { profile_stats && profile_stats[0] && profile_stats[0].products ?
+                <ShowMyArticles username={profile.username} total={ profile_stats[0].products } />
+                : null }
                 <EditProfileSettings/>
               </div>
 
               <br/>
 
-              { profile_stats && profile_stats[0].categories.length > 0 ?
+              { profile_stats && profile_stats[0] && profile_stats[0].categories.length > 0 ?
               <span>Categories:<div className="scrolling-wrapper">{profile_stats[0].categories.filter(el => el.category__name).map(el => {
                 return  (
                   <Link className="category" key={el.category__name} to={`/products_category_owner/${el.category__name}/${profile.username}`} >
@@ -149,7 +151,7 @@ class Profile extends React.Component {
               })}</div></span>
               : null }
               
-              { profile_stats && profile_stats[0].tags.length > 0 ?
+              { profile_stats && profile_stats[0] && profile_stats[0].tags.length > 0 ?
               <span>Tags:<div className="scrolling-wrapper">{profile_stats[0].tags.filter(el => el.tags__name).map(el => {
                 return  (
                   <Link className="tag" key={el.tags__name} to={`/products_tag_owner/${el.tags__name}/${profile.username}`} >
