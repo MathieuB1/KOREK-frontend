@@ -1,3 +1,5 @@
+[![Build Status](https://api.travis-ci.org/MathieuB1/KOREK-frontend.svg?branch=master)](https://travis-ci.org/github/MathieuB1/KOREK-frontend)
+
 # ![React + Redux + Korek Api](project-logo.jpg)
 
 This frontend is based on https://github.com/gothinkster/react-redux-realworld-example-app
