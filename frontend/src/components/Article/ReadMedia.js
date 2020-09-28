@@ -14,6 +14,7 @@ class ReadMedia extends React.Component {
         media_image: [],
         media_video: [],
         media_audio: [],
+        media_file: [],
         loaded: false
       };
   }
@@ -36,7 +37,10 @@ class ReadMedia extends React.Component {
         {
           that.setState({ loaded: true, media_audio: that.state.media_audio.concat(props.url) });
         }
-
+        else if (props.type.startsWith('file'))
+        {
+          that.setState({ loaded: true, media_file: that.state.media_file.concat(props.url) });
+        }
   }
 
   componentDidMount(){
@@ -59,6 +63,11 @@ class ReadMedia extends React.Component {
             } 
             else if (this.props.type === 'audio'){
                 this.state.media_audio.map(key =>  media = <audio style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={key} controls><source src={key + add_token} /></audio>);
+            }
+            else if (this.props.type === 'file'){
+                this.state.media_file.map(key =>  media = <a href={key + add_token} style={(this.props.resize) ? this.props.resize : {'width':'100%'} }>
+                <i style={{'fontSize':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>
+                <div style={{'color':'black'}}>{key.split('/').pop()}</div></a>)
             }
             return media;
 
