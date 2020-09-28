@@ -61,7 +61,7 @@ class App extends React.Component {
         if(response.ok) {
             return response.text();
         }
-        throw new Error('WebSocket network response was not ok.');
+        console.log('WebSocket network response was not ok.');
         })
         .then(function(text) {
             var script = document.createElement("script");
