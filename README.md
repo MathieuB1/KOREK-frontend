@@ -1,6 +1,4 @@
-# ![React + Redux + Korek Api]
-
-(project-logo.png)
+# ![React + Redux + Korek Api](project-logo.jpg)
 
 This frontend is based on https://github.com/gothinkster/react-redux-realworld-example-app
 
