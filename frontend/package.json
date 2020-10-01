@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "bootstrap": "^4.5.0",
+        "cypress": "^5.3.0",
         "history": "^4.10.1",
         "leaflet": "^1.6.0",
         "rc-progress": "^2.6.1",

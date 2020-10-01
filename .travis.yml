@@ -11,4 +11,4 @@ before_install:
   - docker ps
 
 script:
-  - sleep 30 && echo "Build Me!!"
+  - sleep 30 && docker exec -it $(docker ps | grep web | awk '{print $NF}') /bin/bash -c "apk add xvfb && cd /usr/app/ && npx cypress run --spec basic_test.spec.js"
