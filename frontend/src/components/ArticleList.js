@@ -23,7 +23,7 @@ const ArticleList = props => {
 
   return (
     <div>
-
+      <div style={{ 'position': 'absolute', 'right': '0%' }}>{props.articlesCount} {props.articlesCount === 1 ? "item" : "items"} </div>
       {
         props.articles.map(article => {
           return (

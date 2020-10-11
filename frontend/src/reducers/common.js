@@ -23,6 +23,7 @@ import {
     DISPLAY_MODE,
     FILTERS_LOADED,
     SEARCHING,
+    LOCATION_SEARCHING,
     FETCH_IMAGE_MEDIA,
 } from '../constants/actionTypes';
 
@@ -125,6 +126,10 @@ export default (state = defaultState, action) => {
         case SEARCHING:
             return {...state,
                 criteria: action.criteria
+            };
+        case LOCATION_SEARCHING:
+            return {...state,
+                bbox: action.bbox
             };
         case LOGIN_PAGE_UNLOADED:
         case DELETE_PROFILE_ARTICLE:

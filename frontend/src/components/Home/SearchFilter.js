@@ -8,6 +8,7 @@ import '../../../node_modules/react-simple-tree-menu/dist/main.css';
 
 import Select from 'react-select';
 import './SearchFilter.css';
+import Instersect from './Instersect';
 
 const mapStateToProps = state => ({
   ...state.common,
@@ -31,6 +32,7 @@ class SearchFilter extends React.Component {
       url_tags_suffix: '',
       url_category_suffix: '',
       url_search_suffix: '',
+      search_by_location: false,
     }
   }
 
@@ -80,15 +82,28 @@ class SearchFilter extends React.Component {
       this.setState({ search: value , url_search_suffix: search });
     }
     
+
+    if (type === 'select-intersection'){ 
+      this.setState({ search_by_location: !this.state.search_by_location});
+    }
+
     var criteria = search ? search : this.state.url_search_suffix;
     criteria += category ? ((category === 'null') ? '' : category) : this.state.url_category_suffix;
     criteria += tags_list ? ((tags_list === 'null') ? '' : tags_list) : this.state.url_tags_suffix;
     criteria = criteria.replace(',','')
+    if (this.props.bbox && this.props.bbox.length > 0) { criteria += this.props.bbox}
+
 
     this.props.onSearch('filter', agent.Articles.filter, agent.Articles.filter(criteria), criteria);
 
   }
 
+  setLocationFilter = (type, value) => {
+    if (type === 'select-intersection')
+    {
+      this.setState({ search_by_location: !this.state.search_by_location});
+    }   
+  }
 
   render() {
 
@@ -100,6 +115,7 @@ class SearchFilter extends React.Component {
         return _tree;
       }
     }
+
 
     if (this.props.categories) { 
       tree.push({ key: '0', label: 'Category', nodes: nodesSet(this.props.categories)});
@@ -113,16 +129,27 @@ class SearchFilter extends React.Component {
         <div>
             <fieldset className="form-group" style={{ marginTop: '1rem'}}>
                 <div className="input-group mb-3">
+                    <div className="input-group-append">
+                        <span className="input-group-text" id="search"><i className="ion-search"></i></span>
+                    </div>
                     <input type="text" className="form-control" placeholder="Search" aria-describedby="search"
                         value={this.state.search}
                         onChange={el => this.setFilter('search', el.target.value )}
                         />
+
                     <div className="input-group-prepend">
-                        <span className="input-group-text" id="search"><i className="ion-search"></i></span>
+                      <button style={{'display': 'contents'}} className="" onClick={value => this.setLocationFilter('select-intersection', value)} >
+                        <span className={"btn btn-outline-success" + (this.props.bbox && this.props.bbox.length > 0 ? " active" : "") } id="location"><i className="ion-ios-location" ></i></span>
+                      </button>
                     </div>
+
                 </div>
 
                 <div>
+
+                     {this.state.search_by_location ? 
+                     <Instersect  />: null }
+
 
                      {this.props.categories ? 
                      <TreeMenu 
