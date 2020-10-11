@@ -20,7 +20,7 @@ const ArticlePreview = props => {
                                                             maxWidth:'20rem',
                                                             minHeight: '27rem',
                                                             maxHeight: '27rem',
-                                                            margin: '1rem',
+                                                            margin: '0.5rem',
                                                             backgroundColor: '#ffffff',
                                                           } : { display:'block'};
   

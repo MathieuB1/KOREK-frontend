@@ -76,7 +76,7 @@ const Articles = {
     filter: (filters, page) =>
         requests.get(`/products?${limit(8, page)}${filters}`),
     feed: (page, owner) =>
-        requests.get(`/products?${limit(8, page)}&owner__username=${ owner ? owner : window.localStorage.getItem('username')}`),
+        requests.get(`/products?${limit(8, page)}&owner__username=${owner ? owner : window.localStorage.getItem('username')}`),
     get_image_media: name =>
         requests.get_image_media(`${name}`),
     get_tags: () =>

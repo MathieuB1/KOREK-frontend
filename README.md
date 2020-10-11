@@ -68,3 +68,4 @@ The example application is targeting the KOREK backend API, which provides a Dja
 - Follow other users
 - Articles Tags/Category
 - Articles Locations
+- Leaflet Map Intersection

@@ -3,12 +3,14 @@ import {
     HOME_PAGE_LOADED,
     HOME_PAGE_UNLOADED,
     CHANGE_TAB,
-    SEARCHING
+    SEARCHING,
+    LOCATION_SEARCHING
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
     switch (action.type) {
         case SEARCHING:
+        case LOCATION_SEARCHING:
         case HOME_PAGE_LOADED:
             return {
                 ...state,
