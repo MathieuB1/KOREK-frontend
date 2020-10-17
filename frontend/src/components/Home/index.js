@@ -19,7 +19,8 @@ const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,
   token: state.common.token,
-  display_mode: state.common.display_mode
+  display_mode: state.common.display_mode,
+  criteria: state.common.criteria
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -36,7 +37,9 @@ class Home extends React.Component {
       agent.Articles.all :
       agent.Articles.feed;
 
-    this.props.onLoad(tab, articlesPromise, articlesPromise());
+    if(!this.props.criteria){
+      this.props.onLoad(tab, articlesPromise, articlesPromise());
+    }
   }
 
   onClickDisplay(type){

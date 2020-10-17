@@ -125,7 +125,10 @@ export default (state = defaultState, action) => {
             };
         case SEARCHING:
             return {...state,
-                criteria: action.criteria
+                criteria: action.criteria,
+                search: action.search,
+                selected_category: action.selected_category,
+                selected_tags: action.selected_tags,
             };
         case LOCATION_SEARCHING:
             return {...state,
