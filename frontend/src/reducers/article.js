@@ -15,7 +15,7 @@ export default (state = {}, action) => {
                 highlight: action.error ? null : action.payload[1].text
             };
         case ARTICLE_PAGE_UNLOADED:
-            return {};
+            return state;
         case ADD_COMMENT:
             return {
                 ...state,

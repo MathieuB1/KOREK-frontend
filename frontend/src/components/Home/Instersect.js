@@ -111,7 +111,7 @@ class Instersect extends React.Component {
   }
 
   render() {
-    return <div><span><p>Draw a square</p></span><div id="map" style={style} /></div>;
+    return <div><span><p>Draw a rectangle</p></span><div id="map" style={style} /></div>;
   }
 }
 

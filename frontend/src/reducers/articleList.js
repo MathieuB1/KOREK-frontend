@@ -21,7 +21,7 @@ export default (state = {}, action) => {
                 tab: action.error ? null : action.tab
             };
         case HOME_PAGE_UNLOADED:
-            return {};
+            return state;
         case CHANGE_TAB:
             return {
                 ...state,

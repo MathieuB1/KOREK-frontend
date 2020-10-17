@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     onLoad: payload => dispatch({ type: FILTERS_LOADED, payload }),
-    onSearch: (tab, pager, payload, criteria) =>  dispatch({ type: SEARCHING, tab, pager, payload, criteria })
+    onSearch: (tab, pager, payload, criteria, search, selected_category, selected_tags) =>  dispatch({ type: SEARCHING, tab, pager, payload, criteria, search, selected_category, selected_tags })
 });
 
 class SearchFilter extends React.Component {
@@ -24,84 +24,85 @@ class SearchFilter extends React.Component {
     super(props);
 
     this.state = {
-      search: '',
       categories: [],
       tags: this.props.tags,
-      selected_tags: [],
-      selected_category: [],
-      url_tags_suffix: '',
-      url_category_suffix: '',
-      url_search_suffix: '',
-      search_by_location: false,
+      search: '',
+      selected_tags: '',
+      selected_category: '',
+      selected_location: false,
     }
   }
 
   componentDidMount() {
     if (this.props.currentUser)
     {
-      this.props.onLoad(Promise.all([
-        agent.Articles.get_categories(),
-        agent.Articles.get_tags()
-      ]));
+      if ((this.props.search && this.props.search.length > 0) || 
+      (this.props.selected_tags && this.props.selected_tags.length > 0) ||
+      (this.props.selected_category && this.props.selected_category.length > 0)) 
+      {
+        this.setState({selected_tags: this.props.selected_tags,
+        search: this.props.search, 
+        selected_category: this.props.selected_category});
+      }
+      else{
+        this.props.onLoad(Promise.all([
+          agent.Articles.get_categories(),
+          agent.Articles.get_tags()
+        ]));
+        this.setState({categories: this.props.categories });
+      }
+    }
+  }
 
-      this.setState({ categories: this.props.categories });
+
+  componentDidUpdate(prevProps, prevState) {
+ 
+    if (this.state !== prevState) {
+      var criteria = "";
+      if (this.state.search) {
+        criteria = '&search=' + this.state.search;
+      }
+      if (this.state.selected_category) {
+        criteria += '&category__name=' + (this.state.selected_category !== '' && this.state.selected_category.split("/").length > 1 ? this.state.selected_category.split("/").pop() : this.state.selected_category);
+      }
+      if (this.state.selected_tags) {
+        criteria += '&tags__name=' + this.state.selected_tags.value;
+      }
+      if (this.props.bbox) {
+        criteria += this.props.bbox;
+      }
+
+      this.props.onSearch('filter', agent.Articles.filter, agent.Articles.filter(criteria), criteria, this.state.search, 
+      this.state.selected_category ? this.state.selected_category : '', 
+      this.state.selected_tags ? this.state.selected_tags : '');
     }
   }
 
 
   setFilter = (type, value) => {
 
-    var search = '';
-    var tags_list = '';
-    var category = ''; 
-
     if (type === 'selected_tags'){
-      if(value)
-      {
-        tags_list = '&tags__name=' + value.value;
-        //tags_list = value.map(el => '&tags__name=' + el.value).toString().replace(',','');
-        this.setState({ selected_tags: value, url_tags_suffix: tags_list });
-      } else {
-        tags_list = 'null';
-        this.setState({ selected_tags: '', url_tags_suffix: '' });
-      }
+        this.setState({ selected_tags: value });
     }
 
     if (type === 'selected_category'){ 
-      if (value === 'Category') { 
-        category = 'null';
-        this.setState({ selected_category: [], url_category_suffix: '' });
+      if (value !== 'Category') { 
+        this.setState({ selected_category: value});
       } else {
-        category = '&category__name=' + (value.split("/").length > 1 ? value.split("/").pop() : value);
-        this.setState({ selected_category: value, url_category_suffix: category });
+        this.setState({ selected_category: ''});
       }
     }
 
     if (type === 'search'){ 
-      search = '&search=' + value;
-      this.setState({ search: value , url_search_suffix: search });
+      this.setState({ search: value });
     }
-    
-
-    if (type === 'select-intersection'){ 
-      this.setState({ search_by_location: !this.state.search_by_location});
-    }
-
-    var criteria = search ? search : this.state.url_search_suffix;
-    criteria += category ? ((category === 'null') ? '' : category) : this.state.url_category_suffix;
-    criteria += tags_list ? ((tags_list === 'null') ? '' : tags_list) : this.state.url_tags_suffix;
-    criteria = criteria.replace(',','')
-    if (this.props.bbox && this.props.bbox.length > 0) { criteria += this.props.bbox}
-
-
-    this.props.onSearch('filter', agent.Articles.filter, agent.Articles.filter(criteria), criteria);
 
   }
 
   setLocationFilter = (type, value) => {
     if (type === 'select-intersection')
     {
-      this.setState({ search_by_location: !this.state.search_by_location});
+      this.setState({ selected_location: !this.state.selected_location});
     }   
   }
 
@@ -111,14 +112,14 @@ class SearchFilter extends React.Component {
     function nodesSet(node) {
       if(node && node.length){
         var _tree = [];
-        node.map(el => _tree.push({ key: el.id.toString(), label: el.data.name, nodes: el.children ? nodesSet(el.children) : [] }));
+        node.map(el => _tree.push({ key: el.data.name, label: el.data.name, nodes: el.children ? nodesSet(el.children) : [] }));
         return _tree;
       }
     }
 
 
     if (this.props.categories) { 
-      tree.push({ key: '0', label: 'Category', nodes: nodesSet(this.props.categories)});
+      tree.push({ key: 'Category', label: 'Category', nodes: nodesSet(this.props.categories)});
     }
 
     if (this.props.tags){
@@ -147,16 +148,17 @@ class SearchFilter extends React.Component {
 
                 <div>
 
-                     {this.state.search_by_location ? 
+                     {this.state.selected_location ? 
                      <Instersect  />: null }
 
 
                      {this.props.categories ? 
                      <TreeMenu 
                      data={tree}
-                     onClickItem={({ key, label }) => { this.setFilter('selected_category', label) }}
+                     onClickItem={({ key, label }) => { this.setFilter('selected_category', key) }}
+                     initialActiveKey={this.props.selected_category}
                      hasSearch={false}>
-                      </TreeMenu>: null }
+                     </TreeMenu>: null }
 
                     <Select
                       placeholder={"Select tag"}
