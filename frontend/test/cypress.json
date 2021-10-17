@@ -1,4 +1,7 @@
 {
+    "baseUrl": "http://localhost:4100",
     "integrationFolder": ".",
-    "testFiles": "**.spec.js"
+    "testFiles": "**.spec.js",
+    "video": false,
+    "videoCompression": false
 }

@@ -1,4 +1,4 @@
-[![Build Status](https://api.travis-ci.org/MathieuB1/KOREK-frontend.svg?branch=master)](https://travis-ci.org/github/MathieuB1/KOREK-frontend)
+[![Build Status](https://app.travis-ci.com/MathieuB1/KOREK-frontend.svg?branch=master)](https://app.travis-ci.com/github/MathieuB1/KOREK-frontend)
 
 # ![React + Redux + Korek Api](project-logo.jpg)
 
