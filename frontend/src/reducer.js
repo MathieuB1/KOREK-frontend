@@ -9,6 +9,7 @@ import profile from './reducers/profile';
 import friend from './reducers/friend';
 import tag from './reducers/tag';
 import settings from './reducers/settings';
+import websocket from './reducers/websocket';
 import { routerReducer } from 'react-router-redux';
 
 export default combineReducers({
@@ -22,5 +23,6 @@ export default combineReducers({
     friend,
     settings,
     tag,
+    websocket,
     router: routerReducer
 });

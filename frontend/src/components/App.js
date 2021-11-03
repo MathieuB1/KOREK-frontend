@@ -2,7 +2,7 @@ import agent from '../agent';
 import Header from './Header';
 import React from 'react';
 import { connect } from 'react-redux';
-import { REQUEST_CSRF, APP_LOAD, REDIRECT, LOGOUT, IMAGE_LOAD } from '../constants/actionTypes';
+import { REQUEST_CSRF, APP_LOAD, REDIRECT, LOGOUT, IMAGE_LOAD, WS_RECEIVED_MESSAGE } from '../constants/actionTypes';
 import { Route, Switch } from 'react-router-dom';
 import Article from '../components/Article';
 import Tag from '../components/Tag';
@@ -38,6 +38,14 @@ const mapDispatchToProps = dispatch => ({
     onClickLogout: () => dispatch({ type: LOGOUT }),
 });
 
+
+// Open the websocket
+var wsStart = window.localStorage.getItem('API_ROOT').split("//")[0] === "https:" ? 'wss://' : 'ws://';
+var ws = new WebSocket(wsStart + window.localStorage.getItem('API_ROOT').split("//")[1] + 
+                        '/ws/event/' + window.localStorage.getItem('username') + '/', 
+                        window.localStorage.getItem('jwt'));
+
+                        
 class App extends React.Component {
 
     constructor() {
@@ -51,6 +59,51 @@ class App extends React.Component {
 
     loadWebSocket() {
 
+        // 1st websocket
+        // Used for Redux Storage
+        var timeout = 250;
+        var connectInterval;
+
+        // websocket onopen event listener
+        ws.onopen = () => {
+            console.log("connected websocket main component");
+            timeout = 250; // reset timer to 250 on open of websocket connection 
+            clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+        }
+
+        // websocket onclose event listener
+        ws.onclose = e => {
+            console.log(
+                `Socket is closed. Reconnect will be attempted in ${Math.min(
+                    10000 / 1000,
+                    (timeout + timeout) / 1000
+                )} second.`,
+                e.reason
+            );
+            timeout = timeout + timeout; //increment retry interval
+            connectInterval = setTimeout(this.check, Math.min(10000, timeout)); //call check function after timeout
+        };
+
+        // websocket onerror event listener
+        ws.onerror = err => {
+            console.error(
+                "Socket encountered error: ",
+                err.message,
+                "Closing socket"
+            );
+            ws.close();
+        };
+
+        ws.onmessage = evt => {
+            // listen to data sent from the websocket server
+            const message = JSON.parse(evt.data)
+            const action = { type: WS_RECEIVED_MESSAGE, message }
+            store.dispatch(action);
+        }
+        
+
+        // Used for Notifier (can be desactivated & no retry!)
+        // 2nd websocket 
         fetch(window.localStorage.getItem('API_ROOT') + '/event/notif/', { 
         method: 'GET',  
         headers: new Headers({
@@ -71,8 +124,15 @@ class App extends React.Component {
         })
 
         this.setState({ loadedWebSocket: true });
-        
     }
+    /**
+     * utilited by the @function connect to check if the connection is close, if so attempts to reconnect
+    */
+    check = () => {
+        const { ws } = this.state;
+        if (!ws || ws.readyState === WebSocket.CLOSED) this.loadWebSocket(); //check if websocket instance is closed, if so call `connect` function.
+    };
+
 
 
     componentDidUpdate(prevProps, prevState) {

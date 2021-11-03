@@ -17,14 +17,23 @@ export default (state = {}, action) => {
                 group_name: ''
             };
         case PROFILE_PAGE_LOADED:
-            return {
-                ...state,
-                pager: action.pager,
-                articles: action.error ? null : action.payload[1].body.results,
-                articlesCount: action.error ? null : action.payload[1].body.count,
-                currentPage: 0,
-                profile: action.payload[0].body.results[0],
-                group_name: '',
+
+            if (action.error) {
+                /* article could have been deleted, jwt expires or worst
+                    manage connection in home page
+                */
+                return {...state, redirectTo: '/' };
+            } else {
+                return {
+                    ...state,
+                    redirectTo: null,
+                    pager: action.pager,
+                    articles: action.error ? null : action.payload[1].body.results,
+                    articlesCount: action.error ? null : action.payload[1].body.count,
+                    currentPage: 0,
+                    profile: action.error ? null : action.payload[0].body.results[0],
+                    group_name: '',
+                }
             };
         case ADD_FRIEND:
             return {...state,

@@ -3,21 +3,25 @@ import ReadMedia from './ReadMedia';
 import React from 'react';
 import  agent from '../../agent';
 import CommentContainer from '../Comment/CommentContainer';
+import { store } from '../../store';
+import { push } from 'react-router-redux';
 
 import { connect } from 'react-redux';
-import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED } from '../../constants/actionTypes';
+import { ARTICLE_PAGE_LOADED, ARTICLE_PAGE_UNLOADED, REDIRECT } from '../../constants/actionTypes';
 
 import Map from './Map';
 
 const mapStateToProps = state => ({
   ...state.article,
   currentUser: state.common.currentUser,
-  currentUserImage: state.common.currentUserImage
+  currentUserImage: state.common.currentUserImage,
+  websocket: state.websocket
 });
 
 const mapDispatchToProps = dispatch => ({
   onLoad: payload => dispatch({ type: ARTICLE_PAGE_LOADED, payload }),
-  onUnload: () => dispatch({ type: ARTICLE_PAGE_UNLOADED })
+  onUnload: () => dispatch({ type: ARTICLE_PAGE_UNLOADED }),
+  onRedirect: () => dispatch({ type: REDIRECT }),
 });
 
 class Article extends React.Component {
@@ -38,9 +42,29 @@ class Article extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-   if (this.props.article && this.props.article.locations !== prevState.locations) {
+
+    // redirect to home page in case of error
+    if (this.props.redirectTo && this.props.redirectTo !== prevProps.redirectTo) {
+        store.dispatch(push(this.props.redirectTo));
+        this.props.onRedirect();
+    }
+
+    if (this.props.article && this.props.article.locations !== prevState.locations) {
       this.setState({ locations: this.props.article.locations });
     }
+
+   // if we have an update from websocket then we refresh the page
+   if(this.props.article && this.props.websocket && Number(this.props.websocket.product_id) === this.props.article.id ) {
+      // consume the message
+      this.props.websocket.last_consumed_message = this.props.websocket.message;
+      this.props.websocket.message = '';
+      this.props.websocket.product_id = '';
+      
+      this.props.onLoad(Promise.all([
+        agent.Articles.get(this.props.match.params.id),
+        agent.Articles.highlight(this.props.match.params.id)
+      ]));
+   }
 
   }
 

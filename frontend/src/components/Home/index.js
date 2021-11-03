@@ -20,7 +20,8 @@ const mapStateToProps = state => ({
   appName: state.common.appName,
   token: state.common.token,
   display_mode: state.common.display_mode,
-  criteria: state.common.criteria
+  criteria: state.common.criteria,
+  websocket: state.websocket
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -39,6 +40,30 @@ class Home extends React.Component {
 
     if(!this.props.criteria){
       this.props.onLoad(tab, articlesPromise, articlesPromise());
+    }
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // if we have an update from websocket then we refresh the page
+    var message = String(this.props.websocket.message);
+    var consumed_message = String(this.props.websocket.message);
+    if(message !== '' || consumed_message !== '') {
+
+      // consume all messages
+      this.props.websocket.last_consumed_message = '';
+      this.props.websocket.message = '';
+      this.props.websocket.product_id = '';
+        
+      const tab = this.props.token ? 'all' : 'feed';
+
+      const articlesPromise = this.props.token ?
+      agent.Articles.all :
+      agent.Articles.feed;
+
+
+      this.props.onLoad(tab, articlesPromise, articlesPromise());
+
     }
   }
 

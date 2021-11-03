@@ -32,8 +32,7 @@ class ImageMediaReader extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    
-   if (this.props.media_name === this.props.url && this.props.media !== prevProps.media) {
+   if (this.props.media_name === this.props.url && this.state.display === null) {
 
       var reader = new FileReader();
       var that = this;

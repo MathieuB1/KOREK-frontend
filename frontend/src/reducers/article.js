@@ -8,11 +8,19 @@ import {
 export default (state = {}, action) => {
     switch (action.type) {
         case ARTICLE_PAGE_LOADED:
-            return {
-                ...state,
-                article: action.error ? null : action.payload[0].body,
-                comments: action.error ? null : action.payload[0].body.comments,
-                highlight: action.error ? null : action.payload[1].text
+            if (action.error) {
+                /* article could have been deleted, jwt expires or worst
+                    manage connection in home page
+                */
+                return {...state, redirectTo: '/' };
+            } else {
+                return {
+                    ...state,
+                    redirectTo: null,
+                    article: action.error ? null : action.payload[0].body,
+                    comments: action.error ? null : action.payload[0].body.comments,
+                    highlight: action.error ? null : action.payload[1].text
+                }
             };
         case ARTICLE_PAGE_UNLOADED:
             return state;

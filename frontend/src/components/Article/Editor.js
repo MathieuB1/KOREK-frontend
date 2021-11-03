@@ -10,13 +10,16 @@ import ReadMedia from './ReadMedia';
 
 import { Line } from 'rc-progress';
 
-import 'react-widgets/dist/css/react-widgets.css';
-import Multiselect from 'react-widgets/lib/Multiselect'
+import "react-widgets/styles.css";
+import Multiselect from 'react-widgets/Multiselect'
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 import Select from 'react-select';
+
+import { store } from '../../store';
+import { push } from 'react-router-redux';
 
 import {
   EDITOR_PAGE_LOADED,
@@ -24,10 +27,9 @@ import {
   EDITOR_PAGE_UNLOADED,
   UPDATE_FIELD_EDITOR,
   DELETE_MEDIA,
-  FILTERS_LOADED
+  FILTERS_LOADED,
+  REDIRECT
 } from '../../constants/actionTypes';
-
-
 
 
 
@@ -50,6 +52,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: DELETE_MEDIA, payload }),
   onLoadFilters: (payload) => 
     dispatch({ type: FILTERS_LOADED, payload }),
+  onRedirect: () => 
+    dispatch({ type: REDIRECT })
 });
 
 class Editor extends React.Component {
@@ -123,7 +127,14 @@ class Editor extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.deleted && this.props.deleted !== prevProps.deleted) {
+
+    // redirect to home page in case of error
+    if (this.props.redirectTo && this.props.redirectTo !== prevProps.redirectTo) {
+      store.dispatch(push(this.props.redirectTo));
+      this.props.onRedirect();
+    }
+
+    if (this.props.deleted && this.props.media_deleted !== prevProps.media_deleted) {
         // hide the component
         if(this.props.media_deleted.images_urls) { this.setState({ deleted_images: this.state.deleted_images.concat(this.props.media_deleted.images_urls) }) }
         if(this.props.media_deleted.videos_urls) { this.setState({ deleted_videos: this.state.deleted_videos.concat(this.props.media_deleted.videos_urls) }) }
@@ -312,8 +323,8 @@ class Editor extends React.Component {
                     <div className="row article-content">
                       <div className="col-lg-12">
 
-                        {(this.props.images.length) ? (<p>Images:</p>) : null}
-                        { Object.keys(this.props.images).filter( key => !this.state.deleted_images.includes(this.props.images[key].image) ).map(key => 
+                        {(this.props.images && this.props.images.length) ? (<p>Images:</p>) : null}
+                        { (this.props.images) ? Object.keys(this.props.images).filter( key => !this.state.deleted_images.includes(this.props.images[key].image) ).map(key => 
                          
                           { 
                             return ( <span key={`image_` + key} className="img-wrap">
@@ -322,10 +333,10 @@ class Editor extends React.Component {
                             </span> ) 
                           }
 
-                        )}
+                        ) : null }
 
-                        {(this.props.videos.length) ? (<p>Videos:</p>) : null}
-                        { Object.keys(this.props.videos).filter(key => !this.state.deleted_videos.includes(this.props.videos[key].video)).map(key => 
+                        {(this.props.videos && this.props.videos.length) ? (<p>Videos:</p>) : null}
+                        { (this.props.videos) ? Object.keys(this.props.videos).filter(key => !this.state.deleted_videos.includes(this.props.videos[key].video)).map(key => 
                          
                           { 
                             return ( <span key={`video_` + key} className="img-wrap">
@@ -334,10 +345,10 @@ class Editor extends React.Component {
                             </span> ) 
                           }
 
-                        )}
+                        ) : null }
 
-                        {(this.props.audios.length) ? (<p>Audios:</p>) : null}
-                        { Object.keys(this.props.audios).filter(key => !this.state.deleted_audios.includes(this.props.audios[key].audio)).map(key => 
+                        {(this.props.audios && this.props.audios.length) ? (<p>Audios:</p>) : null}
+                        { (this.props.audios) ? Object.keys(this.props.audios).filter(key => !this.state.deleted_audios.includes(this.props.audios[key].audio)).map(key => 
 
                           { 
                             return ( <span key={`audio_` + key} className="img-wrap">
@@ -346,10 +357,10 @@ class Editor extends React.Component {
                             </span> ) 
                           }
 
-                        )}
+                        ) : null }
 
-                        {(this.props.files.length) ? (<p>Files:</p>) : null}
-                        { Object.keys(this.props.files).filter(key => !this.state.deleted_files.includes(this.props.files[key].file)).map(key => 
+                        {(this.props.files && this.props.files.length) ? (<p>Files:</p>) : null}
+                        { (this.props.files) ? Object.keys(this.props.files).filter(key => !this.state.deleted_files.includes(this.props.files[key].file)).map(key => 
 
                           { 
                             return ( <span key={`audio_` + key} className="img-wrap" style={{'margin':'0.5rem'}}>
@@ -358,7 +369,7 @@ class Editor extends React.Component {
                             </span> ) 
                           }
 
-                        )}
+                        ) : null }
 
 
                       </div>

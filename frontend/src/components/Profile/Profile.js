@@ -6,14 +6,17 @@ import { Link } from 'react-router-dom';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 
-import Media from 'react-bootstrap/Media';
+import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 
+import { store } from '../../store';
+import { push } from 'react-router-redux';
 
 import {
   PROFILE_PAGE_LOADED,
   PROFILE_PAGE_UNLOADED,
-  DELETE_FRIEND
+  DELETE_FRIEND,
+  REDIRECT
 } from '../../constants/actionTypes';
 
 
@@ -48,7 +51,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   onLoad: payload => dispatch({ type: PROFILE_PAGE_LOADED, payload }),
   onUnload: () => dispatch({ type: PROFILE_PAGE_UNLOADED }),
-  onClickDeleteFriend: payload => dispatch({ type: DELETE_FRIEND, payload })
+  onClickDeleteFriend: payload => dispatch({ type: DELETE_FRIEND, payload }),
+  onRedirect: () =>  dispatch({ type: REDIRECT })
 });
 
 class Profile extends React.Component {
@@ -82,6 +86,12 @@ class Profile extends React.Component {
 
 
   componentDidUpdate(prevProps, prevState) {
+
+    // redirect to home page in case of error
+    if (this.props.redirectTo && this.props.redirectTo !== prevProps.redirectTo) {
+        store.dispatch(push(this.props.redirectTo));
+        this.props.onRedirect();
+    }
 
       if (this.props.profile && this.props.profile !== prevProps.profile)
       {
@@ -118,16 +128,15 @@ class Profile extends React.Component {
 
         <div className="container page">
             
-              <Media className="edit-profile">
-              <img width={55}
-                  height={55}
-                  style={{ borderRadius:'50px' }}
-                  className="mr-3" src={this.props.currentUserImage} alt={profile.username}/>
-                <Media.Body>
-                    <h4>{profile.username}</h4>
-                    <h5>{profile.first_name}&nbsp;{profile.last_name}</h5>
-                </Media.Body>
-              </Media>
+              <Card className="edit-profile" style={{ 'border': '0px'}}>
+              <Card.Img  variant="top"
+                  style={{ borderRadius:'50px', width:'55px', height:'55px', margin:'auto', display:'block' }}
+                  src={this.props.currentUserImage} alt={profile.username}/>
+                <Card.Body>
+                  <Card.Title>{profile.username}</Card.Title>
+                  <Card.Text>{profile.first_name}&nbsp;{profile.last_name}</Card.Text>
+                </Card.Body>
+              </Card>
 
               <div className="edit-profile">
                 { profile_stats && profile_stats[0] && profile_stats[0].products ?

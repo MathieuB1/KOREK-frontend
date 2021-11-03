@@ -24,7 +24,7 @@ import {
     FILTERS_LOADED,
     SEARCHING,
     LOCATION_SEARCHING,
-    FETCH_IMAGE_MEDIA,
+    FETCH_IMAGE_MEDIA
 } from '../constants/actionTypes';
 
 const defaultState = {

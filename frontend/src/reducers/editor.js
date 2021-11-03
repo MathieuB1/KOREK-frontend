@@ -12,23 +12,32 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
     case EDITOR_PAGE_LOADED:
-      return {
-        ...state,
-        articleid: action.payload ? action.payload.body.id : '',
-        title: action.payload ? action.payload.body.title : '',
-        subtitle: action.payload ? action.payload.body.subtitle : '',
-        images: action.payload ? action.payload.body.images : '',
-        videos: action.payload ? action.payload.body.videos : '',
-        audios: action.payload ? action.payload.body.audios : '',
-        files: action.payload ? action.payload.body.files : '',
-        text: action.payload ? action.payload.body.text : '',
-        private: action.payload ? action.payload.body.private : false,
-        category: action.payload ? action.payload.body.category : null,
-        tags_set: action.payload ? action.payload.body.tags : null,
-        uploadProgress: 0,
-        inProgress: false,
-        deleted: false
-      };
+
+      if (action.error) {
+        /* article could have been deleted, jwt expires or worst
+          manage connection in home page
+        */
+        return {...state, redirectTo: '/' };
+      } else {
+        return {
+          ...state,
+          redirectTo: null,
+          articleid: action.error ? null : action.payload ? action.payload.body.id : '',
+          title: action.error ? null : action.payload ? action.payload.body.title : '',
+          subtitle: action.error ? null : action.payload ? action.payload.body.subtitle : '',
+          images: action.error ? null : action.payload ? action.payload.body.images : '',
+          videos: action.error ? null : action.payload ? action.payload.body.videos : '',
+          audios: action.error ? null : action.payload ? action.payload.body.audios : '',
+          files: action.error ? null : action.payload ? action.payload.body.files : '',
+          text: action.error ? null : action.payload ? action.payload.body.text : '',
+          private: action.error ? null : action.payload ? action.payload.body.private : false,
+          category: action.error ? null : action.payload ? action.payload.body.category : null,
+          tags_set: action.error ? null : action.payload ? action.payload.body.tags : null,
+          uploadProgress: 0,
+          inProgress: false,
+          deleted: false
+        }
+    };
     case UPLOAD_PROGRESS:
       return { ...state, uploadProgress: action.percent }
     case DELETE_MEDIA:
