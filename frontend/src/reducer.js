@@ -2,6 +2,7 @@ import article from './reducers/article';
 import articleList from './reducers/articleList';
 import auth from './reducers/auth';
 import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router'
 import common from './reducers/common';
 import editor from './reducers/editor';
 import home from './reducers/home';
@@ -10,9 +11,8 @@ import friend from './reducers/friend';
 import tag from './reducers/tag';
 import settings from './reducers/settings';
 import websocket from './reducers/websocket';
-import { routerReducer } from 'react-router-redux';
 
-export default combineReducers({
+const createRootReducer = (history) => combineReducers({
     article,
     articleList,
     auth,
@@ -24,5 +24,7 @@ export default combineReducers({
     settings,
     tag,
     websocket,
-    router: routerReducer
+    router: connectRouter(history)
 });
+
+export default createRootReducer;
