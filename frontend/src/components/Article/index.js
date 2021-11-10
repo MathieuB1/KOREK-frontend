@@ -118,6 +118,16 @@ class Article extends React.Component {
                 { return ( <ReadMedia key={`audio_` + key} type='audio' url={this.props.article.audios[key].audio} /> ) }
               )}
 
+              {(this.props.article.files.length) ? (<p>PDFs:</p>) : null }
+              { Object.keys(this.props.article.files).map(key => { 
+                  if (this.props.article.files[key].file.split('.').pop() === 'pdf') {
+                    return (  <ReadMedia key={`pdf_` + key} type='pdf' url={this.props.article.files[key].file} /> ) 
+                  } else {
+                    return null;
+                  }
+                }
+              )}
+
               {(this.props.article.files.length) ? (<p>Files:</p>) : null }
               { Object.keys(this.props.article.files).map(key => 
                 { return (  <ReadMedia key={`file_` + key} type='file' url={this.props.article.files[key].file} /> ) }

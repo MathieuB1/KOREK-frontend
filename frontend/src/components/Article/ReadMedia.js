@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import ImageMediaReader from './Readers/ImageMediaReader';
+import { PDFReader } from 'reactjs-pdf-reader';
 
 const mapStateToProps = state => ({
    token: state.common.token,
@@ -18,8 +19,6 @@ class ReadMedia extends React.Component {
         loaded: false
       };
   }
-
-
 
   refreshMedia(props) {
 
@@ -41,6 +40,10 @@ class ReadMedia extends React.Component {
         {
           that.setState({ loaded: true, media_file: props.url });
         }
+        else if (props.type.startsWith('pdf'))
+        {
+          that.setState({ loaded: true, media_file: props.url });
+        }
   }
 
   componentDidMount(){
@@ -53,7 +56,6 @@ class ReadMedia extends React.Component {
       this.refreshMedia(this.props);
     }
   }
-
 
   render() {
 
@@ -71,10 +73,13 @@ class ReadMedia extends React.Component {
             else if (this.props.type === 'audio'){
                 media = <audio style={(this.props.resize) ? this.props.resize : {'width':'100%'} } key={this.state.media_audio} controls><source src={this.state.media_audio + add_token} /></audio>;
             }
+            else if (this.props.type === 'pdf') {
+                media = <PDFReader key={this.state.media_file} style={(this.props.resize) ? this.props.resize : {'width':'100%'}} url={this.state.media_file + add_token}/>;
+            }
             else if (this.props.type === 'file'){
                 media = <a key={this.state.media_file} href={this.state.media_file + add_token} style={(this.props.resize) ? this.props.resize : {'width':'100%'} }>
                 <i style={{'fontSize':'2rem', 'margin':'0.5rem'}} className="ion-android-archive"/>
-                <div style={{'color':'black'}}>{this.state.media_file.split('/').pop()}</div></a>
+                <div style={{'color':'black'}}>{this.state.media_file.split('/').pop()}</div></a>;
             }
             return media;
 
