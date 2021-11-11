@@ -31,6 +31,8 @@ class Map extends React.Component {
         })
       ]
     });
+    // List of Markers
+    this.markers = [];
 
   }
 
@@ -43,6 +45,13 @@ class Map extends React.Component {
     // check if positions have changed
     if (this.props.markerPositions && this.props.markerPositions !== prevProps.markerPositions) {
 
+        // clear all markers if any
+        if (this.markers != null ){
+          for(var i=0; i < this.markers.length; i++){
+            this.map.removeLayer(this.markers[i]);
+          }
+        }
+
         var greenIcon = new L.Icon({
           iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
           shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -53,13 +62,12 @@ class Map extends React.Component {
         });
 
         // add marker
-        var markers = [];
-        markers.push(new L.marker(this.props.markerPositions[this.props.markerPositions.length-1][0],  {icon: greenIcon}).addTo(this.map))
+        this.markers.push(new L.marker(this.props.markerPositions[this.props.markerPositions.length-1][0],  {icon: greenIcon}).addTo(this.map))
         var latlngs = this.props.markerPositions.map((key,idx) => [key[0].lat, key[0].lon])
         this.polyline = new L.polyline(latlngs, {color: 'blue'}).addTo(this.map)
         // go to marker
-        if(markers.length){
-          this.centerLeafletMapOnMarker(this.map, markers)
+        if(this.markers.length){
+          this.centerLeafletMapOnMarker(this.map, this.markers)
         }
     }
 

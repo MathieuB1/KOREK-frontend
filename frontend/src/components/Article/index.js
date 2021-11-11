@@ -139,7 +139,7 @@ class Article extends React.Component {
               <div>Trip length: {this.props.article.locations_distance} m</div>
               <span>Lon Lat: {this.props.article.locations[this.props.article.locations.length-1].coords.split(';')[1].replace('POINT (','').replace(')','')}</span></span>) 
               : null }
-              { (locations.length) ? <Map markerPositions={locations} /> : null }
+              { (locations.length) ? <Map key={this.props.article.id} markerPositions={locations} /> : null }
 
 
             </div>

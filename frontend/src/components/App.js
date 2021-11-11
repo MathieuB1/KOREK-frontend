@@ -59,71 +59,78 @@ class App extends React.Component {
 
     loadWebSocket() {
 
-        // 1st websocket
-        // Used for Redux Storage
-        var timeout = 250;
-        var connectInterval;
+        if (window.localStorage.getItem('username') != null && 
+        window.localStorage.getItem('API_ROOT') != null && 
+        window.localStorage.getItem('jwt') != null) {
 
-        // websocket onopen event listener
-        ws.onopen = () => {
-            console.log("connected websocket main component");
-            timeout = 250; // reset timer to 250 on open of websocket connection 
-            clearTimeout(connectInterval); // clear Interval on on open of websocket connection
-        }
+            // 1st websocket
+            // Used for Redux Storage
+            var timeout = 250;
+            var connectInterval;
 
-        // websocket onclose event listener
-        ws.onclose = e => {
-            console.log(
-                `Socket is closed. Reconnect will be attempted in ${Math.min(
-                    10000 / 1000,
-                    (timeout + timeout) / 1000
-                )} second.`,
-                e.reason
-            );
-            timeout = timeout + timeout; //increment retry interval
-            connectInterval = setTimeout(this.check, Math.min(10000, timeout)); //call check function after timeout
-        };
+            // websocket onopen event listener
+            ws.onopen = () => {
+                console.log("connected websocket main component");
+                timeout = 250; // reset timer to 250 on open of websocket connection 
+                clearTimeout(connectInterval); // clear Interval on on open of websocket connection
+            }
 
-        // websocket onerror event listener
-        ws.onerror = err => {
-            console.error(
-                "Socket encountered error: ",
-                err.message,
-                "Closing socket"
-            );
-            ws.close();
-        };
+            // websocket onclose event listener
+            ws.onclose = e => {
+                console.log(
+                    `Socket is closed. Reconnect will be attempted in ${Math.min(
+                        10000 / 1000,
+                        (timeout + timeout) / 1000
+                    )} second.`,
+                    e.reason
+                );
+                timeout = timeout + timeout; //increment retry interval
+                connectInterval = setTimeout(this.check, Math.min(10000, timeout)); //call check function after timeout
+            };
 
-        ws.onmessage = evt => {
-            // listen to data sent from the websocket server
-            const message = JSON.parse(evt.data)
-            const action = { type: WS_RECEIVED_MESSAGE, message }
-            store.dispatch(action);
+            // websocket onerror event listener
+            ws.onerror = err => {
+                console.error(
+                    "Socket encountered error: ",
+                    err.message,
+                    "Closing socket"
+                );
+                ws.close();
+            };
+
+            ws.onmessage = evt => {
+                // listen to data sent from the websocket server
+                const message = JSON.parse(evt.data)
+                const action = { type: WS_RECEIVED_MESSAGE, message }
+                store.dispatch(action);
+            }
+            
+
+            // Used for Notifier (can be desactivated & no retry!)
+            // 2nd websocket 
+            fetch(window.localStorage.getItem('API_ROOT') + '/event/notif/', { 
+            method: 'GET',  
+            headers: new Headers({
+                'Authorization': 'Bearer '+  window.localStorage.getItem('jwt'), 
+            }), 
+            })
+            .then(function(response) {
+            if(response.ok) {
+                return response.text();
+            }
+            console.log('WebSocket network response was not ok.');
+            })
+            .then(function(text) {
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.text = text;
+                document.getElementsByTagName("head")[0].appendChild(script);
+            })
+
+            this.setState({ loadedWebSocket: true });
+
         }
         
-
-        // Used for Notifier (can be desactivated & no retry!)
-        // 2nd websocket 
-        fetch(window.localStorage.getItem('API_ROOT') + '/event/notif/', { 
-        method: 'GET',  
-        headers: new Headers({
-            'Authorization': 'Bearer '+  window.localStorage.getItem('jwt'), 
-        }), 
-        })
-        .then(function(response) {
-        if(response.ok) {
-            return response.text();
-        }
-        console.log('WebSocket network response was not ok.');
-        })
-        .then(function(text) {
-            var script = document.createElement("script");
-            script.type = "text/javascript";
-            script.text = text;
-            document.getElementsByTagName("head")[0].appendChild(script);
-        })
-
-        this.setState({ loadedWebSocket: true });
     }
     /**
      * utilited by the @function connect to check if the connection is close, if so attempts to reconnect
