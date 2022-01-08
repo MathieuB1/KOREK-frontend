@@ -82,10 +82,10 @@ class Home extends React.Component {
 
         <Banner token={this.props.token} appName={this.props.appName} />
         <div className={"container " + this.props.display_mode}>
+        
           <div className="row">
-            <ListErrors errors={this.props.errors} />
+          { this.props.errors ? <ListErrors errors={this.props.errors} /> : null }
           </div>
-
 
           {this.props.errors ? null :
           <div className="article-display" style={{'float':'right','position':'absolute','right':'0.5rem'}}>
