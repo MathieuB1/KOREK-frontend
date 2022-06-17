@@ -22,4 +22,5 @@ RUN chmod +x /usr/app/set_ssl.sh
 EXPOSE 4100
 
 CMD npm start
+
 #CMD npm run-script start_https

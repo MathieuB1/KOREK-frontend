@@ -5,16 +5,18 @@ import {
     CLEAR_TOKEN
 } from '../constants/actionTypes';
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({ ...state });
 const mapDispatchToProps = dispatch => ({
-    _clearToken: () => dispatch({ type: CLEAR_TOKEN, payload: agent.Auth.current() }),
+    clearToken: () => dispatch({ type: CLEAR_TOKEN, payload: agent.Auth.current() }),
+    logout: () => dispatch({ type: LOGOUT }),
 });
 
 
 class ListErrors extends React.Component {
 
   clearToken = () => {
-    this.props._clearToken();
+    this.props.clearToken();
+    this.props.logout();
   }
 
   render() {

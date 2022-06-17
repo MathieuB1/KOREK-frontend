@@ -52,8 +52,9 @@ export default (state = defaultState, action) => {
         case CLEAR_TOKEN:
             return {
                 ...state,
-                redirectTo: '/login/',
                 token: null,
+                csrf: null,
+                redirectTo: '/login/'
             };
         case APP_LOAD:
             return {

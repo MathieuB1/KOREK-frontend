@@ -14,7 +14,6 @@ import {
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 
-
 const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,
@@ -29,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   onUnload: () => dispatch({  type: HOME_PAGE_UNLOADED }),
   onChangeDisplay: mode => dispatch({ type: DISPLAY_MODE, mode })
 });
+
 
 class Home extends React.Component {
 
@@ -47,8 +47,7 @@ class Home extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     // if we have an update from websocket then we refresh the page
     var message = String(this.props.websocket.message);
-    var consumed_message = String(this.props.websocket.message);
-    if(message !== '' || consumed_message !== '') {
+    if(message !== '') {
 
       // consume all messages
       this.props.websocket.last_consumed_message = '';

@@ -40,11 +40,8 @@ const mapDispatchToProps = dispatch => ({
 
 
 // Open the websocket
-var wsStart = window.localStorage.getItem('API_ROOT').split("//")[0] === "https:" ? 'wss://' : 'ws://';
-var ws = new WebSocket(wsStart + window.localStorage.getItem('API_ROOT').split("//")[1] + 
-                        '/ws/event/' + window.localStorage.getItem('username') + '/', 
-                        window.localStorage.getItem('jwt'));
-
+let wsStart = window.localStorage.getItem('API_ROOT').split("//")[0] === "https:" ? 'wss://' : 'ws://';
+let ws;
                         
 class App extends React.Component {
 
@@ -63,6 +60,12 @@ class App extends React.Component {
         window.localStorage.getItem('API_ROOT') != null && 
         window.localStorage.getItem('jwt') != null) {
 
+            this.setState({ loadedWebSocket: true });
+
+            ws = new WebSocket(wsStart + window.localStorage.getItem('API_ROOT').split("//")[1] + 
+            '/ws/event/' + window.localStorage.getItem('username') + '/', 
+            window.localStorage.getItem('jwt'));
+
             // 1st websocket
             // Used for Redux Storage
             var timeout = 250;
@@ -73,7 +76,7 @@ class App extends React.Component {
                 console.log("connected websocket main component");
                 timeout = 250; // reset timer to 250 on open of websocket connection 
                 clearTimeout(connectInterval); // clear Interval on on open of websocket connection
-            }
+             }
 
             // websocket onclose event listener
             ws.onclose = e => {
@@ -106,28 +109,7 @@ class App extends React.Component {
             }
             
 
-            // Used for Notifier (can be desactivated & no retry!)
-            // 2nd websocket 
-            fetch(window.localStorage.getItem('API_ROOT') + '/event/notif/', { 
-            method: 'GET',  
-            headers: new Headers({
-                'Authorization': 'Bearer '+  window.localStorage.getItem('jwt'), 
-            }), 
-            })
-            .then(function(response) {
-            if(response.ok) {
-                return response.text();
-            }
-            console.log('WebSocket network response was not ok.');
-            })
-            .then(function(text) {
-                var script = document.createElement("script");
-                script.type = "text/javascript";
-                script.text = text;
-                document.getElementsByTagName("head")[0].appendChild(script);
-            })
 
-            this.setState({ loadedWebSocket: true });
 
         }
         
@@ -162,11 +144,6 @@ class App extends React.Component {
         {
             this.loadWebSocket();
         }
-    }
-
-
-    onUnload(event) {
-        window.eventSocket.onclose();
     }
 
     componentDidMount() {

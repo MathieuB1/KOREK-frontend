@@ -6,7 +6,8 @@ import {
     LOGIN,
     LOGOUT,
     SETTINGS_PAGE_UNLOADED,
-    REGISTER
+    REGISTER,
+    CLEAR_TOKEN
 } from './constants/actionTypes';
 
 const promiseMiddleware = store => next => action => {
@@ -81,9 +82,9 @@ const localStorageMiddleware = store => next => action => {
 
         }
 
-    } else if (action.type === LOGOUT || (action.type === SETTINGS_PAGE_UNLOADED && !action.error)) {
-        window.localStorage.removeItem('jwt', '');
-        window.localStorage.removeItem('username', '');
+    } else if (action.type === LOGOUT || action.type === CLEAR_TOKEN || (action.type === SETTINGS_PAGE_UNLOADED && !action.error)) {
+        window.localStorage.removeItem('jwt', null);
+        window.localStorage.removeItem('username', null);
         agent.setToken(null);
         agent.setCsrf(null);
         document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
