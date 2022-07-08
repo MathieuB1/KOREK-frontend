@@ -7,8 +7,7 @@ import {
 
 const mapStateToProps = state => ({ ...state });
 const mapDispatchToProps = dispatch => ({
-    clearToken: () => dispatch({ type: CLEAR_TOKEN, payload: agent.Auth.current() }),
-    logout: () => dispatch({ type: LOGOUT }),
+    clearToken: () => dispatch({ type: CLEAR_TOKEN }),
 });
 
 
@@ -16,7 +15,6 @@ class ListErrors extends React.Component {
 
   clearToken = () => {
     this.props.clearToken();
-    this.props.logout();
   }
 
   render() {
