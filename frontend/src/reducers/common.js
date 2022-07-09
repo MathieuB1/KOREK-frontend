@@ -47,7 +47,7 @@ export default (state = defaultState, action) => {
                 ...state,
                 redirectTo: action.error ? null : '/',
                 token: action.error ? null : action.payload.body.token,
-                currentUser: action.error ? null : action.payload.req._data.username
+                currentUser: action.error ? state.currentUser : action.payload.req._data.username
             };
         case CLEAR_TOKEN:
             return {
