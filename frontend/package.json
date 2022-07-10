@@ -13,7 +13,7 @@
         "history": "^4.10.1",
         "leaflet": "^1.8.0",
         "rc-progress": "^3.1.4",
-        "rc-slider": "^9.7.4",
+        "rc-slider": "^10.0.0",
         "react": "^17.0.0",
         "react-bootstrap": "^2.4.0",
         "react-dom": "^17.0.0",

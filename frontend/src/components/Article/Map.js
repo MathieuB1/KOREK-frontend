@@ -1,6 +1,6 @@
 import React from "react";
 import L from "leaflet";
-import { Range } from 'rc-slider';
+import Slider from 'rc-slider';
 
 import 'rc-slider/assets/index.css';
 
@@ -87,7 +87,7 @@ class Map extends React.Component {
     const default_max = this.props.markerPositions.length-1;
     const default_min = 0;
     return <div><div id="map" style={style} />
-                <Range defaultValue={[default_min, default_max]} allowCross={false} min={default_min} max={default_max} onChange={this.onSliderChange}/>
+                <Slider range defaultValue={[default_min, default_max]} allowCross={false} min={default_min} max={default_max} onChange={this.onSliderChange}/>
            </div>;
   }
 }
