@@ -40,6 +40,7 @@ describe('Test the basic', () => {
 
     it('Delete the test user', () => {
         cy.visit('/login');
+
         cy.get('input').should('have.length', 2);
         cy.get('input').eq(0).clear().type("heytester1");
         cy.get('input').eq(1).clear().type("heytester1");
@@ -51,6 +52,7 @@ describe('Test the basic', () => {
         cy.visit('/settings');
         cy.wait(1000);
         cy.contains('Delete User').click();
+        cy.wait(1000);
 
         // // Try to login when User has been deleted
         cy.visit('/login');

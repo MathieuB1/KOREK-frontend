@@ -156,15 +156,16 @@ class SettingsForm extends React.Component {
                       Update Settings
                     </button>
                 </fieldset>
-
-               <hr/>
-               <button
-                className="btn btn-lg btn-danger pull-xs-left"
-                onClick={this.deleteUser}>
-                Delete User
-               </button>
-
             </form>
+
+            
+            <hr/>
+            <button
+             className="btn btn-lg btn-danger pull-xs-left"
+             onClick={this.deleteUser}>
+             Delete User
+            </button>
+
           </div>
         )
     }
