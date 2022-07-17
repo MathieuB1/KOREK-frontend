@@ -13,8 +13,6 @@ ADD src /usr/app/src/
 ADD package.json /usr/app/
 RUN npm install
 
-ADD test /usr/app/test/
-RUN npm install cypress --save-dev
 
 ADD set_ssl.sh /usr/app/
 RUN chmod +x /usr/app/set_ssl.sh
