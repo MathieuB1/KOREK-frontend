@@ -16,7 +16,7 @@ import Profile from '../components/Profile/Profile';
 import Friend from '../components/Profile/Friend';
 import { store } from '../store';
 import { push } from 'react-router-redux';
-
+import Notifier from './Notifier';
 
 
 const mapStateToProps = state => {
@@ -189,6 +189,7 @@ class App extends React.Component {
                 <Route path = "/users/" component = { Profile }/> 
                 <Route path = "/settings" component = { Settings } />
                 </Switch>
+                <Notifier/>
                 </div>
 
             );
