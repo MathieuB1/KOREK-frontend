@@ -23,7 +23,13 @@ export default (state = {}, action) => {
                 }
             };
         case ARTICLE_PAGE_UNLOADED:
-            return state;
+            return {
+                ...state,
+                redirectTo: null,
+                article: null,
+                comments: null,
+                highlight: null
+            }
         case ADD_COMMENT:
             return {
                 ...state,
