@@ -1,7 +1,7 @@
 FROM ubuntu:bionic
 
 RUN apt-get update
-RUN apt-get install -y build-essential libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb vim
+RUN apt-get install -y build-essential vim
 RUN apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates && \
 curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
