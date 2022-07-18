@@ -8,6 +8,7 @@ RUN apt-get install -y nodejs
 
 WORKDIR /usr/app
 
+ADD .env /usr/app/
 ADD public /usr/app/public
 ADD src /usr/app/src/
 ADD package.json /usr/app/
